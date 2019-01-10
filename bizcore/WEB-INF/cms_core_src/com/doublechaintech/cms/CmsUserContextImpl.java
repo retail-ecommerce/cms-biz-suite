@@ -77,7 +77,7 @@ public class CmsUserContextImpl extends UserContextImpl implements CmsUserContex
 	public Map<String,String> getLocaleMap(){
 		
 		init();
-		return chineseMap;
+		return englishMap;
 		
 	}
 	
