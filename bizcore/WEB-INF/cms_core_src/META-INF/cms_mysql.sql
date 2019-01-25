@@ -203,13 +203,13 @@ insert into user_white_list_data values ('UWL000003','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000004','13808188512','tester;ios-spokesperson0004','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-01-06 01:31:09','2019-01-04 06:50:55','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-01-22 14:09:30','2019-01-11 09:49:07','UD000001',NULL,'BLOCKED0002','1');
-insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-01-08 08:07:31','2019-01-06 14:24:53','UD000001',NULL,'BLOCKED0003','1');
-insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-01-18 01:05:43','2019-01-18 12:41:37','UD000001',NULL,'BLOCKED0004','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-01-18 18:49:10','2019-01-14 16:58:37','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-01-12 02:33:06','2019-01-16 00:00:51','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000003','login0003','13900000003','','1A39AE05E011CF4B6ADE19307698831F4303CEB3FF5A9E21EEC0B21FB19B1050','0','2019-01-04 18:45:59','2019-01-12 20:21:26','UD000001',NULL,'BLOCKED0003','1');
+insert into sec_user_data values ('SU000004','login0004','13900000004','suddy_chang@163.com','331D0B81C261072AB3E01D2D09A3D1F9B03F1E5F095D6BF7284F32BF85135D59','9999999','2019-01-13 06:47:21','2019-01-11 07:18:51','UD000001',NULL,'BLOCKED0004','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-01-25 07:40:53','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-01-05 18:31:21','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -362,22 +362,22 @@ insert into object_access_data values ('OA000063','控制访问列表10063','Fra
 insert into object_access_data values ('OA000064','控制访问列表10064','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000016','1');
 
 	
-insert into login_history_data values ('LH000001','2019-01-22 22:29:52','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-01-25 01:41:32','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-01-20 15:53:57','192.168.1.1','登陆成功0003','SU000001','1');
-insert into login_history_data values ('LH000004','2019-01-25 03:54:48','192.168.1.2','登陆成功0004','SU000001','1');
-insert into login_history_data values ('LH000005','2019-01-18 13:32:05','192.168.1.1','登陆成功0005','SU000002','1');
-insert into login_history_data values ('LH000006','2019-01-21 23:26:42','192.168.1.2','登陆成功0006','SU000002','1');
-insert into login_history_data values ('LH000007','2019-01-14 07:28:36','192.168.1.1','登陆成功0007','SU000002','1');
-insert into login_history_data values ('LH000008','2019-01-09 17:10:53','192.168.1.2','登陆成功0008','SU000002','1');
-insert into login_history_data values ('LH000009','2019-01-21 03:36:55','192.168.1.1','登陆成功0009','SU000003','1');
-insert into login_history_data values ('LH000010','2019-01-10 06:45:53','192.168.1.2','登陆成功0010','SU000003','1');
-insert into login_history_data values ('LH000011','2019-01-20 15:54:28','192.168.1.1','登陆成功0011','SU000003','1');
-insert into login_history_data values ('LH000012','2019-01-16 05:44:44','192.168.1.2','登陆成功0012','SU000003','1');
-insert into login_history_data values ('LH000013','2019-01-09 12:06:59','192.168.1.1','登陆成功0013','SU000004','1');
-insert into login_history_data values ('LH000014','2019-01-22 20:09:53','192.168.1.2','登陆成功0014','SU000004','1');
-insert into login_history_data values ('LH000015','2019-01-06 00:43:54','192.168.1.1','登陆成功0015','SU000004','1');
-insert into login_history_data values ('LH000016','2019-01-04 20:24:57','192.168.1.2','登陆成功0016','SU000004','1');
+insert into login_history_data values ('LH000001','2019-01-12 00:57:09','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-01-06 05:29:34','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-01-24 14:58:36','192.168.1.1','登陆成功0003','SU000001','1');
+insert into login_history_data values ('LH000004','2019-01-06 19:13:36','192.168.1.2','登陆成功0004','SU000001','1');
+insert into login_history_data values ('LH000005','2019-01-15 11:52:29','192.168.1.1','登陆成功0005','SU000002','1');
+insert into login_history_data values ('LH000006','2019-01-20 02:17:15','192.168.1.2','登陆成功0006','SU000002','1');
+insert into login_history_data values ('LH000007','2019-01-22 01:29:16','192.168.1.1','登陆成功0007','SU000002','1');
+insert into login_history_data values ('LH000008','2019-01-08 21:19:27','192.168.1.2','登陆成功0008','SU000002','1');
+insert into login_history_data values ('LH000009','2019-01-10 16:41:26','192.168.1.1','登陆成功0009','SU000003','1');
+insert into login_history_data values ('LH000010','2019-01-11 17:37:23','192.168.1.2','登陆成功0010','SU000003','1');
+insert into login_history_data values ('LH000011','2019-01-04 11:20:24','192.168.1.1','登陆成功0011','SU000003','1');
+insert into login_history_data values ('LH000012','2019-01-20 13:18:50','192.168.1.2','登陆成功0012','SU000003','1');
+insert into login_history_data values ('LH000013','2019-01-05 00:21:17','192.168.1.1','登陆成功0013','SU000004','1');
+insert into login_history_data values ('LH000014','2019-01-09 00:05:41','192.168.1.2','登陆成功0014','SU000004','1');
+insert into login_history_data values ('LH000015','2019-01-05 12:56:11','192.168.1.1','登陆成功0015','SU000004','1');
+insert into login_history_data values ('LH000016','2019-01-13 03:43:39','192.168.1.2','登陆成功0016','SU000004','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
