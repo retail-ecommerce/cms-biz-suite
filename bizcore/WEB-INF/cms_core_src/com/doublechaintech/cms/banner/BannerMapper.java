@@ -65,7 +65,7 @@ public class BannerMapper extends BaseRowMapper<Banner>{
 	protected void setLastUpdate(Banner banner, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
-		Date lastUpdate = rs.getTimestamp(BannerTable.COLUMN_LASTUPDATE);
+		Date lastUpdate = rs.getTimestamp(BannerTable.COLUMN_LAST_UPDATE);
 		if(lastUpdate == null){
 			//do nothing when nothing found in database
 			return;

@@ -20,7 +20,7 @@
 	<li><span>${userContext.localeMap['banner.id']}</span> ${banner.id}</li>
 <li><span>${userContext.localeMap['banner.name']}</span> ${banner.name}</li>
 <li><span>${userContext.localeMap['banner.image_path']}</span> ${banner.imagePath}</li>
-<li><span>${userContext.localeMap['banner.lastUpdate']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${banner.lastUpdate}" /></li>
+<li><span>${userContext.localeMap['banner.last_update']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${banner.lastUpdate}" /></li>
 
 	
 	</ul>

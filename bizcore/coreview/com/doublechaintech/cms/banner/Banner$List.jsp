@@ -105,7 +105,7 @@
 	<th>${userContext.localeMap['banner.image_path']}</th>
 </c:if>
 <c:if test="${param.referName ne 'lastUpdate'}">
-	<th>${userContext.localeMap['banner.lastUpdate']}</th>
+	<th>${userContext.localeMap['banner.last_update']}</th>
 </c:if>
 <c:if test="${param.referName ne 'platform'}">
 	<th>${userContext.localeMap['banner.platform']}</th>

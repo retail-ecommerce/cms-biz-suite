@@ -21,7 +21,7 @@ public class Banner extends BaseEntity implements  java.io.Serializable{
 	public static final String ID_PROPERTY                    = "id"                ;
 	public static final String NAME_PROPERTY                  = "name"              ;
 	public static final String IMAGE_PATH_PROPERTY            = "imagePath"         ;
-	public static final String LASTUPDATE_PROPERTY            = "lastUpdate"        ;
+	public static final String LAST_UPDATE_PROPERTY           = "lastUpdate"        ;
 	public static final String PLATFORM_PROPERTY              = "platform"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
@@ -87,7 +87,7 @@ public class Banner extends BaseEntity implements  java.io.Serializable{
 		if(IMAGE_PATH_PROPERTY.equals(property)){
 			changeImagePathProperty(newValueExpr);
 		}
-		if(LASTUPDATE_PROPERTY.equals(property)){
+		if(LAST_UPDATE_PROPERTY.equals(property)){
 			changeLastUpdateProperty(newValueExpr);
 		}
 
@@ -133,7 +133,7 @@ public class Banner extends BaseEntity implements  java.io.Serializable{
 		}
 		//they are surely different each other
 		updateLastUpdate(newValue);
-		this.onChangeProperty(LASTUPDATE_PROPERTY, oldValue, newValue);
+		this.onChangeProperty(LAST_UPDATE_PROPERTY, oldValue, newValue);
 		return;
   
 	}
@@ -358,7 +358,7 @@ public class Banner extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, ID_PROPERTY, getId());
 		appendKeyValuePair(result, NAME_PROPERTY, getName());
 		appendKeyValuePair(result, IMAGE_PATH_PROPERTY, getImagePath());
-		appendKeyValuePair(result, LASTUPDATE_PROPERTY, getLastUpdate());
+		appendKeyValuePair(result, LAST_UPDATE_PROPERTY, getLastUpdate());
 		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 		appendKeyValuePair(result, TARGET_LIST, getTargetList());

@@ -22,7 +22,7 @@
 	<li><span>ID</span><a class="link-action-removed" href="./bannerManager/view/${banner.id}/"> ${banner.id}</a></li>
 <li><span>${userContext.localeMap['banner.name']}</span> ${banner.name}</li>
 <li><span>${userContext.localeMap['banner.image_path']}</span> ${banner.imagePath}</li>
-<li><span>${userContext.localeMap['banner.lastUpdate']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${banner.lastUpdate}" /></li>
+<li><span>${userContext.localeMap['banner.last_update']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${banner.lastUpdate}" /></li>
 
 	
 	</ul>

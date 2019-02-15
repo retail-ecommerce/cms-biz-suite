@@ -172,14 +172,14 @@ public class BaseForm extends GenericForm{
 
 	protected FormField lastUpdateFromBanner(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("LastUpdate");
-		field.setLocaleKey("banner.lastUpdate");
+		field.setLabel("Last Update");
+		field.setLocaleKey("banner.last_update");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("date_time");
 		field.setRequired(true);
-		field.setPlaceholder("请填写LastUpdate");
+		field.setPlaceholder("请填写Last Update");
 		return field;
 	}
 

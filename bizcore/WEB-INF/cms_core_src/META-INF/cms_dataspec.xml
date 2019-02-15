@@ -16,7 +16,7 @@
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
 			<field name="name" type="string" checkType="StringLengthRange" min="4" max="52" description="Name" />
 			<field name="image_path" type="string_image" checkType="Image" min="0" max="512" description="Image Path" />
-			<field name="lastUpdate" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="LastUpdate" />
+			<field name="last_update" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Last Update" />
 			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
 			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
 		</fields>

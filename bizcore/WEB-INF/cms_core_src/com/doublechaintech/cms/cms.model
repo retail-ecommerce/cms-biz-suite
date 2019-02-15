@@ -12,7 +12,7 @@
 	<banner
 		name="2.14Promotion"
 		image_path="ValDay-800-600-RED.jpg"
-		lastUpdate="updateTime()"
+		last_update="updateTime()"
 		platform="$(platform)"
 	/>
 	

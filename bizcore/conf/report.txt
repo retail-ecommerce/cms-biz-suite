@@ -1,8 +1,8 @@
-@warning banner.lastUpdate: word 'lastUpdate' seems not found in library
+@warning target.lastUpdate: word 'lastUpdate' seems not found in library
 
 
 
-=================Execute Report (Model Time 190215T1702) @Fri Feb 15 17:05:44 CST 2019, 17 objects and 128 fields===========================
+=================Execute Report (Model Time 190215T1712) @Fri Feb 15 17:12:44 CST 2019, 17 objects and 128 fields===========================
 
 
 
@@ -63,7 +63,7 @@ banner{
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('2.14Promotion'), verb: false, required: true;
 		string_image	image_path('ValDay-800-600-RED.jpg'), verb: false, required: true;
-		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
 		platform	platform('$(object)'), verb: false, required: true, referenceBy: bannerList;
 		int	version('2147483647'), verb: false, required: true;
 	}
@@ -117,7 +117,7 @@ banner{
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('2.14Promotion'), verb: false, required: true;
 		string_image	image_path('ValDay-800-600-RED.jpg'), verb: false, required: true;
-		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
 		platform	platform('$(object)'), verb: false, required: true, referenceBy: bannerList;
 		int	version('2147483647'), verb: false, required: true;
 	}

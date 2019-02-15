@@ -9,7 +9,7 @@ Banner|Banner
 Id|Id
 Name|Name
 Image Path|Image Path
-LastUpdate|LastUpdate
+Last Update|Last Update
 Platform|Platform
 Version|Version
 Profile|Profile

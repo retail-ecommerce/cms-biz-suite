@@ -377,10 +377,10 @@ public class BannerJDBCTemplateDAO extends CmsNamingServiceDAO implements Banner
  		
  
 		StatsItem lastUpdateStatsItem = new StatsItem();
-		//Banner.LASTUPDATE_PROPERTY
+		//Banner.LAST_UPDATE_PROPERTY
 		lastUpdateStatsItem.setDisplayName("Banner");
-		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Banner.LASTUPDATE_PROPERTY));
-		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Banner.LASTUPDATE_PROPERTY),filterKey,emptyOptions));
+		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Banner.LAST_UPDATE_PROPERTY));
+		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Banner.LAST_UPDATE_PROPERTY),filterKey,emptyOptions));
 		info.addItem(lastUpdateStatsItem);
  				
  		resultList.setStatsInfo(info);
