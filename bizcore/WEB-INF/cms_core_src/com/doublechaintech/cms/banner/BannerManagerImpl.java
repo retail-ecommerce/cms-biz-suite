@@ -452,7 +452,7 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 	
 	
 
-	protected void checkParamsForAddingTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String when, String location,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -465,20 +465,18 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 		
 		userContext.getChecker().checkProfileIdOfTarget(profileId);
 		
-		userContext.getChecker().checkWhenOfTarget(when);
-		
 		userContext.getChecker().checkLocationOfTarget(location);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(BannerManagerException.class);
 
 	
 	}
-	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String when, String location, String [] tokensExpr) throws Exception
+	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingTarget(userContext,bannerId,name, profileId, when, location,tokensExpr);
+		checkParamsForAddingTarget(userContext,bannerId,name, profileId, location,tokensExpr);
 		
-		Target target = createTarget(userContext,name, profileId, when, location);
+		Target target = createTarget(userContext,name, profileId, location);
 		
 		Banner banner = loadBanner(userContext, bannerId, allTokens());
 		synchronized(banner){ 
@@ -491,21 +489,20 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 			return present(userContext,banner, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingTargetProperties(CmsUserContext userContext, String bannerId,String id,String name,String when,String location,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingTargetProperties(CmsUserContext userContext, String bannerId,String id,String name,String location,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfBanner(bannerId);
 		userContext.getChecker().checkIdOfTarget(id);
 		
 		userContext.getChecker().checkNameOfTarget( name);
-		userContext.getChecker().checkWhenOfTarget( when);
 		userContext.getChecker().checkLocationOfTarget( location);
 
 		userContext.getChecker().throwExceptionIfHasErrors(BannerManagerException.class);
 		
 	}
-	public  Banner updateTargetProperties(CmsUserContext userContext, String bannerId, String id,String name,String when,String location, String [] tokensExpr) throws Exception
+	public  Banner updateTargetProperties(CmsUserContext userContext, String bannerId, String id,String name,String location, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingTargetProperties(userContext,bannerId,id,name,when,location,tokensExpr);
+		checkParamsForUpdatingTargetProperties(userContext,bannerId,id,name,location,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -521,7 +518,6 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 		Target item = bannerToUpdate.getTargetList().first();
 		
 		item.updateName( name );
-		item.updateWhen( when );
 		item.updateLocation( location );
 
 		
@@ -533,7 +529,7 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 	}
 	
 	
-	protected Target createTarget(CmsUserContext userContext, String name, String profileId, String when, String location) throws Exception{
+	protected Target createTarget(CmsUserContext userContext, String name, String profileId, String location) throws Exception{
 
 		Target target = new Target();
 		
@@ -542,7 +538,6 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 		Profile  profile = new Profile();
 		profile.setId(profileId);		
 		target.setProfile(profile);		
-		target.setWhen(when);		
 		target.setLocation(location);		
 		target.setLastUpdate(userContext.now());
 	
@@ -658,10 +653,6 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 
 		if(Target.NAME_PROPERTY.equals(property)){
 			userContext.getChecker().checkNameOfTarget(parseString(newValueExpr));
-		}
-		
-		if(Target.WHEN_PROPERTY.equals(property)){
-			userContext.getChecker().checkWhenOfTarget(parseString(newValueExpr));
 		}
 		
 		if(Target.LOCATION_PROPERTY.equals(property)){

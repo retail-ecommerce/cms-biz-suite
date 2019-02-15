@@ -446,7 +446,7 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 	
 	
 
-	protected void checkParamsForAddingTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String when, String location,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String location,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -459,20 +459,18 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 		
 		userContext.getChecker().checkBannerIdOfTarget(bannerId);
 		
-		userContext.getChecker().checkWhenOfTarget(when);
-		
 		userContext.getChecker().checkLocationOfTarget(location);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(ProfileManagerException.class);
 
 	
 	}
-	public  Profile addTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String when, String location, String [] tokensExpr) throws Exception
+	public  Profile addTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String location, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingTarget(userContext,profileId,name, bannerId, when, location,tokensExpr);
+		checkParamsForAddingTarget(userContext,profileId,name, bannerId, location,tokensExpr);
 		
-		Target target = createTarget(userContext,name, bannerId, when, location);
+		Target target = createTarget(userContext,name, bannerId, location);
 		
 		Profile profile = loadProfile(userContext, profileId, allTokens());
 		synchronized(profile){ 
@@ -485,21 +483,20 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 			return present(userContext,profile, mergedAllTokens(tokensExpr));
 		}
 	}
-	protected void checkParamsForUpdatingTargetProperties(CmsUserContext userContext, String profileId,String id,String name,String when,String location,String [] tokensExpr) throws Exception {
+	protected void checkParamsForUpdatingTargetProperties(CmsUserContext userContext, String profileId,String id,String name,String location,String [] tokensExpr) throws Exception {
 		
 		userContext.getChecker().checkIdOfProfile(profileId);
 		userContext.getChecker().checkIdOfTarget(id);
 		
 		userContext.getChecker().checkNameOfTarget( name);
-		userContext.getChecker().checkWhenOfTarget( when);
 		userContext.getChecker().checkLocationOfTarget( location);
 
 		userContext.getChecker().throwExceptionIfHasErrors(ProfileManagerException.class);
 		
 	}
-	public  Profile updateTargetProperties(CmsUserContext userContext, String profileId, String id,String name,String when,String location, String [] tokensExpr) throws Exception
+	public  Profile updateTargetProperties(CmsUserContext userContext, String profileId, String id,String name,String location, String [] tokensExpr) throws Exception
 	{	
-		checkParamsForUpdatingTargetProperties(userContext,profileId,id,name,when,location,tokensExpr);
+		checkParamsForUpdatingTargetProperties(userContext,profileId,id,name,location,tokensExpr);
 
 		Map<String, Object> options = tokens()
 				.allTokens()
@@ -515,7 +512,6 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 		Target item = profileToUpdate.getTargetList().first();
 		
 		item.updateName( name );
-		item.updateWhen( when );
 		item.updateLocation( location );
 
 		
@@ -527,7 +523,7 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 	}
 	
 	
-	protected Target createTarget(CmsUserContext userContext, String name, String bannerId, String when, String location) throws Exception{
+	protected Target createTarget(CmsUserContext userContext, String name, String bannerId, String location) throws Exception{
 
 		Target target = new Target();
 		
@@ -536,7 +532,6 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 		Banner  banner = new Banner();
 		banner.setId(bannerId);		
 		target.setBanner(banner);		
-		target.setWhen(when);		
 		target.setLocation(location);		
 		target.setLastUpdate(userContext.now());
 	
@@ -652,10 +647,6 @@ public class ProfileManagerImpl extends CustomCmsCheckerManager implements Profi
 
 		if(Target.NAME_PROPERTY.equals(property)){
 			userContext.getChecker().checkNameOfTarget(parseString(newValueExpr));
-		}
-		
-		if(Target.WHEN_PROPERTY.equals(property)){
-			userContext.getChecker().checkWhenOfTarget(parseString(newValueExpr));
 		}
 		
 		if(Target.LOCATION_PROPERTY.equals(property)){

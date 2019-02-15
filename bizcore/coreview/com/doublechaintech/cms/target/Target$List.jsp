@@ -107,9 +107,6 @@
 <c:if test="${param.referName ne 'banner'}">
 	<th>${userContext.localeMap['target.banner']}</th>
 </c:if>
-<c:if test="${param.referName ne 'when'}">
-	<th>${userContext.localeMap['target.when']}</th>
-</c:if>
 <c:if test="${param.referName ne 'location'}">
 	<th>${userContext.localeMap['target.location']}</th>
 </c:if>
@@ -161,8 +158,7 @@
 		</div>
 	</td>
 </c:if>
-<c:if test="${param.referName ne 'when'}">	<td contenteditable='true' class='edit-value'  propertyToChange='when' storedCellValue='${item.when}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'>${item.when}</td>
-</c:if><c:if test="${param.referName ne 'location'}">	<td contenteditable='true' class='edit-value'  propertyToChange='location' storedCellValue='${item.location}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'>${item.location}</td>
+<c:if test="${param.referName ne 'location'}">	<td contenteditable='true' class='edit-value'  propertyToChange='location' storedCellValue='${item.location}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'>${item.location}</td>
 </c:if><c:if test="${param.referName ne 'lastUpdate'}">	<td contenteditable='true' class='edit-value'  propertyToChange='lastUpdate' storedCellValue='${item.lastUpdate}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.lastUpdate}" /></td>
 </c:if>
 				<td>

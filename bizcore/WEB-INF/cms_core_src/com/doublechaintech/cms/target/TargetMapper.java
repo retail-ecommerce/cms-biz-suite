@@ -17,7 +17,6 @@ public class TargetMapper extends BaseRowMapper<Target>{
  		setName(target, rs, rowNumber); 		
  		setProfile(target, rs, rowNumber); 		
  		setBanner(target, rs, rowNumber); 		
- 		setWhen(target, rs, rowNumber); 		
  		setLocation(target, rs, rowNumber); 		
  		setLastUpdate(target, rs, rowNumber); 		
  		setVersion(target, rs, rowNumber);
@@ -89,18 +88,6 @@ public class TargetMapper extends BaseRowMapper<Target>{
  		target.setBanner(createEmptyBanner(bannerId));
  	}
  	
-	protected void setWhen(Target target, ResultSet rs, int rowNumber) throws SQLException{
-	
-		//there will be issue when the type is double/int/long
-		String when = rs.getString(TargetTable.COLUMN_WHEN);
-		if(when == null){
-			//do nothing when nothing found in database
-			return;
-		}
-		
-		target.setWhen(when);
-	}
-		
 	protected void setLocation(Target target, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long

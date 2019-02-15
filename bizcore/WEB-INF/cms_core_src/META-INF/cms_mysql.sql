@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190215T1649
+-- BUILD WITH MODEL TIME 190215T1702
 drop database  if exists cms;
 create database cms;
 alter  database cms  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -40,7 +40,6 @@ create table target_data (
 	name                	varchar(56)                              comment 'Name',
 	profile             	varchar(48)                              comment 'Profile',
 	banner              	varchar(48)                              comment 'Banner',
-	when                	varchar(16)                              comment 'When',
 	location            	varchar(16)                              comment 'Location',
 	lastUpdate          	datetime                                 comment 'LastUpdate',
 	version             	int                                      comment 'Version',
@@ -227,8 +226,8 @@ create table form_action_data (
 insert into platform_data values ('P000001','Chain eComerce Platform','new generation of eCommerce platform based on opensource and modern tech','V1.0','1');
 
 	
-insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-11 14:42:45','P000001','1');
-insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-01-29 22:26:28','P000001','1');
+insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-08 09:53:08','P000001','1');
+insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-08 17:53:08','P000001','1');
 
 	
 insert into profile_data values ('P000001','Philip Zhang','P000001','1');
@@ -236,10 +235,10 @@ insert into profile_data values ('P000002','Naveen Kumar R ','P000001','1');
 insert into profile_data values ('P000003','VENKATESH GADUPUTI','P000001','1');
 
 	
-insert into target_data values ('T000001','valentines day','P000001','B000001','VIEW','HOME','2019-02-13 20:20:55','1');
-insert into target_data values ('T000002','valentines day0002','P000001','B000001','VIEW0002','HOME0002','2019-02-03 21:16:30','1');
-insert into target_data values ('T000003','valentines day0003','P000002','B000002','VIEW0003','HOME0003','2019-01-24 23:38:25','1');
-insert into target_data values ('T000004','valentines day0004','P000003','B000002','VIEW0004','HOME0004','2019-01-28 20:09:59','1');
+insert into target_data values ('T000001','valentines day','P000001','B000001','HOME','2019-01-30 05:14:30','1');
+insert into target_data values ('T000002','valentines day0002','P000001','B000001','HOME0002','2019-02-15 15:45:30','1');
+insert into target_data values ('T000003','valentines day0003','P000002','B000002','HOME0003','2019-01-25 13:25:51','1');
+insert into target_data values ('T000004','valentines day0004','P000003','B000002','HOME0004','2019-02-13 14:08:39','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -249,11 +248,11 @@ insert into user_white_list_data values ('UWL000001','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-01-31 06:29:11','2019-02-01 11:01:37','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-01-29 17:46:11','2019-01-28 15:15:48','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-05 09:54:16','2019-02-12 04:50:08','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-01-25 01:52:14','2019-01-30 20:58:16','UD000001',NULL,'BLOCKED0002','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-15 16:05:33','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-13 03:32:45','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -284,10 +283,10 @@ insert into object_access_data values ('OA000007','控制访问列表10007','Fra
 insert into object_access_data values ('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-09 10:39:52','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-02-09 17:16:35','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-01-26 16:11:43','192.168.1.1','登陆成功0003','SU000002','1');
-insert into login_history_data values ('LH000004','2019-01-28 21:06:30','192.168.1.2','登陆成功0004','SU000002','1');
+insert into login_history_data values ('LH000001','2019-02-12 05:15:04','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-02-04 12:34:36','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-08 02:13:33','192.168.1.1','登陆成功0003','SU000002','1');
+insert into login_history_data values ('LH000004','2019-02-06 00:19:01','192.168.1.2','登陆成功0004','SU000002','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');

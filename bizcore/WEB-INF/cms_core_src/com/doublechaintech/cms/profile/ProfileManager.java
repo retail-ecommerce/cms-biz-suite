@@ -28,9 +28,9 @@ public interface ProfileManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  TargetManager getTargetManager(CmsUserContext userContext, String profileId, String name, String bannerId, String when, String location ,String [] tokensExpr)  throws Exception;
+	//public  TargetManager getTargetManager(CmsUserContext userContext, String profileId, String name, String bannerId, String location ,String [] tokensExpr)  throws Exception;
 	
-	public  Profile addTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String when, String location , String [] tokensExpr)  throws Exception;
+	public  Profile addTarget(CmsUserContext userContext, String profileId, String name, String bannerId, String location , String [] tokensExpr)  throws Exception;
 	public  Profile removeTarget(CmsUserContext userContext, String profileId, String targetId, int targetVersion,String [] tokensExpr)  throws Exception;
 	public  Profile updateTarget(CmsUserContext userContext, String profileId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

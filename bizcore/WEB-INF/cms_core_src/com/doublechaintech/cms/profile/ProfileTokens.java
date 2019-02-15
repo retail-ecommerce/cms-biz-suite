@@ -130,7 +130,7 @@ public class ProfileTokens extends CommonTokens{
 	}
 	
 	public ProfileTokens searchAllTextOfTargetList(String verb, String value){	
-		String field = "id|name|when|location";
+		String field = "id|name|location";
 		addSearchMoreOptions(TARGET_LIST,targetListSearchCounter++, field, verb, value);
 		return this;
 	}

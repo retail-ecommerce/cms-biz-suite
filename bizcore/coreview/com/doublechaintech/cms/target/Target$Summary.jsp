@@ -41,10 +41,6 @@
 <span >${result.name}</span>
 </div>
 <div class="col-xs-12 col-md-3 summary-section">
-<span class="summary-label">${userContext.localeMap['target.when']}</span>
-<span >${result.when}</span>
-</div>
-<div class="col-xs-12 col-md-3 summary-section">
 <span class="summary-label">${userContext.localeMap['target.location']}</span>
 <span >${result.location}</span>
 </div>

@@ -12,7 +12,7 @@ public interface TargetManager{
 
 		
 
-	public Target createTarget(CmsUserContext userContext, String name, String profileId, String bannerId, String when, String location) throws Exception;	
+	public Target createTarget(CmsUserContext userContext, String name, String profileId, String bannerId, String location) throws Exception;	
 	public Target updateTarget(CmsUserContext userContext,String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception;
 	public Target loadTarget(CmsUserContext userContext, String targetId, String [] tokensExpr) throws Exception;
 	public Target internalSaveTarget(CmsUserContext userContext, Target target) throws Exception;

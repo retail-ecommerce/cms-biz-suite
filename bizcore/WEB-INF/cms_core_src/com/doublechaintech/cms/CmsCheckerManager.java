@@ -153,14 +153,6 @@ public class CmsCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
-	public static final String  WHEN_OF_TARGET ="target.when";
-	protected void checkWhenOfTarget(CmsUserContext userContext, String when, List<Message> messageList)
-	{
-		
-	 	checkStringLengthRange(when,2, 16,WHEN_OF_TARGET, messageList); 		
-		
-	}	 			
-	
 	public static final String  LOCATION_OF_TARGET ="target.location";
 	protected void checkLocationOfTarget(CmsUserContext userContext, String location, List<Message> messageList)
 	{

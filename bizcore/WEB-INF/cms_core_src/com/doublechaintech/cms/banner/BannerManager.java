@@ -28,9 +28,9 @@ public interface BannerManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
-	//public  TargetManager getTargetManager(CmsUserContext userContext, String bannerId, String name, String profileId, String when, String location ,String [] tokensExpr)  throws Exception;
+	//public  TargetManager getTargetManager(CmsUserContext userContext, String bannerId, String name, String profileId, String location ,String [] tokensExpr)  throws Exception;
 	
-	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String when, String location , String [] tokensExpr)  throws Exception;
+	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location , String [] tokensExpr)  throws Exception;
 	public  Banner removeTarget(CmsUserContext userContext, String bannerId, String targetId, int targetVersion,String [] tokensExpr)  throws Exception;
 	public  Banner updateTarget(CmsUserContext userContext, String bannerId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 

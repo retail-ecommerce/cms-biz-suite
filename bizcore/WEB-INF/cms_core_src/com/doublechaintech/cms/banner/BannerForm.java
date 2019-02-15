@@ -208,20 +208,6 @@ public class BannerForm extends BaseForm {
 	}
 
 
-	public BannerForm whenFieldForTarget(String parameterName, String initValue){
-		FormField field =  whenFromTarget(parameterName, initValue);		
-		this.addFormField(field);
-		return this;
-	}
-	
-	public BannerForm whenFieldForTarget(String initValue){
-		return whenFieldForTarget("when",initValue);
-	}
-	public BannerForm whenFieldForTarget(){
-		return whenFieldForTarget("when","");
-	}
-
-
 	public BannerForm locationFieldForTarget(String parameterName, String initValue){
 		FormField field =  locationFromTarget(parameterName, initValue);		
 		this.addFormField(field);

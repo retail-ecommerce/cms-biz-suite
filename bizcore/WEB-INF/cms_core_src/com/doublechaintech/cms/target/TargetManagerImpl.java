@@ -164,7 +164,7 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
  	
 
 
-	public Target createTarget(CmsUserContext userContext,String name, String profileId, String bannerId, String when, String location) throws Exception
+	public Target createTarget(CmsUserContext userContext,String name, String profileId, String bannerId, String location) throws Exception
 	{
 		
 		
@@ -172,7 +172,6 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		
 
 		userContext.getChecker().checkNameOfTarget(name);
-		userContext.getChecker().checkWhenOfTarget(when);
 		userContext.getChecker().checkLocationOfTarget(location);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(TargetManagerException.class);
@@ -191,7 +190,6 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		target.setBanner(banner);
 		
 		
-		target.setWhen(when);
 		target.setLocation(location);
 		target.setLastUpdate(userContext.now());
 
@@ -225,9 +223,6 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 				
 
 		
-		if(Target.WHEN_PROPERTY.equals(property)){
-			userContext.getChecker().checkWhenOfTarget(parseString(newValueExpr));
-		}
 		if(Target.LOCATION_PROPERTY.equals(property)){
 			userContext.getChecker().checkLocationOfTarget(parseString(newValueExpr));
 		}

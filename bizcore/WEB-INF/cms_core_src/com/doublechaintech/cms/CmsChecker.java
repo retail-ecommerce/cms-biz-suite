@@ -185,15 +185,6 @@ public class CmsChecker extends BaseChecker{
 		return this;
 	}	 			
 
-	public static final String  WHEN_OF_TARGET ="target.when";
-	public CmsChecker checkWhenOfTarget(String when)
-	{
-		
-	 	checkStringLengthRange(when,2, 16,WHEN_OF_TARGET ); 		
-		
-		return this;
-	}	 			
-
 	public static final String  LOCATION_OF_TARGET ="target.location";
 	public CmsChecker checkLocationOfTarget(String location)
 	{

@@ -538,7 +538,7 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		return prepareTargetCreateParameters(target);
  	}
  	protected Object[] prepareTargetUpdateParameters(Target target){
- 		Object[] parameters = new Object[9];
+ 		Object[] parameters = new Object[8];
  
  		parameters[0] = target.getName(); 	
  		if(target.getProfile() != null){
@@ -549,17 +549,16 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  			parameters[2] = target.getBanner().getId();
  		}
  
- 		parameters[3] = target.getWhen();
- 		parameters[4] = target.getLocation();
- 		parameters[5] = target.getLastUpdate();		
- 		parameters[6] = target.nextVersion();
- 		parameters[7] = target.getId();
- 		parameters[8] = target.getVersion();
+ 		parameters[3] = target.getLocation();
+ 		parameters[4] = target.getLastUpdate();		
+ 		parameters[5] = target.nextVersion();
+ 		parameters[6] = target.getId();
+ 		parameters[7] = target.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareTargetCreateParameters(Target target){
-		Object[] parameters = new Object[7];
+		Object[] parameters = new Object[6];
 		String newTargetId=getNextId();
 		target.setId(newTargetId);
 		parameters[0] =  target.getId();
@@ -575,9 +574,8 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		
  		}
  		
- 		parameters[4] = target.getWhen();
- 		parameters[5] = target.getLocation();
- 		parameters[6] = target.getLastUpdate();		
+ 		parameters[4] = target.getLocation();
+ 		parameters[5] = target.getLastUpdate();		
  				
  		return parameters;
  	}

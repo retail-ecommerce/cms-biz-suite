@@ -180,20 +180,6 @@ public class ProfileForm extends BaseForm {
 	}
 
 
-	public ProfileForm whenFieldForTarget(String parameterName, String initValue){
-		FormField field =  whenFromTarget(parameterName, initValue);		
-		this.addFormField(field);
-		return this;
-	}
-	
-	public ProfileForm whenFieldForTarget(String initValue){
-		return whenFieldForTarget("when",initValue);
-	}
-	public ProfileForm whenFieldForTarget(){
-		return whenFieldForTarget("when","");
-	}
-
-
 	public ProfileForm locationFieldForTarget(String parameterName, String initValue){
 		FormField field =  locationFromTarget(parameterName, initValue);		
 		this.addFormField(field);

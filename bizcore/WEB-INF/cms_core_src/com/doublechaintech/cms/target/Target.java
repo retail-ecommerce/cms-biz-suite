@@ -22,7 +22,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	public static final String NAME_PROPERTY                  = "name"              ;
 	public static final String PROFILE_PROPERTY               = "profile"           ;
 	public static final String BANNER_PROPERTY                = "banner"            ;
-	public static final String WHEN_PROPERTY                  = "when"              ;
 	public static final String LOCATION_PROPERTY              = "location"          ;
 	public static final String LASTUPDATE_PROPERTY            = "lastUpdate"        ;
 	public static final String VERSION_PROPERTY               = "version"           ;
@@ -51,7 +50,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	protected		String              	mName               ;
 	protected		Profile             	mProfile            ;
 	protected		Banner              	mBanner             ;
-	protected		String              	mWhen               ;
 	protected		String              	mLocation           ;
 	protected		DateTime            	mLastUpdate         ;
 	protected		int                 	mVersion            ;
@@ -70,12 +68,11 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public 	Target(String name, Profile profile, Banner banner, String when, String location, DateTime lastUpdate)
+	public 	Target(String name, Profile profile, Banner banner, String location, DateTime lastUpdate)
 	{
 		setName(name);
 		setProfile(profile);
 		setBanner(banner);
-		setWhen(when);
 		setLocation(location);
 		setLastUpdate(lastUpdate);
 	
@@ -87,9 +84,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
      	
 		if(NAME_PROPERTY.equals(property)){
 			changeNameProperty(newValueExpr);
-		}
-		if(WHEN_PROPERTY.equals(property)){
-			changeWhenProperty(newValueExpr);
 		}
 		if(LOCATION_PROPERTY.equals(property)){
 			changeLocationProperty(newValueExpr);
@@ -111,21 +105,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		//they are surely different each other
 		updateName(newValue);
 		this.onChangeProperty(NAME_PROPERTY, oldValue, newValue);
-		return;
-  
-	}
-			
-			
-			
-	protected void changeWhenProperty(String newValueExpr){
-		String oldValue = getWhen();
-		String newValue = parseString(newValueExpr);
-		if(equalsString(oldValue , newValue)){
-			return;//they can be both null, or exact the same object, this is much faster than equals function
-		}
-		//they are surely different each other
-		updateWhen(newValue);
-		this.onChangeProperty(WHEN_PROPERTY, oldValue, newValue);
 		return;
   
 	}
@@ -229,19 +208,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 	}
 	
-	public void setWhen(String when){
-		this.mWhen = trimString(when);;
-	}
-	public String getWhen(){
-		return this.mWhen;
-	}
-	public Target updateWhen(String when){
-		this.mWhen = trimString(when);;
-		this.changed = true;
-		return this;
-	}
-	
-	
 	public void setLocation(String location){
 		this.mLocation = trimString(location);;
 	}
@@ -313,7 +279,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, NAME_PROPERTY, getName());
 		appendKeyValuePair(result, PROFILE_PROPERTY, getProfile());
 		appendKeyValuePair(result, BANNER_PROPERTY, getBanner());
-		appendKeyValuePair(result, WHEN_PROPERTY, getWhen());
 		appendKeyValuePair(result, LOCATION_PROPERTY, getLocation());
 		appendKeyValuePair(result, LASTUPDATE_PROPERTY, getLastUpdate());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
@@ -335,7 +300,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 			dest.setName(getName());
 			dest.setProfile(getProfile());
 			dest.setBanner(getBanner());
-			dest.setWhen(getWhen());
 			dest.setLocation(getLocation());
 			dest.setLastUpdate(getLastUpdate());
 			dest.setVersion(getVersion());
@@ -357,7 +321,6 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		if(getBanner() != null ){
  			stringBuilder.append("\tbanner='Banner("+getBanner().getId()+")';");
  		}
-		stringBuilder.append("\twhen='"+getWhen()+"';");
 		stringBuilder.append("\tlocation='"+getLocation()+"';");
 		stringBuilder.append("\tlastUpdate='"+getLastUpdate()+"';");
 		stringBuilder.append("\tversion='"+getVersion()+"';");

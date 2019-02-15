@@ -287,19 +287,6 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
-	protected FormField whenFromTarget(String parameterName, String initValue){
-		FormField field = new FormField();
-		field.setLabel("When");
-		field.setLocaleKey("target.when");
-		field.setParameterName(parameterName);
-		field.setDefaultValue(initValue);
-		field.setFieldGroup("基本信息");
-		field.setType("text");
-		field.setRequired(true);
-		field.setPlaceholder("请填写When");
-		return field;
-	}
-
 	protected FormField locationFromTarget(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("Location");

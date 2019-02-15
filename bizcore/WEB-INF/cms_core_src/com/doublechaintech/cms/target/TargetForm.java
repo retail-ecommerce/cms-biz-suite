@@ -76,20 +76,6 @@ public class TargetForm extends BaseForm {
 	}
 
 
-	public TargetForm whenField(String parameterName, String initValue){
-		FormField field = whenFromTarget(parameterName, initValue);		
-		this.addFormField(field);
-		return this;
-	}
-	
-	public TargetForm whenField(String initValue){
-		return whenField("when",initValue);
-	}
-	public TargetForm whenField(){
-		return whenField("when","");
-	}
-
-
 	public TargetForm locationField(String parameterName, String initValue){
 		FormField field = locationFromTarget(parameterName, initValue);		
 		this.addFormField(field);

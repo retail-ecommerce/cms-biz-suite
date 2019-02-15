@@ -21,7 +21,6 @@
 	
 	<li><span>ID</span><a class="link-action-removed" href="./targetManager/view/${target.id}/"> ${target.id}</a></li>
 <li><span>${userContext.localeMap['target.name']}</span> ${target.name}</li>
-<li><span>${userContext.localeMap['target.when']}</span> ${target.when}</li>
 <li><span>${userContext.localeMap['target.location']}</span> ${target.location}</li>
 <li><span>${userContext.localeMap['target.lastUpdate']}</span> <fmt:formatDate pattern="yyyy-MM-dd" value="${target.lastUpdate}" /></li>
 

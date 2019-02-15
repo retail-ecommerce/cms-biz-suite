@@ -27,7 +27,6 @@
 		name="valentines day"
 		profile="$(profile)"
 		banner="$(banner)"
-		when="VIEW"
 		location="HOME"
 		lastUpdate="updateTime()"
 	/>

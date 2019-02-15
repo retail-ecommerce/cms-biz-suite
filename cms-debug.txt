@@ -22,7 +22,6 @@ Id|Id
 Name|Name
 Profile|Profile
 Banner|Banner
-When|When
 Location|Location
 LastUpdate|LastUpdate
 Version|Version
