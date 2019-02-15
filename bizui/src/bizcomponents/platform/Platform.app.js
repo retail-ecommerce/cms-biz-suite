@@ -157,6 +157,104 @@ class PlatformBizApp extends React.PureComponent {
 
 
 
+  getBannerSearch = () => {
+    const {BannerSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Banner",
+      role: "banner",
+      data: state._platform.bannerList,
+      metaInfo: state._platform.bannerListMetaInfo,
+      count: state._platform.bannerCount,
+      currentPage: state._platform.bannerCurrentPageNumber,
+      searchFormParameters: state._platform.bannerSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'bannerList', ref:state._platform, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(BannerSearch)
+  }
+  getBannerCreateForm = () => {
+   	const {BannerCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "banner",
+      data: state._platform.bannerList,
+      metaInfo: state._platform.bannerListMetaInfo,
+      count: state._platform.bannerCount,
+      currentPage: state._platform.bannerCurrentPageNumber,
+      searchFormParameters: state._platform.bannerSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'bannerList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(BannerCreateForm)
+  }
+  
+  getBannerUpdateForm = () => {
+    const userContext = null
+  	const {BannerUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "banner",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'bannerList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(BannerUpdateForm)
+  }
+
+  getProfileSearch = () => {
+    const {ProfileSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Profile",
+      role: "profile",
+      data: state._platform.profileList,
+      metaInfo: state._platform.profileListMetaInfo,
+      count: state._platform.profileCount,
+      currentPage: state._platform.profileCurrentPageNumber,
+      searchFormParameters: state._platform.profileSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'profileList', ref:state._platform, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(ProfileSearch)
+  }
+  getProfileCreateForm = () => {
+   	const {ProfileCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "profile",
+      data: state._platform.profileList,
+      metaInfo: state._platform.profileListMetaInfo,
+      count: state._platform.profileCount,
+      currentPage: state._platform.profileCurrentPageNumber,
+      searchFormParameters: state._platform.profileSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'profileList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(ProfileCreateForm)
+  }
+  
+  getProfileUpdateForm = () => {
+    const userContext = null
+  	const {ProfileUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "profile",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'profileList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(ProfileUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -169,7 +267,15 @@ class PlatformBizApp extends React.PureComponent {
   	{path:"/platform/:id/preference", component: PlatformPreference},
   	
   	
-    	
+  	
+  	{path:"/platform/:id/list/bannerList", component: this.getBannerSearch()},
+  	{path:"/platform/:id/list/bannerCreateForm", component: this.getBannerCreateForm()},
+  	{path:"/platform/:id/list/bannerUpdateForm", component: this.getBannerUpdateForm()},
+   	
+  	{path:"/platform/:id/list/profileList", component: this.getProfileSearch()},
+  	{path:"/platform/:id/list/profileCreateForm", component: this.getProfileCreateForm()},
+  	{path:"/platform/:id/list/profileUpdateForm", component: this.getProfileUpdateForm()},
+     	
   	
   	]
   	

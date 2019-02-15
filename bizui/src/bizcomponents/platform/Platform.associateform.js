@@ -74,6 +74,8 @@ class PlatformAssociateForm extends Component {
     const {PlatformService} = GlobalComponents
     const userContext = null
     
+ const {BannerModalTable} = GlobalComponents;
+ const {ProfileModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -185,6 +187,8 @@ class PlatformAssociateForm extends Component {
 			
         </Card>
         
+	<BannerModalTable data={data.bannerList} owner={owner} />
+	<ProfileModalTable data={data.profileList} owner={owner} />
         
         
         

@@ -15,6 +15,45 @@ import PlatformAssociateForm from './platform/Platform.associateform';
 import PlatformTable from './platform/Platform.table';
 import PlatformService from './platform/Platform.service';
 import PlatformUpdateForm from './platform/Platform.updateform';
+import BannerBase from './banner/Banner.base';
+import BannerBizApp from './banner/Banner.app';
+import BannerModel from './banner/Banner.model';
+import BannerDashboard from './banner/Banner.dashboard';
+import BannerPreference from './banner/Banner.preference';
+import BannerModalTable from './banner/Banner.modaltable';
+import BannerSearch from './banner/Banner.search';
+import BannerSearchForm from './banner/Banner.searchform';
+import BannerCreateForm from './banner/Banner.createform';
+import BannerAssociateForm from './banner/Banner.associateform';
+import BannerTable from './banner/Banner.table';
+import BannerService from './banner/Banner.service';
+import BannerUpdateForm from './banner/Banner.updateform';
+import ProfileBase from './profile/Profile.base';
+import ProfileBizApp from './profile/Profile.app';
+import ProfileModel from './profile/Profile.model';
+import ProfileDashboard from './profile/Profile.dashboard';
+import ProfilePreference from './profile/Profile.preference';
+import ProfileModalTable from './profile/Profile.modaltable';
+import ProfileSearch from './profile/Profile.search';
+import ProfileSearchForm from './profile/Profile.searchform';
+import ProfileCreateForm from './profile/Profile.createform';
+import ProfileAssociateForm from './profile/Profile.associateform';
+import ProfileTable from './profile/Profile.table';
+import ProfileService from './profile/Profile.service';
+import ProfileUpdateForm from './profile/Profile.updateform';
+import TargetBase from './target/Target.base';
+import TargetBizApp from './target/Target.app';
+import TargetModel from './target/Target.model';
+import TargetDashboard from './target/Target.dashboard';
+import TargetPreference from './target/Target.preference';
+import TargetModalTable from './target/Target.modaltable';
+import TargetSearch from './target/Target.search';
+import TargetSearchForm from './target/Target.searchform';
+import TargetCreateForm from './target/Target.createform';
+import TargetAssociateForm from './target/Target.associateform';
+import TargetTable from './target/Target.table';
+import TargetService from './target/Target.service';
+import TargetUpdateForm from './target/Target.updateform';
 import UserDomainBase from './userdomain/UserDomain.base';
 import UserDomainBizApp from './userdomain/UserDomain.app';
 import UserDomainModel from './userdomain/UserDomain.model';
@@ -123,6 +162,9 @@ import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 
 const BizModels = [
 	PlatformModel,
+	BannerModel,
+	ProfileModel,
+	TargetModel,
 	UserDomainModel,
 	UserWhiteListModel,
 	SecUserModel,
@@ -149,6 +191,9 @@ const unbindBizModels = (app) =>{
 const menuLibrary = []
 
 menuLibrary['platform'] = PlatformBase.menuData
+menuLibrary['banner'] = BannerBase.menuData
+menuLibrary['profile'] = ProfileBase.menuData
+menuLibrary['target'] = TargetBase.menuData
 menuLibrary['userDomain'] = UserDomainBase.menuData
 menuLibrary['userWhiteList'] = UserWhiteListBase.menuData
 menuLibrary['secUser'] = SecUserBase.menuData
@@ -178,6 +223,9 @@ const ViewMapping = {
 
 
   'com.doublechaintech.cms.platform.Platform': {name:'platform'},
+  'com.doublechaintech.cms.banner.Banner': {name:'banner'},
+  'com.doublechaintech.cms.profile.Profile': {name:'profile'},
+  'com.doublechaintech.cms.target.Target': {name:'target'},
   'com.doublechaintech.cms.userdomain.UserDomain': {name:'userDomain'},
   'com.doublechaintech.cms.userwhitelist.UserWhiteList': {name:'userWhiteList'},
   'com.doublechaintech.cms.secuser.SecUser': {name:'secUser'},
@@ -244,6 +292,45 @@ const OOTBComponents={
     PlatformTable,
     PlatformService,
     PlatformUpdateForm,
+    BannerBase,
+    BannerBizApp,
+    BannerModel,
+    BannerDashboard,
+    BannerPreference,
+    BannerModalTable,
+    BannerSearch,
+    BannerSearchForm,
+    BannerCreateForm,
+    BannerAssociateForm,
+    BannerTable,
+    BannerService,
+    BannerUpdateForm,
+    ProfileBase,
+    ProfileBizApp,
+    ProfileModel,
+    ProfileDashboard,
+    ProfilePreference,
+    ProfileModalTable,
+    ProfileSearch,
+    ProfileSearchForm,
+    ProfileCreateForm,
+    ProfileAssociateForm,
+    ProfileTable,
+    ProfileService,
+    ProfileUpdateForm,
+    TargetBase,
+    TargetBizApp,
+    TargetModel,
+    TargetDashboard,
+    TargetPreference,
+    TargetModalTable,
+    TargetSearch,
+    TargetSearchForm,
+    TargetCreateForm,
+    TargetAssociateForm,
+    TargetTable,
+    TargetService,
+    TargetUpdateForm,
     UserDomainBase,
     UserDomainBizApp,
     UserDomainModel,
