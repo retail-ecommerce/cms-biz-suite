@@ -11,6 +11,7 @@ import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.doublechaintech.cms.target.Target;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
 
@@ -26,6 +27,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 
 	public static final String BANNER_LIST                              = "bannerList"        ;
 	public static final String PROFILE_LIST                             = "profileList"       ;
+	public static final String TARGET_LIST                              = "targetList"        ;
 
 	public static final String INTERNAL_TYPE="Platform";
 	public String getInternalType(){
@@ -55,6 +57,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	
 	protected		SmartList<Banner>   	mBannerList         ;
 	protected		SmartList<Profile>  	mProfileList        ;
+	protected		SmartList<Target>   	mTargetList         ;
 	
 		
 	public 	Platform(){
@@ -73,7 +76,8 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		setCurrentVersion(currentVersion);
 
 		this.mBannerList = new SmartList<Banner>();
-		this.mProfileList = new SmartList<Profile>();	
+		this.mProfileList = new SmartList<Profile>();
+		this.mTargetList = new SmartList<Target>();	
 	}
 	
 	//Support for changing the property
@@ -406,6 +410,104 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	
 
 
+	public  SmartList<Target> getTargetList(){
+		if(this.mTargetList == null){
+			this.mTargetList = new SmartList<Target>();
+			this.mTargetList.setListInternalName (TARGET_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mTargetList;	
+	}
+	public  void setTargetList(SmartList<Target> targetList){
+		for( Target target:targetList){
+			target.setPlatform(this);
+		}
+
+		this.mTargetList = targetList;
+		this.mTargetList.setListInternalName (TARGET_LIST );
+		
+	}
+	
+	public  void addTarget(Target target){
+		target.setPlatform(this);
+		getTargetList().add(target);
+	}
+	public  void addTargetList(SmartList<Target> targetList){
+		for( Target target:targetList){
+			target.setPlatform(this);
+		}
+		getTargetList().addAll(targetList);
+	}
+	
+	public  Target removeTarget(Target targetIndex){
+		
+		int index = getTargetList().indexOf(targetIndex);
+        if(index < 0){
+        	String message = "Target("+targetIndex.getId()+") with version='"+targetIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        Target target = getTargetList().get(index);        
+        // target.clearPlatform(); //disconnect with Platform
+        target.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getTargetList().planToRemove(target);
+        if(!result){
+        	String message = "Target("+targetIndex.getId()+") with version='"+targetIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return target;
+        
+	
+	}
+	//断舍离
+	public  void breakWithTarget(Target target){
+		
+		if(target == null){
+			return;
+		}
+		target.setPlatform(null);
+		//getTargetList().remove();
+	
+	}
+	
+	public  boolean hasTarget(Target target){
+	
+		return getTargetList().contains(target);
+  
+	}
+	
+	public void copyTargetFrom(Target target) {
+
+		Target targetInList = findTheTarget(target);
+		Target newTarget = new Target();
+		targetInList.copyTo(newTarget);
+		newTarget.setVersion(0);//will trigger copy
+		getTargetList().add(newTarget);
+		addItemToFlexiableObject(COPIED_CHILD, newTarget);
+	}
+	
+	public  Target findTheTarget(Target target){
+		
+		int index =  getTargetList().indexOf(target);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "Target("+target.getId()+") with version='"+target.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getTargetList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpTargetList(){
+		getTargetList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 
@@ -417,6 +519,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		List<BaseEntity> entityList = new ArrayList<BaseEntity>();
 		collectFromList(this, entityList, getBannerList(), internalType);
 		collectFromList(this, entityList, getProfileList(), internalType);
+		collectFromList(this, entityList, getTargetList(), internalType);
 
 		return entityList;
 	}
@@ -426,6 +529,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		
 		listOfList.add( getBannerList());
 		listOfList.add( getProfileList());
+		listOfList.add( getTargetList());
 			
 
 		return listOfList;
@@ -450,6 +554,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			appendKeyValuePair(result, "profileCount", getProfileList().getTotalCount());
 			appendKeyValuePair(result, "profileCurrentPageNumber", getProfileList().getCurrentPageNumber());
 		}
+		appendKeyValuePair(result, TARGET_LIST, getTargetList());
+		if(!getTargetList().isEmpty()){
+			appendKeyValuePair(result, "targetCount", getTargetList().getTotalCount());
+			appendKeyValuePair(result, "targetCurrentPageNumber", getTargetList().getCurrentPageNumber());
+		}
 
 		
 		return result;
@@ -471,6 +580,7 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			dest.setVersion(getVersion());
 			dest.setBannerList(getBannerList());
 			dest.setProfileList(getProfileList());
+			dest.setTargetList(getTargetList());
 
 		}
 		super.copyTo(baseDest);

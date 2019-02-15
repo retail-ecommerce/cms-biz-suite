@@ -10,6 +10,7 @@ const menuData = {menuName:"Platform", menuFor: "platform",
   		subItems: [
   {name: 'bannerList', displayName:'Banner', icon:'ban',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   {name: 'profileList', displayName:'Profile', icon:'file',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'targetList', displayName:'Target', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }

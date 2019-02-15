@@ -65,13 +65,38 @@ const removeProfileList = (targetObjectId, parameters) => {
 }
 
 
+
+const addTarget = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addTarget/platformId/name/profileId/bannerId/location/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateTarget = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateTargetProperties/platformId/id/name/location/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeTargetList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeTargetList/platformId/targetIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const PlatformService = { view,
   load,
   addBanner,
   addProfile,
+  addTarget,
   updateBanner,
   updateProfile,
+  updateTarget,
   removeBannerList,
-  removeProfileList }
+  removeProfileList,
+  removeTargetList }
 export default PlatformService
 

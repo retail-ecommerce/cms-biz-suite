@@ -74,7 +74,8 @@ const displayColumns = [
   { title: 'Profile', dataIndex: 'profile', render: (text, record) => renderReferenceCell(text, record)},
   { title: 'Banner', dataIndex: 'banner', render: (text, record) => renderReferenceCell(text, record)},
   { title: 'Location', debugtype: 'string', dataIndex: 'location', width: '8',render: (text, record)=>renderTextCell(text,record) },
-  { title: 'LastUpdate', dataIndex: 'lastUpdate', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: 'Last Update', dataIndex: 'lastUpdate', render: (text, record) =>renderDateTimeCell(text,record)  },
+  { title: 'Platform', dataIndex: 'platform', render: (text, record) => renderReferenceCell(text, record)},
 
 ]
 
@@ -84,7 +85,8 @@ const fieldLabels = {
   profile: 'Profile',
   banner: 'Banner',
   location: 'Location',
-  lastUpdate: 'LastUpdate',
+  lastUpdate: 'Last Update',
+  platform: 'Platform',
 
 }
 

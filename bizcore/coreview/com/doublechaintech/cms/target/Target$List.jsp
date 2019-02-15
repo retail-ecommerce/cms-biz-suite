@@ -111,7 +111,10 @@
 	<th>${userContext.localeMap['target.location']}</th>
 </c:if>
 <c:if test="${param.referName ne 'lastUpdate'}">
-	<th>${userContext.localeMap['target.lastUpdate']}</th>
+	<th>${userContext.localeMap['target.last_update']}</th>
+</c:if>
+<c:if test="${param.referName ne 'platform'}">
+	<th>${userContext.localeMap['target.platform']}</th>
 </c:if>
 <th>${userContext.localeMap['@action']}</th>
 		</tr></thead>
@@ -160,7 +163,26 @@
 </c:if>
 <c:if test="${param.referName ne 'location'}">	<td contenteditable='true' class='edit-value'  propertyToChange='location' storedCellValue='${item.location}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'>${item.location}</td>
 </c:if><c:if test="${param.referName ne 'lastUpdate'}">	<td contenteditable='true' class='edit-value'  propertyToChange='lastUpdate' storedCellValue='${item.lastUpdate}' prefix='${ownerBeanName}Manager/updateTarget/${result.id}/${item.id}/'><fmt:formatDate pattern="yyyy-MM-dd'T'HH:mm:ss" value="${item.lastUpdate}" /></td>
+</c:if><c:if test="${param.referName ne 'platform'}">
+	<td class="select_candidate_td"
+			data-candidate-method="./targetManager/requestCandidatePlatform/${ownerBeanName}/${item.id}/"
+			data-switch-method="./targetManager/transferToAnotherPlatform/${item.id}/"
+			data-link-template="./platformManager/view/${'$'}{ID}/">
+		<span class="display_span">
+			<c:if test="${not empty  item.platform}">
+			<a href='./platformManager/view/${item.platform.id}/'>${item.platform.displayName}</a>
+			</c:if>
+			<c:if test="${empty  item.platform}">
+			<a href='#'></a>
+			</c:if>
+			<button class="btn btn-link candidate-action">...</button>
+		</span>
+		<div class="candidate_span" style="display:none;">
+			<input type="text" data-provide="typeahead" class="input-sm form-control candidate-filter-input" autocomplete="off" />
+		</div>
+	</td>
 </c:if>
+
 				<td>
 
 				<a href='#${ownerBeanName}Manager/removeTarget/${result.id}/${item.id}/' class='delete-action btn btn-danger btn-xs'><i class="fa fa-trash-o fa-lg"></i> ${userContext.localeMap['@delete']}</a>

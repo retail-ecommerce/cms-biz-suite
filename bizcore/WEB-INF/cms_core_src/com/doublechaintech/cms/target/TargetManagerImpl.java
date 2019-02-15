@@ -20,9 +20,11 @@ import com.doublechaintech.cms.CmsUserContext;
 import com.doublechaintech.cms.CmsCheckerManager;
 import com.doublechaintech.cms.CustomCmsCheckerManager;
 
+import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.banner.Banner;
 
+import com.doublechaintech.cms.platform.CandidatePlatform;
 import com.doublechaintech.cms.profile.CandidateProfile;
 import com.doublechaintech.cms.banner.CandidateBanner;
 
@@ -152,6 +154,7 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		
 		addAction(userContext, target, tokens,"target.transfer_to_profile","transferToAnotherProfile","transferToAnotherProfile/"+target.getId()+"/","main","primary");
 		addAction(userContext, target, tokens,"target.transfer_to_banner","transferToAnotherBanner","transferToAnotherBanner/"+target.getId()+"/","main","primary");
+		addAction(userContext, target, tokens,"target.transfer_to_platform","transferToAnotherPlatform","transferToAnotherPlatform/"+target.getId()+"/","main","primary");
 	
 		
 		
@@ -164,7 +167,7 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
  	
 
 
-	public Target createTarget(CmsUserContext userContext,String name, String profileId, String bannerId, String location) throws Exception
+	public Target createTarget(CmsUserContext userContext,String name, String profileId, String bannerId, String location, String platformId) throws Exception
 	{
 		
 		
@@ -192,6 +195,11 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		
 		target.setLocation(location);
 		target.setLastUpdate(userContext.now());
+			
+		Platform platform = loadPlatform(userContext, platformId,emptyOptions());
+		target.setPlatform(platform);
+		
+		
 
 		target = saveTarget(userContext, target, emptyOptions());
 		
@@ -225,7 +233,9 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		
 		if(Target.LOCATION_PROPERTY.equals(property)){
 			userContext.getChecker().checkLocationOfTarget(parseString(newValueExpr));
-		}
+		}		
+
+		
 	
 		userContext.getChecker().throwExceptionIfHasErrors(TargetManagerException.class);
 	
@@ -428,6 +438,55 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
 		return result;
 	}
  	
+ 	protected void checkParamsForTransferingAnotherPlatform(CmsUserContext userContext, String targetId, String anotherPlatformId) throws Exception
+ 	{
+ 		
+ 		userContext.getChecker().checkIdOfTarget(targetId);
+ 		userContext.getChecker().checkIdOfPlatform(anotherPlatformId);//check for optional reference
+ 		userContext.getChecker().throwExceptionIfHasErrors(TargetManagerException.class);
+ 		
+ 	}
+ 	public Target transferToAnotherPlatform(CmsUserContext userContext, String targetId, String anotherPlatformId) throws Exception
+ 	{
+ 		checkParamsForTransferingAnotherPlatform(userContext, targetId,anotherPlatformId);
+ 
+		Target target = loadTarget(userContext, targetId, allTokens());	
+		synchronized(target){
+			//will be good when the target loaded from this JVM process cache.
+			//also good when there is a ram based DAO implementation
+			Platform platform = loadPlatform(userContext, anotherPlatformId, emptyOptions());		
+			target.updatePlatform(platform);		
+			target = saveTarget(userContext, target, emptyOptions());
+			
+			return present(userContext,target, allTokens());
+			
+		}
+
+ 	}
+ 	
+	 	
+ 	
+ 	
+	public CandidatePlatform requestCandidatePlatform(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo) throws Exception {
+
+		CandidatePlatform result = new CandidatePlatform();
+		result.setOwnerClass(ownerClass);
+		result.setOwnerId(id);
+		result.setFilterKey(filterKey==null?"":filterKey.trim());
+		result.setPageNo(pageNo);
+		result.setValueFieldName("id");
+		result.setDisplayFieldName("name");
+		
+		pageNo = Math.max(1, pageNo);
+		int pageSize = 20;
+		//requestCandidateProductForSkuAsOwner
+		SmartList<Platform> candidateList = userContext.getDAOGroup().getPlatformDAO().requestCandidatePlatformForTarget(userContext,ownerClass, id, filterKey, pageNo, pageSize);
+		result.setCandidates(candidateList);
+		int totalCount = candidateList.getTotalCount();
+		result.setTotalPage(Math.max(1, (totalCount + pageSize -1)/pageSize ));
+		return result;
+	}
+ 	
  //--------------------------------------------------------------
 	
 	 	
@@ -445,6 +504,16 @@ public class TargetManagerImpl extends CustomCmsCheckerManager implements Target
  	{
 		
  		return userContext.getDAOGroup().getBannerDAO().load(newBannerId, options);
+ 	}
+ 	
+ 	
+ 	
+	
+	 	
+ 	protected Platform loadPlatform(CmsUserContext userContext, String newPlatformId, Map<String,Object> options) throws Exception
+ 	{
+		
+ 		return userContext.getDAOGroup().getPlatformDAO().load(newPlatformId, options);
  	}
  	
  	

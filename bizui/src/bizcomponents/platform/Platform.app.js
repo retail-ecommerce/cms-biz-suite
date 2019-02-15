@@ -255,6 +255,55 @@ class PlatformBizApp extends React.PureComponent {
     }))(ProfileUpdateForm)
   }
 
+  getTargetSearch = () => {
+    const {TargetSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Target",
+      role: "target",
+      data: state._platform.targetList,
+      metaInfo: state._platform.targetListMetaInfo,
+      count: state._platform.targetCount,
+      currentPage: state._platform.targetCurrentPageNumber,
+      searchFormParameters: state._platform.targetSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'targetList', ref:state._platform, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(TargetSearch)
+  }
+  getTargetCreateForm = () => {
+   	const {TargetCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "target",
+      data: state._platform.targetList,
+      metaInfo: state._platform.targetListMetaInfo,
+      count: state._platform.targetCount,
+      currentPage: state._platform.targetCurrentPageNumber,
+      searchFormParameters: state._platform.targetSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'targetList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(TargetCreateForm)
+  }
+  
+  getTargetUpdateForm = () => {
+    const userContext = null
+  	const {TargetUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "target",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'targetList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(TargetUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -275,6 +324,10 @@ class PlatformBizApp extends React.PureComponent {
   	{path:"/platform/:id/list/profileList", component: this.getProfileSearch()},
   	{path:"/platform/:id/list/profileCreateForm", component: this.getProfileCreateForm()},
   	{path:"/platform/:id/list/profileUpdateForm", component: this.getProfileUpdateForm()},
+   	
+  	{path:"/platform/:id/list/targetList", component: this.getTargetSearch()},
+  	{path:"/platform/:id/list/targetCreateForm", component: this.getTargetCreateForm()},
+  	{path:"/platform/:id/list/targetUpdateForm", component: this.getTargetUpdateForm()},
      	
   	
   	]

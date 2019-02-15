@@ -18,9 +18,11 @@ import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 
 
+import com.doublechaintech.cms.target.Target;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
 
+import com.doublechaintech.cms.target.TargetDAO;
 import com.doublechaintech.cms.banner.BannerDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
@@ -67,6 +69,25 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  		}
  		
 	 	return this.profileDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  TargetDAO  targetDAO;
+ 	public void setTargetDAO(TargetDAO pTargetDAO){
+ 	
+ 		if(pTargetDAO == null){
+ 			throw new IllegalStateException("Do not try to set targetDAO to null.");
+ 		}
+	 	this.targetDAO = pTargetDAO;
+ 	}
+ 	public TargetDAO getTargetDAO(){
+ 		if(this.targetDAO == null){
+ 			throw new IllegalStateException("The targetDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.targetDAO;
  	}	
  	
 			
@@ -125,6 +146,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  		
  		if(isSaveProfileListEnabled(options)){
  			for(Profile item: newPlatform.getProfileList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveTargetListEnabled(options)){
+ 			for(Target item: newPlatform.getTargetList()){
  				item.setVersion(0);
  			}
  		}
@@ -250,6 +278,21 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  	}
  	
 		
+	
+	protected boolean isExtractTargetListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.TARGET_LIST);
+ 	}
+ 	protected boolean isAnalyzeTargetListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.TARGET_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveTargetListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.TARGET_LIST);
+		
+ 	}
+ 	
+		
 
 	
 
@@ -290,6 +333,14 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  		}	
  		if(isAnalyzeProfileListEnabled(loadOptions)){
 	 		analyzeProfileList(platform, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractTargetListEnabled(loadOptions)){
+	 		extractTargetList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeTargetListEnabled(loadOptions)){
+	 		analyzeTargetList(platform, loadOptions);
  		}
  		
 		
@@ -391,6 +442,56 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		SmartList<Profile> profileList = platform.getProfileList();
 		if(profileList != null){
 			getProfileDAO().analyzeProfileByPlatform(profileList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
+	
+		
+	protected void enhanceTargetList(SmartList<Target> targetList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractTargetList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Target> targetList = getTargetDAO().findTargetByPlatform(platform.getId(),options);
+		if(targetList != null){
+			enhanceTargetList(targetList,options);
+			platform.setTargetList(targetList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeTargetList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Target> targetList = platform.getTargetList();
+		if(targetList != null){
+			getTargetDAO().analyzeTargetByPlatform(targetList, platform.getId(), options);
 			
 		}
 		
@@ -585,6 +686,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	 		
  		}		
 		
+		if(isSaveTargetListEnabled(options)){
+	 		saveTargetList(platform, options);
+	 		//removeTargetList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return platform;
 		
 	}
@@ -651,6 +759,122 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	}
 
 
+	public Platform planToRemoveTargetList(Platform platform, String targetIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PLATFORM_PROPERTY, platform.getId());
+		key.put(Target.ID_PROPERTY, targetIds);
+		
+		SmartList<Target> externalTargetList = getTargetDAO().
+				findTargetWithKey(key, options);
+		if(externalTargetList == null){
+			return platform;
+		}
+		if(externalTargetList.isEmpty()){
+			return platform;
+		}
+		
+		for(Target target: externalTargetList){
+
+			target.clearFromAll();
+		}
+		
+		
+		SmartList<Target> targetList = platform.getTargetList();		
+		targetList.addAllToRemoveList(externalTargetList);
+		return platform;	
+	
+	}
+
+
+	//disconnect Platform with profile in Target
+	public Platform planToRemoveTargetListWithProfile(Platform platform, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PLATFORM_PROPERTY, platform.getId());
+		key.put(Target.PROFILE_PROPERTY, profileId);
+		
+		SmartList<Target> externalTargetList = getTargetDAO().
+				findTargetWithKey(key, options);
+		if(externalTargetList == null){
+			return platform;
+		}
+		if(externalTargetList.isEmpty()){
+			return platform;
+		}
+		
+		for(Target target: externalTargetList){
+			target.clearProfile();
+			target.clearPlatform();
+			
+		}
+		
+		
+		SmartList<Target> targetList = platform.getTargetList();		
+		targetList.addAllToRemoveList(externalTargetList);
+		return platform;
+	}
+	
+	public int countTargetListWithProfile(String platformId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		key.put(Target.PROFILE_PROPERTY, profileId);
+		
+		int count = getTargetDAO().countTargetWithKey(key, options);
+		return count;
+	}
+	
+	//disconnect Platform with banner in Target
+	public Platform planToRemoveTargetListWithBanner(Platform platform, String bannerId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PLATFORM_PROPERTY, platform.getId());
+		key.put(Target.BANNER_PROPERTY, bannerId);
+		
+		SmartList<Target> externalTargetList = getTargetDAO().
+				findTargetWithKey(key, options);
+		if(externalTargetList == null){
+			return platform;
+		}
+		if(externalTargetList.isEmpty()){
+			return platform;
+		}
+		
+		for(Target target: externalTargetList){
+			target.clearBanner();
+			target.clearPlatform();
+			
+		}
+		
+		
+		SmartList<Target> targetList = platform.getTargetList();		
+		targetList.addAllToRemoveList(externalTargetList);
+		return platform;
+	}
+	
+	public int countTargetListWithBanner(String platformId, String bannerId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		key.put(Target.BANNER_PROPERTY, bannerId);
+		
+		int count = getTargetDAO().countTargetWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Platform saveBannerList(Platform platform, Map<String,Object> options){
@@ -785,11 +1009,78 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	
 	
 		
+	protected Platform saveTargetList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<Target> targetList = platform.getTargetList();
+		if(targetList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<Target> mergedUpdateTargetList = new SmartList<Target>();
+		
+		
+		mergedUpdateTargetList.addAll(targetList); 
+		if(targetList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateTargetList.addAll(targetList.getToRemoveList());
+			targetList.removeAll(targetList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getTargetDAO().saveTargetList(mergedUpdateTargetList,options);
+		
+		if(targetList.getToRemoveList() != null){
+			targetList.removeAll(targetList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeTargetList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<Target> targetList = platform.getTargetList();
+		if(targetList == null){
+			return platform;
+		}	
+	
+		SmartList<Target> toRemoveTargetList = targetList.getToRemoveList();
+		
+		if(toRemoveTargetList == null){
+			return platform;
+		}
+		if(toRemoveTargetList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getTargetDAO().removeTargetList(toRemoveTargetList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
 
 	public Platform present(Platform platform,Map<String, Object> options){
 	
 		presentBannerList(platform,options);
 		presentProfileList(platform,options);
+		presentTargetList(platform,options);
 
 		return platform;
 	
@@ -835,6 +1126,26 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		return platform;
 	}			
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentTargetList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<Target> targetList = platform.getTargetList();		
+				SmartList<Target> newList= presentSubList(platform.getId(),
+				targetList,
+				options,
+				getTargetDAO()::countTargetByPlatform,
+				getTargetDAO()::findTargetByPlatform
+				);
+
+		
+		platform.setTargetList(newList);
+		
+
+		return platform;
+	}			
+		
 
 	
     public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
@@ -844,6 +1155,12 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
     }
 		
     public SmartList<Platform> requestCandidatePlatformForProfile(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
+    public SmartList<Platform> requestCandidatePlatformForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
 		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());

@@ -115,7 +115,7 @@ public class BaseRelation{
 		String [] profileRelatedObjectNames = {"platform:Platform"};
 		addRelationIndex("Profile",profileRelatedObjectNames);
 
-		String [] targetRelatedObjectNames = {"profile:Profile","banner:Banner"};
+		String [] targetRelatedObjectNames = {"profile:Profile","banner:Banner","platform:Platform"};
 		addRelationIndex("Target",targetRelatedObjectNames);
 
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
@@ -172,6 +172,7 @@ public class BaseRelation{
 		addGenericRelation("Profile"                               ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"profile");
 		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"banner");
+		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");

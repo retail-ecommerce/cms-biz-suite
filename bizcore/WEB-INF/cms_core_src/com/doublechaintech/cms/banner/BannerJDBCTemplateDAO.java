@@ -688,6 +688,50 @@ public class BannerJDBCTemplateDAO extends CmsNamingServiceDAO implements Banner
 		return count;
 	}
 	
+	//disconnect Banner with platform in Target
+	public Banner planToRemoveTargetListWithPlatform(Banner banner, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.BANNER_PROPERTY, banner.getId());
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Target> externalTargetList = getTargetDAO().
+				findTargetWithKey(key, options);
+		if(externalTargetList == null){
+			return banner;
+		}
+		if(externalTargetList.isEmpty()){
+			return banner;
+		}
+		
+		for(Target target: externalTargetList){
+			target.clearPlatform();
+			target.clearBanner();
+			
+		}
+		
+		
+		SmartList<Target> targetList = banner.getTargetList();		
+		targetList.addAllToRemoveList(externalTargetList);
+		return banner;
+	}
+	
+	public int countTargetListWithPlatform(String bannerId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.BANNER_PROPERTY, bannerId);
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		
+		int count = getTargetDAO().countTargetWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Banner saveTargetList(Banner banner, Map<String,Object> options){

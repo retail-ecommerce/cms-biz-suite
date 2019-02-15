@@ -1,8 +1,7 @@
-@warning target.lastUpdate: word 'lastUpdate' seems not found in library
 
 
 
-=================Execute Report (Model Time 190215T1712) @Fri Feb 15 17:23:33 CST 2019, 17 objects and 128 fields===========================
+=================Execute Report (Model Time 190215T1728) @Fri Feb 15 17:28:29 CST 2019, 17 objects and 129 fields===========================
 
 
 
@@ -42,6 +41,12 @@ Info: Add virtual field [targets(es)] to <banner>
 	target.banner
 
 
+ processing: target.platform.platform
+
+Info: Add virtual field [targets(es)] to <platform>
+	target.platform
+
+
 **************************************************
 
 platform{
@@ -52,9 +57,10 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(2){
+	references field(3){
 		bannerList	platform(基本信息)--platform;
 		profileList	platform(基本信息)--platform;
+		targetList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -85,13 +91,14 @@ profile{
 } depth=1; isRoot = false
 
 target{
-	fields(7){
+	fields(8){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('valentines day'), verb: false, required: true;
 		profile	profile('$(object)'), verb: false, required: true, referenceBy: targetList;
 		banner	banner('$(object)'), verb: false, required: true, referenceBy: targetList;
 		string	location('HOME'), verb: false, required: true;
-		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: targetList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -106,9 +113,10 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(2){
+	references field(3){
 		bannerList	platform(基本信息)--platform;
 		profileList	platform(基本信息)--platform;
+		targetList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
 
@@ -139,13 +147,14 @@ profile{
 } depth=1; isRoot = false
 
 target{
-	fields(7){
+	fields(8){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
 		string	name('valentines day'), verb: false, required: true;
 		profile	profile('$(object)'), verb: false, required: true, referenceBy: targetList;
 		banner	banner('$(object)'), verb: false, required: true, referenceBy: targetList;
 		string	location('HOME'), verb: false, required: true;
-		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: targetList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){

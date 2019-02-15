@@ -235,6 +235,20 @@ public class BannerForm extends BaseForm {
 		return lastUpdateFieldForTarget("lastUpdate","");
 	}
 
+
+	public BannerForm platformIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  platformIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public BannerForm platformIdFieldForTarget(String initValue){
+		return platformIdFieldForTarget("platformId",initValue);
+	}
+	public BannerForm platformIdFieldForTarget(){
+		return platformIdFieldForTarget("platformId","");
+	}
+
 	
 
 	

@@ -302,14 +302,27 @@ public class BaseForm extends GenericForm{
 
 	protected FormField lastUpdateFromTarget(String parameterName, String initValue){
 		FormField field = new FormField();
-		field.setLabel("LastUpdate");
-		field.setLocaleKey("target.lastUpdate");
+		field.setLabel("Last Update");
+		field.setLocaleKey("target.last_update");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");
 		field.setType("date_time");
 		field.setRequired(true);
-		field.setPlaceholder("请填写LastUpdate");
+		field.setPlaceholder("请填写Last Update");
+		return field;
+	}
+
+	protected FormField platformIdFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("target.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
 		return field;
 	}
 

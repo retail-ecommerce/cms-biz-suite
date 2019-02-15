@@ -252,6 +252,75 @@ export default {
       notifySuccess(userContext)
     },
 
+
+
+
+    *addTarget({ payload }, { call, put }) {
+      const userContext = null
+      const {PlatformService} = GlobalComponents;
+
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.addTarget, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+      yield put({ type: 'updateState', payload: newPlayload })
+      // yield put(routerRedux.push(`/platform/${id}/list/${role}CreateForm'))
+      notifySuccess(userContext)
+      if (continueNext) {
+        return
+      }
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/platform/${id}/list/\TargetList/Target+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+    },
+    *updateTarget({ payload }, { call, put }) {
+      const userContext = null
+      const {PlatformService} = GlobalComponents;      
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.updateTarget, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const partialList = true
+      
+      const newPlayload = { ...payload, ...data, selectedRows, currentUpdateIndex,partialList }
+      yield put({ type: 'updateState', payload: newPlayload })
+      notifySuccess(userContext)
+      
+      if (continueNext) {
+        return
+      }
+      const location = { pathname: `/platform/${id}/list/\TargetList/Target列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+    },
+    *gotoNextTargetUpdateRow({ payload }, { call, put }) {
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      const newPlayload = { ...payload, selectedRows, currentUpdateIndex }
+      yield put({ type: 'updateState', payload: newPlayload })
+    },
+    *removeTargetList({ payload }, { call, put }) {
+     const userContext = null
+      const {PlatformService} = GlobalComponents; 
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(PlatformService.removeTargetList, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+
+      yield put({ type: 'updateState', payload: newPlayload })
+      notifySuccess(userContext)
+    },
+
   },
   
   reducers: {

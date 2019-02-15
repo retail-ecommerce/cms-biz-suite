@@ -64,7 +64,8 @@ public class PlatformTokens extends CommonTokens{
 		
 		return start()
 			.withBannerList()
-			.withProfileList();
+			.withProfileList()
+			.withTargetList();
 	
 	}
 	public static PlatformTokens withoutListsTokens(){
@@ -207,11 +208,74 @@ public class PlatformTokens extends CommonTokens{
 	
 	
 		
+	protected static final String TARGET_LIST = "targetList";
+	public String getTargetList(){
+		return TARGET_LIST;
+	}
+	public PlatformTokens withTargetList(){		
+		addSimpleOptions(TARGET_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeTargetList(){		
+		addSimpleOptions(TARGET_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeTargetListEnabled(){		
+		
+		return checkOptions(this.options(), TARGET_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromTargetList(String idsSeperatedWithComma){		
+		addSimpleOptions(TARGET_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int targetListSortCounter = 0;
+	public PlatformTokens sortTargetListWith(String field, String descOrAsc){		
+		addSortMoreOptions(TARGET_LIST,targetListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int targetListSearchCounter = 0;
+	public PlatformTokens searchTargetListWith(String field, String verb, String value){		
+		addSearchMoreOptions(TARGET_LIST,targetListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfTargetList(String verb, String value){	
+		String field = "id|name|location";
+		addSearchMoreOptions(TARGET_LIST,targetListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfTargetList(int rowsPerPage){		
+		addSimpleOptions(TARGET_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfTargetList(int currentPageNumber){		
+		addSimpleOptions(TARGET_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfTargetList(String[] columns){		
+		addSimpleOptions(TARGET_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfTargetList(String[] columns){		
+		addSimpleOptions(TARGET_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  PlatformTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfBannerList(verb, value);	
 		searchAllTextOfProfileList(verb, value);	
+		searchAllTextOfTargetList(verb, value);	
 		return this;
 	}
 }

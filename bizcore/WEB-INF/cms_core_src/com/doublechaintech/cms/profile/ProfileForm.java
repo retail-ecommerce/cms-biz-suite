@@ -207,6 +207,20 @@ public class ProfileForm extends BaseForm {
 		return lastUpdateFieldForTarget("lastUpdate","");
 	}
 
+
+	public ProfileForm platformIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  platformIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm platformIdFieldForTarget(String initValue){
+		return platformIdFieldForTarget("platformId",initValue);
+	}
+	public ProfileForm platformIdFieldForTarget(){
+		return platformIdFieldForTarget("platformId","");
+	}
+
 	
 
 	

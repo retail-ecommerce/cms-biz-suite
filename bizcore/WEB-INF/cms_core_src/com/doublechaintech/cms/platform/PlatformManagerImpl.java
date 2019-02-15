@@ -20,11 +20,14 @@ import com.doublechaintech.cms.CmsUserContext;
 import com.doublechaintech.cms.CmsCheckerManager;
 import com.doublechaintech.cms.CustomCmsCheckerManager;
 
+import com.doublechaintech.cms.target.Target;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
 
 
 import com.doublechaintech.cms.platform.Platform;
+import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.banner.Banner;
 
 
 
@@ -157,6 +160,10 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 		addAction(userContext, platform, tokens,"platform.removeProfile","removeProfile","removeProfile/"+platform.getId()+"/","profileList","primary");
 		addAction(userContext, platform, tokens,"platform.updateProfile","updateProfile","updateProfile/"+platform.getId()+"/","profileList","primary");
 		addAction(userContext, platform, tokens,"platform.copyProfileFrom","copyProfileFrom","copyProfileFrom/"+platform.getId()+"/","profileList","primary");
+		addAction(userContext, platform, tokens,"platform.addTarget","addTarget","addTarget/"+platform.getId()+"/","targetList","primary");
+		addAction(userContext, platform, tokens,"platform.removeTarget","removeTarget","removeTarget/"+platform.getId()+"/","targetList","primary");
+		addAction(userContext, platform, tokens,"platform.updateTarget","updateTarget","updateTarget/"+platform.getId()+"/","targetList","primary");
+		addAction(userContext, platform, tokens,"platform.copyTargetFrom","copyTargetFrom","copyTargetFrom/"+platform.getId()+"/","targetList","primary");
 	
 		
 		
@@ -320,6 +327,7 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 		return tokens().allTokens()
 		.sortBannerListWith("id","desc")
 		.sortProfileListWith("id","desc")
+		.sortTargetListWith("id","desc")
 		.done();
 
 	}
@@ -368,6 +376,42 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 	}
 
 
+	//disconnect Platform with profile in Target
+	protected Platform breakWithTargetByProfile(CmsUserContext userContext, String platformId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+
+			synchronized(platform){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveTargetListWithProfile(platform, profileId, this.emptyOptions());
+
+				platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+				return platform;
+			}
+	}
+	//disconnect Platform with banner in Target
+	protected Platform breakWithTargetByBanner(CmsUserContext userContext, String platformId, String bannerId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+
+			synchronized(platform){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveTargetListWithBanner(platform, bannerId, this.emptyOptions());
+
+				platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+				return platform;
+			}
+	}
 	
 	
 	
@@ -841,6 +885,260 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 			profile.changeProperty(property, newValueExpr);
 			
 			platform = savePlatform(userContext, platform, tokens().withProfileList().done());
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingTarget(CmsUserContext userContext, String platformId, String name, String profileId, String bannerId, String location,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+
+		
+		userContext.getChecker().checkNameOfTarget(name);
+		
+		userContext.getChecker().checkProfileIdOfTarget(profileId);
+		
+		userContext.getChecker().checkBannerIdOfTarget(bannerId);
+		
+		userContext.getChecker().checkLocationOfTarget(location);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+
+	
+	}
+	public  Platform addTarget(CmsUserContext userContext, String platformId, String name, String profileId, String bannerId, String location, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingTarget(userContext,platformId,name, profileId, bannerId, location,tokensExpr);
+		
+		Target target = createTarget(userContext,name, profileId, bannerId, location);
+		
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.addTarget( target );		
+			platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+			
+			userContext.getManagerGroup().getTargetManager().onNewInstanceCreated(userContext, target);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingTargetProperties(CmsUserContext userContext, String platformId,String id,String name,String location,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfTarget(id);
+		
+		userContext.getChecker().checkNameOfTarget( name);
+		userContext.getChecker().checkLocationOfTarget( location);
+
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform updateTargetProperties(CmsUserContext userContext, String platformId, String id,String name,String location, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingTargetProperties(userContext,platformId,id,name,location,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withTargetListList()
+				.searchTargetListWith(Target.ID_PROPERTY, "is", id).done();
+		
+		Platform platformToUpdate = loadPlatform(userContext, platformId, options);
+		
+		if(platformToUpdate.getTargetList().isEmpty()){
+			throw new PlatformManagerException("Target is NOT FOUND with id: '"+id+"'");
+		}
+		
+		Target item = platformToUpdate.getTargetList().first();
+		
+		item.updateName( name );
+		item.updateLocation( location );
+
+		
+		//checkParamsForAddingTarget(userContext,platformId,name, code, used,tokensExpr);
+		Platform platform = savePlatform(userContext, platformToUpdate, tokens().withTargetList().done());
+		synchronized(platform){ 
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected Target createTarget(CmsUserContext userContext, String name, String profileId, String bannerId, String location) throws Exception{
+
+		Target target = new Target();
+		
+		
+		target.setName(name);		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		target.setProfile(profile);		
+		Banner  banner = new Banner();
+		banner.setId(bannerId);		
+		target.setBanner(banner);		
+		target.setLocation(location);		
+		target.setLastUpdate(userContext.now());
+	
+		
+		return target;
+	
+		
+	}
+	
+	protected Target createIndexedTarget(String id, int version){
+
+		Target target = new Target();
+		target.setId(id);
+		target.setVersion(version);
+		return target;			
+		
+	}
+	
+	protected void checkParamsForRemovingTargetList(CmsUserContext userContext, String platformId, 
+			String targetIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		for(String targetId: targetIds){
+			userContext.getChecker().checkIdOfTarget(targetId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform removeTargetList(CmsUserContext userContext, String platformId, 
+			String targetIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingTargetList(userContext, platformId,  targetIds, tokensExpr);
+			
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+			synchronized(platform){ 
+				//Will be good when the platform loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveTargetList(platform, targetIds, allTokens());
+				platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+				deleteRelationListInGraph(userContext, platform.getTargetList());
+				return present(userContext,platform, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingTarget(CmsUserContext userContext, String platformId, 
+		String targetId, int targetVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfTarget(targetId);
+		userContext.getChecker().checkVersionOfTarget(targetVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform removeTarget(CmsUserContext userContext, String platformId, 
+		String targetId, int targetVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingTarget(userContext,platformId, targetId, targetVersion,tokensExpr);
+		
+		Target target = createIndexedTarget(targetId, targetVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.removeTarget( target );		
+			platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+			deleteRelationInGraph(userContext, target);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingTarget(CmsUserContext userContext, String platformId, 
+		String targetId, int targetVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfTarget(targetId);
+		userContext.getChecker().checkVersionOfTarget(targetVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform copyTargetFrom(CmsUserContext userContext, String platformId, 
+		String targetId, int targetVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingTarget(userContext,platformId, targetId, targetVersion,tokensExpr);
+		
+		Target target = createIndexedTarget(targetId, targetVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			target.updateLastUpdate(userContext.now());
+			
+			platform.copyTargetFrom( target );		
+			platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+			
+			userContext.getManagerGroup().getTargetManager().onNewInstanceCreated(userContext, (Target)platform.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfTarget(targetId);
+		userContext.getChecker().checkVersionOfTarget(targetVersion);
+		
+
+		if(Target.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfTarget(parseString(newValueExpr));
+		}
+		
+		if(Target.LOCATION_PROPERTY.equals(property)){
+			userContext.getChecker().checkLocationOfTarget(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	
+	public  Platform updateTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingTarget(userContext, platformId, targetId, targetVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withTargetList().searchTargetListWith(Target.ID_PROPERTY, "eq", targetId).done();
+		
+		
+		
+		Platform platform = loadPlatform(userContext, platformId, loadTokens);
+		
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//platform.removeTarget( target );	
+			//make changes to AcceleraterAccount.
+			Target targetIndex = createIndexedTarget(targetId, targetVersion);
+		
+			Target target = platform.findTheTarget(targetIndex);
+			if(target == null){
+				throw new PlatformManagerException(target+" is NOT FOUND" );
+			}
+			
+			target.changeProperty(property, newValueExpr);
+			target.updateLastUpdate(userContext.now());
+			platform = savePlatform(userContext, platform, tokens().withTargetList().done());
 			return present(userContext,platform, mergedAllTokens(tokensExpr));
 		}
 

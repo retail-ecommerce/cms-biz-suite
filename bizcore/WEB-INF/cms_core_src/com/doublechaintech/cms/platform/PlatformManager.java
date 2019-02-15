@@ -47,6 +47,16 @@ public interface PlatformManager{
 
 	*/
 
+	//public  TargetManager getTargetManager(CmsUserContext userContext, String platformId, String name, String profileId, String bannerId, String location ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addTarget(CmsUserContext userContext, String platformId, String name, String profileId, String bannerId, String location , String [] tokensExpr)  throws Exception;
+	public  Platform removeTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
 
 
 }

@@ -52,6 +52,10 @@ public interface ProfileDAO{
 	public Profile planToRemoveTargetListWithBanner(Profile profile, String bannerId, Map<String,Object> options)throws Exception;
 	public int countTargetListWithBanner(String profileId, String bannerId, Map<String,Object> options)throws Exception;
 	
+	//disconnect Profile with platform in Target
+	public Profile planToRemoveTargetListWithPlatform(Profile profile, String platformId, Map<String,Object> options)throws Exception;
+	public int countTargetListWithPlatform(String profileId, String platformId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Profile> queryList(String sql, Object ... parmeters);
  

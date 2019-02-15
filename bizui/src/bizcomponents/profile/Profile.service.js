@@ -39,7 +39,7 @@ const transferToAnotherPlatform = (id, parameters) => {
 
 
 const addTarget = (targetObjectId, parameters) => {
-  const url = `${PREFIX}profileManager/addTarget/profileId/name/bannerId/location/tokensExpr/`
+  const url = `${PREFIX}profileManager/addTarget/profileId/name/bannerId/location/platformId/tokensExpr/`
   const profileId = targetObjectId
   const requestParameters = { ...parameters, profileId, tokensExpr: 'none' }
   return postForm({ url,requestParameters})

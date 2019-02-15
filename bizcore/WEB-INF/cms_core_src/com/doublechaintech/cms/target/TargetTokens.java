@@ -64,14 +64,16 @@ public class TargetTokens extends CommonTokens{
 		
 		return start()
 			.withProfile()
-			.withBanner();
+			.withBanner()
+			.withPlatform();
 	
 	}
 	public static TargetTokens withoutListsTokens(){
 		
 		return start()
 			.withProfile()
-			.withBanner();
+			.withBanner()
+			.withPlatform();
 	
 	}
 	
@@ -101,6 +103,16 @@ public class TargetTokens extends CommonTokens{
 	}
 	public TargetTokens withBanner(){		
 		addSimpleOptions(BANNER);
+		return this;
+	}
+	
+	
+	protected static final String PLATFORM = "platform";
+	public String getPlatform(){
+		return PLATFORM;
+	}
+	public TargetTokens withPlatform(){		
+		addSimpleOptions(PLATFORM);
 		return this;
 	}
 	

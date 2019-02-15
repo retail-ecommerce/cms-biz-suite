@@ -45,7 +45,7 @@
 <span >${result.location}</span>
 </div>
 <div class="col-xs-12 col-md-3 summary-section">
-<span class="summary-label">${userContext.localeMap['target.lastUpdate']}</span>
+<span class="summary-label">${userContext.localeMap['target.last_update']}</span>
 <span ><fmt:formatDate pattern="yyyy-MM-dd" value="${result.lastUpdate}" /></span>
 </div>
 

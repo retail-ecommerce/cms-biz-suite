@@ -113,7 +113,7 @@ class PlatformDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, bannerListMetaInfo, profileListMetaInfo, bannerCount, profileCount } = this.props.platform
+    const { id,displayName, bannerListMetaInfo, profileListMetaInfo, targetListMetaInfo, bannerCount, profileCount, targetCount } = this.props.platform
     if(!this.props.platform.class){
       return null
     }
@@ -124,6 +124,7 @@ class PlatformDashboard extends Component {
   		subItems: [
 {name: 'bannerList', displayName:'Banner',type:'banner',count:bannerCount,addFunction: true, role: 'banner', metaInfo: bannerListMetaInfo},
 {name: 'profileList', displayName:'Profile',type:'profile',count:profileCount,addFunction: true, role: 'profile', metaInfo: profileListMetaInfo},
+{name: 'targetList', displayName:'Target',type:'target',count:targetCount,addFunction: true, role: 'target', metaInfo: targetListMetaInfo},
     
       	],
   	};

@@ -22,14 +22,15 @@ public class TargetTable{
 	static final String COLUMN_PROFILE = "profile";
 	static final String COLUMN_BANNER = "banner";
 	static final String COLUMN_LOCATION = "location";
-	static final String COLUMN_LASTUPDATE = "lastUpdate";
+	static final String COLUMN_LAST_UPDATE = "last_update";
+	static final String COLUMN_PLATFORM = "platform";
 	static final String COLUMN_VERSION = "version";
  
 	static final String []ALL_CLOUMNS = {COLUMN_ID, 
-		COLUMN_NAME, COLUMN_PROFILE, COLUMN_BANNER, COLUMN_LOCATION, COLUMN_LASTUPDATE, 
+		COLUMN_NAME, COLUMN_PROFILE, COLUMN_BANNER, COLUMN_LOCATION, COLUMN_LAST_UPDATE, COLUMN_PLATFORM, 
 		COLUMN_VERSION};
 	static final String []NORMAL_CLOUMNS = {
-		COLUMN_NAME, COLUMN_PROFILE, COLUMN_BANNER, COLUMN_LOCATION, COLUMN_LASTUPDATE
+		COLUMN_NAME, COLUMN_PROFILE, COLUMN_BANNER, COLUMN_LOCATION, COLUMN_LAST_UPDATE, COLUMN_PLATFORM
 		};
 	
 	

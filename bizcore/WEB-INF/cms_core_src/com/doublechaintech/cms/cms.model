@@ -28,7 +28,8 @@
 		profile="$(profile)"
 		banner="$(banner)"
 		location="HOME"
-		lastUpdate="updateTime()"
+		last_update="updateTime()"
+		platform="$(platform)"
 	/>
 	
 	

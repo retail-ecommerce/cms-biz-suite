@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.Date;
 import java.math.BigDecimal;
 import com.doublechaintech.cms.BaseRowMapper;
+import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.banner.Banner;
 
@@ -19,6 +20,7 @@ public class TargetMapper extends BaseRowMapper<Target>{
  		setBanner(target, rs, rowNumber); 		
  		setLocation(target, rs, rowNumber); 		
  		setLastUpdate(target, rs, rowNumber); 		
+ 		setPlatform(target, rs, rowNumber); 		
  		setVersion(target, rs, rowNumber);
 
 		return target;
@@ -103,7 +105,7 @@ public class TargetMapper extends BaseRowMapper<Target>{
 	protected void setLastUpdate(Target target, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
-		Date lastUpdate = rs.getTimestamp(TargetTable.COLUMN_LASTUPDATE);
+		Date lastUpdate = rs.getTimestamp(TargetTable.COLUMN_LAST_UPDATE);
 		if(lastUpdate == null){
 			//do nothing when nothing found in database
 			return;
@@ -111,7 +113,25 @@ public class TargetMapper extends BaseRowMapper<Target>{
 		
 		target.setLastUpdate(convertToDateTime(lastUpdate));
 	}
-		
+		 		
+ 	protected void setPlatform(Target target, ResultSet rs, int rowNumber) throws SQLException{
+ 		String platformId = rs.getString(TargetTable.COLUMN_PLATFORM);
+ 		if( platformId == null){
+ 			return;
+ 		}
+ 		if( platformId.isEmpty()){
+ 			return;
+ 		}
+ 		Platform platform = target.getPlatform();
+ 		if( platform != null ){
+ 			//if the root object 'target' already have the property, just set the id for it;
+ 			platform.setId(platformId);
+ 			
+ 			return;
+ 		}
+ 		target.setPlatform(createEmptyPlatform(platformId));
+ 	}
+ 	
 	protected void setVersion(Target target, ResultSet rs, int rowNumber) throws SQLException{
 	
 		//there will be issue when the type is double/int/long
@@ -138,6 +158,13 @@ public class TargetMapper extends BaseRowMapper<Target>{
  		banner.setId(bannerId);
  		banner.setVersion(Integer.MAX_VALUE);
  		return banner;
+ 	}
+ 	
+ 	protected Platform  createEmptyPlatform(String platformId){
+ 		Platform platform = new Platform();
+ 		platform.setId(platformId);
+ 		platform.setVersion(Integer.MAX_VALUE);
+ 		return platform;
  	}
  	
 }

@@ -8,6 +8,7 @@ import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.platform.PlatformDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
 
@@ -57,6 +58,14 @@ public interface TargetDAO{
  	public Map<String, Integer> countTargetByBannerIds(String[] ids, Map<String,Object> options);
  	public SmartList<Target> findTargetByBanner(String bannerId, int start, int count, Map<String,Object> options);
  	public void analyzeTargetByBanner(SmartList<Target> resultList, String bannerId, Map<String,Object> options);
+
+ 
+  
+ 	public SmartList<Target> findTargetByPlatform(String platformId, Map<String,Object> options);
+ 	public int countTargetByPlatform(String platformId, Map<String,Object> options);
+ 	public Map<String, Integer> countTargetByPlatformIds(String[] ids, Map<String,Object> options);
+ 	public SmartList<Target> findTargetByPlatform(String platformId, int start, int count, Map<String,Object> options);
+ 	public void analyzeTargetByPlatform(SmartList<Target> resultList, String platformId, Map<String,Object> options);
 
  
  }

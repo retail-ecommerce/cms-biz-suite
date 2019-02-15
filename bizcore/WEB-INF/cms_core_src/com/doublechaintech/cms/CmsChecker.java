@@ -194,6 +194,15 @@ public class CmsChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  PLATFORM_OF_TARGET ="target.platform";
+	public CmsChecker checkPlatformIdOfTarget(String platformId)
+	{
+		
+	 	checkIdOfTarget(platformId ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  VERSION_OF_TARGET ="target.version";
 	public CmsChecker checkVersionOfTarget(int version)
 	{

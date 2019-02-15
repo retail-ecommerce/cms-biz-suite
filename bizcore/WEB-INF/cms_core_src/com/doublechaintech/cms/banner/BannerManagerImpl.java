@@ -25,6 +25,7 @@ import com.doublechaintech.cms.platform.Platform;
 
 import com.doublechaintech.cms.platform.CandidatePlatform;
 
+import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.banner.Banner;
 
@@ -446,13 +447,31 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 				return banner;
 			}
 	}
+	//disconnect Banner with platform in Target
+	protected Banner breakWithTargetByPlatform(CmsUserContext userContext, String bannerId, String platformId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Banner banner = loadBanner(userContext, bannerId, allTokens());
+
+			synchronized(banner){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getBannerDAO().planToRemoveTargetListWithPlatform(banner, platformId, this.emptyOptions());
+
+				banner = saveBanner(userContext, banner, tokens().withTargetList().done());
+				return banner;
+			}
+	}
 	
 	
 	
 	
 	
 
-	protected void checkParamsForAddingTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location,String [] tokensExpr) throws Exception{
+	protected void checkParamsForAddingTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location, String platformId,String [] tokensExpr) throws Exception{
 		
 		
 
@@ -466,17 +485,19 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 		userContext.getChecker().checkProfileIdOfTarget(profileId);
 		
 		userContext.getChecker().checkLocationOfTarget(location);
+		
+		userContext.getChecker().checkPlatformIdOfTarget(platformId);
 	
 		userContext.getChecker().throwExceptionIfHasErrors(BannerManagerException.class);
 
 	
 	}
-	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location, String [] tokensExpr) throws Exception
+	public  Banner addTarget(CmsUserContext userContext, String bannerId, String name, String profileId, String location, String platformId, String [] tokensExpr) throws Exception
 	{	
 		
-		checkParamsForAddingTarget(userContext,bannerId,name, profileId, location,tokensExpr);
+		checkParamsForAddingTarget(userContext,bannerId,name, profileId, location, platformId,tokensExpr);
 		
-		Target target = createTarget(userContext,name, profileId, location);
+		Target target = createTarget(userContext,name, profileId, location, platformId);
 		
 		Banner banner = loadBanner(userContext, bannerId, allTokens());
 		synchronized(banner){ 
@@ -529,7 +550,7 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 	}
 	
 	
-	protected Target createTarget(CmsUserContext userContext, String name, String profileId, String location) throws Exception{
+	protected Target createTarget(CmsUserContext userContext, String name, String profileId, String location, String platformId) throws Exception{
 
 		Target target = new Target();
 		
@@ -539,7 +560,10 @@ public class BannerManagerImpl extends CustomCmsCheckerManager implements Banner
 		profile.setId(profileId);		
 		target.setProfile(profile);		
 		target.setLocation(location);		
-		target.setLastUpdate(userContext.now());
+		target.setLastUpdate(userContext.now());		
+		Platform  platform = new Platform();
+		platform.setId(platformId);		
+		target.setPlatform(platform);
 	
 		
 		return target;

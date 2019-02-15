@@ -275,7 +275,7 @@ const internalSummaryOf = (target,targetComponent) =>{
   style={{fontSize: 20,color:"red"}} />
 </Description>
 <Description term="Location">{target.location}</Description> 
-<Description term="LastUpdate">{ moment(target.lastUpdate).format('YYYY-MM-DD')}</Description> 
+<Description term="Last Update">{ moment(target.lastUpdate).format('YYYY-MM-DD')}</Description> 
 	
         {buildTransferModal(target,targetComponent)}
       </DescriptionList>

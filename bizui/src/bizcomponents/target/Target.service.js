@@ -50,6 +50,22 @@ const transferToAnotherBanner = (id, parameters) => {
 
 
 
+const requestCandidatePlatform = (ownerClass, id, filterKey, pageNo) => {
+ 
+  const url = `${PREFIX}targetManager/requestCandidatePlatform/ownerClass/id/filterKey/pageNo/`
+  const requestParameters = {id, ownerClass,filterKey, pageNo}
+  return postForm({url,requestParameters})
+}	
+
+const transferToAnotherPlatform = (id, parameters) => {
+  //const parametersExpr = joinParameters(parameters)
+  const url = `${PREFIX}targetManager/transferToAnotherPlatform/id/anotherPlatformId/`
+  const requestParameters = {id, ...parameters}
+  return postForm({url,requestParameters})
+}
+
+
+
 
 
 
@@ -57,7 +73,9 @@ const TargetService = { view,
   load,
   requestCandidateProfile,
   requestCandidateBanner,
+  requestCandidatePlatform,
   transferToAnotherProfile,
-  transferToAnotherBanner }
+  transferToAnotherBanner,
+  transferToAnotherPlatform }
 export default TargetService
 

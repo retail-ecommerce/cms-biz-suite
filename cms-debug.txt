@@ -23,7 +23,8 @@ Name|Name
 Profile|Profile
 Banner|Banner
 Location|Location
-LastUpdate|LastUpdate
+Last Update|Last Update
+Platform|Platform
 Version|Version
 User Domain|User Domain
 Id|Id

@@ -161,6 +161,14 @@ public class CmsCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  PLATFORM_OF_TARGET ="target.platform";
+	protected void checkPlatformIdOfTarget(CmsUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTarget(userContext,platformId, messageList); 		
+		
+	}	 			
+	
 	public static final String  VERSION_OF_TARGET ="target.version";
 	protected void checkVersionOfTarget(CmsUserContext userContext, int version, List<Message> messageList)
 	{

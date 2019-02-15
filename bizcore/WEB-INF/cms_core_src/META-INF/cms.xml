@@ -38,6 +38,8 @@
 		
 		<property name="profileDAO" ref="profileDAO" />
 		
+		<property name="targetDAO" ref="targetDAO" />
+		
 	</bean>
 	<bean id="platformDAO" parent="platformDAOBase"></bean>	
 	
@@ -59,7 +61,7 @@
 	
 	
 	<bean id="targetDAOBase" class="com.doublechaintech.cms.target.TargetJDBCTemplateDAO">
-		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" /><property name="bannerDAO" ref="bannerDAO" />
+		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" /><property name="bannerDAO" ref="bannerDAO" /><property name="platformDAO" ref="platformDAO" />
 	</bean>
 	<bean id="targetDAO" parent="targetDAOBase"></bean>	
 	

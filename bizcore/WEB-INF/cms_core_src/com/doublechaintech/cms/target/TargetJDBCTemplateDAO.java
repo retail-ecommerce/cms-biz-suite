@@ -18,10 +18,12 @@ import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 
 
+import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.banner.Banner;
 
 import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.platform.PlatformDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
 
@@ -46,6 +48,15 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  	}
  	public BannerDAO getBannerDAO(){
 	 	return this.bannerDAO;
+ 	}
+ 
+ 	
+ 	private  PlatformDAO  platformDAO;
+ 	public void setPlatformDAO(PlatformDAO platformDAO){
+	 	this.platformDAO = platformDAO;
+ 	}
+ 	public PlatformDAO getPlatformDAO(){
+	 	return this.platformDAO;
  	}
 
 
@@ -212,6 +223,20 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  	
 
  	
+  
+
+ 	protected boolean isExtractPlatformEnabled(Map<String,Object> options){
+ 		
+	 	return checkOptions(options, TargetTokens.PLATFORM);
+ 	}
+
+ 	protected boolean isSavePlatformEnabled(Map<String,Object> options){
+	 	
+ 		return checkOptions(options, TargetTokens.PLATFORM);
+ 	}
+ 	
+
+ 	
  
 		
 
@@ -246,6 +271,10 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
   	
  		if(isExtractBannerEnabled(loadOptions)){
 	 		extractBanner(target, loadOptions);
+ 		}
+  	
+ 		if(isExtractPlatformEnabled(loadOptions)){
+	 		extractPlatform(target, loadOptions);
  		}
  
 		
@@ -293,6 +322,26 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		return target;
  	}
  		
+  
+
+ 	protected Target extractPlatform(Target target, Map<String,Object> options) throws Exception{
+
+		if(target.getPlatform() == null){
+			return target;
+		}
+		String platformId = target.getPlatform().getId();
+		if( platformId == null){
+			return target;
+		}
+		Platform platform = getPlatformDAO().load(platformId,options);
+		if(platform != null){
+			target.setPlatform(platform);
+		}
+		
+ 		
+ 		return target;
+ 	}
+ 		
  
 		
 		
@@ -325,10 +374,10 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		
  
 		StatsItem lastUpdateStatsItem = new StatsItem();
-		//Target.LASTUPDATE_PROPERTY
+		//Target.LAST_UPDATE_PROPERTY
 		lastUpdateStatsItem.setDisplayName("Target");
-		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Target.LASTUPDATE_PROPERTY));
-		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Target.LASTUPDATE_PROPERTY),filterKey,emptyOptions));
+		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Target.LAST_UPDATE_PROPERTY));
+		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Target.LAST_UPDATE_PROPERTY),filterKey,emptyOptions));
 		info.addItem(lastUpdateStatsItem);
  				
  		resultList.setStatsInfo(info);
@@ -375,10 +424,10 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		
  
 		StatsItem lastUpdateStatsItem = new StatsItem();
-		//Target.LASTUPDATE_PROPERTY
+		//Target.LAST_UPDATE_PROPERTY
 		lastUpdateStatsItem.setDisplayName("Target");
-		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Target.LASTUPDATE_PROPERTY));
-		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Target.LASTUPDATE_PROPERTY),filterKey,emptyOptions));
+		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Target.LAST_UPDATE_PROPERTY));
+		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Target.LAST_UPDATE_PROPERTY),filterKey,emptyOptions));
 		info.addItem(lastUpdateStatsItem);
  				
  		resultList.setStatsInfo(info);
@@ -394,6 +443,56 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  	@Override
 	public Map<String, Integer> countTargetByBannerIds(String[] ids, Map<String, Object> options) {
 		return countWithIds(TargetTable.COLUMN_BANNER, ids, options);
+	}
+ 	
+  	
+ 	public SmartList<Target> findTargetByPlatform(String platformId,Map<String,Object> options){
+ 	
+  		SmartList<Target> resultList = queryWith(TargetTable.COLUMN_PLATFORM, platformId, options, getTargetMapper());
+		// analyzeTargetByPlatform(resultList, platformId, options);
+		return resultList;
+ 	}
+ 	 
+ 
+ 	public SmartList<Target> findTargetByPlatform(String platformId, int start, int count,Map<String,Object> options){
+ 		
+ 		SmartList<Target> resultList =  queryWithRange(TargetTable.COLUMN_PLATFORM, platformId, options, getTargetMapper(), start, count);
+ 		//analyzeTargetByPlatform(resultList, platformId, options);
+ 		return resultList;
+ 		
+ 	}
+ 	public void analyzeTargetByPlatform(SmartList<Target> resultList, String platformId, Map<String,Object> options){
+		if(resultList==null){
+			return;//do nothing when the list is null.
+		}
+		
+ 		MultipleAccessKey filterKey = new MultipleAccessKey();
+ 		filterKey.put(Target.PLATFORM_PROPERTY, platformId);
+ 		Map<String,Object> emptyOptions = new HashMap<String,Object>();
+ 		
+ 		StatsInfo info = new StatsInfo();
+ 		
+ 
+		StatsItem lastUpdateStatsItem = new StatsItem();
+		//Target.LAST_UPDATE_PROPERTY
+		lastUpdateStatsItem.setDisplayName("Target");
+		lastUpdateStatsItem.setInternalName(formatKeyForDateLine(Target.LAST_UPDATE_PROPERTY));
+		lastUpdateStatsItem.setResult(statsWithGroup(DateKey.class,wrapWithDate(Target.LAST_UPDATE_PROPERTY),filterKey,emptyOptions));
+		info.addItem(lastUpdateStatsItem);
+ 				
+ 		resultList.setStatsInfo(info);
+
+ 	
+ 		
+ 	}
+ 	@Override
+ 	public int countTargetByPlatform(String platformId,Map<String,Object> options){
+
+ 		return countWith(TargetTable.COLUMN_PLATFORM, platformId, options);
+ 	}
+ 	@Override
+	public Map<String, Integer> countTargetByPlatformIds(String[] ids, Map<String, Object> options) {
+		return countWithIds(TargetTable.COLUMN_PLATFORM, ids, options);
 	}
  	
  	
@@ -538,7 +637,7 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		return prepareTargetCreateParameters(target);
  	}
  	protected Object[] prepareTargetUpdateParameters(Target target){
- 		Object[] parameters = new Object[8];
+ 		Object[] parameters = new Object[9];
  
  		parameters[0] = target.getName(); 	
  		if(target.getProfile() != null){
@@ -550,15 +649,19 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		}
  
  		parameters[3] = target.getLocation();
- 		parameters[4] = target.getLastUpdate();		
- 		parameters[5] = target.nextVersion();
- 		parameters[6] = target.getId();
- 		parameters[7] = target.getVersion();
+ 		parameters[4] = target.getLastUpdate(); 	
+ 		if(target.getPlatform() != null){
+ 			parameters[5] = target.getPlatform().getId();
+ 		}
+ 		
+ 		parameters[6] = target.nextVersion();
+ 		parameters[7] = target.getId();
+ 		parameters[8] = target.getVersion();
  				
  		return parameters;
  	}
  	protected Object[] prepareTargetCreateParameters(Target target){
-		Object[] parameters = new Object[6];
+		Object[] parameters = new Object[7];
 		String newTargetId=getNextId();
 		target.setId(newTargetId);
 		parameters[0] =  target.getId();
@@ -575,7 +678,12 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		}
  		
  		parameters[4] = target.getLocation();
- 		parameters[5] = target.getLastUpdate();		
+ 		parameters[5] = target.getLastUpdate(); 	
+ 		if(target.getPlatform() != null){
+ 			parameters[6] = target.getPlatform().getId();
+ 		
+ 		}
+ 				
  				
  		return parameters;
  	}
@@ -590,6 +698,10 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
   	
  		if(isSaveBannerEnabled(options)){
 	 		saveBanner(target, options);
+ 		}
+  	
+ 		if(isSavePlatformEnabled(options)){
+	 		savePlatform(target, options);
  		}
  
 		
@@ -626,6 +738,23 @@ public class TargetJDBCTemplateDAO extends CmsNamingServiceDAO implements Target
  		}
  		
  		getBannerDAO().save(target.getBanner(),options);
+ 		return target;
+ 		
+ 	}
+ 	
+ 	
+ 	
+ 	 
+	
+  
+ 
+ 	protected Target savePlatform(Target target, Map<String,Object> options){
+ 		//Call inject DAO to execute this method
+ 		if(target.getPlatform() == null){
+ 			return target;//do nothing when it is null
+ 		}
+ 		
+ 		getPlatformDAO().save(target.getPlatform(),options);
  		return target;
  		
  	}

@@ -668,6 +668,50 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 		return count;
 	}
 	
+	//disconnect Profile with platform in Target
+	public Profile planToRemoveTargetListWithPlatform(Profile profile, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PROFILE_PROPERTY, profile.getId());
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<Target> externalTargetList = getTargetDAO().
+				findTargetWithKey(key, options);
+		if(externalTargetList == null){
+			return profile;
+		}
+		if(externalTargetList.isEmpty()){
+			return profile;
+		}
+		
+		for(Target target: externalTargetList){
+			target.clearPlatform();
+			target.clearProfile();
+			
+		}
+		
+		
+		SmartList<Target> targetList = profile.getTargetList();		
+		targetList.addAllToRemoveList(externalTargetList);
+		return profile;
+	}
+	
+	public int countTargetListWithPlatform(String profileId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Target.PROFILE_PROPERTY, profileId);
+		key.put(Target.PLATFORM_PROPERTY, platformId);
+		
+		int count = getTargetDAO().countTargetWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Profile saveTargetList(Profile profile, Map<String,Object> options){

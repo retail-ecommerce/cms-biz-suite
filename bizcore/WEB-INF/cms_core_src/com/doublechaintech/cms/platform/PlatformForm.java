@@ -193,6 +193,104 @@ public class PlatformForm extends BaseForm {
 		return platformIdFieldForProfile("platformId","");
 	}
 
+
+	public PlatformForm targetIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  idFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm targetIdFieldForTarget(String initValue){
+		return targetIdFieldForTarget("targetId",initValue);
+	}
+	public PlatformForm targetIdFieldForTarget(){
+		return targetIdFieldForTarget("targetId","");
+	}
+
+
+	public PlatformForm nameFieldForTarget(String parameterName, String initValue){
+		FormField field =  nameFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForTarget(String initValue){
+		return nameFieldForTarget("name",initValue);
+	}
+	public PlatformForm nameFieldForTarget(){
+		return nameFieldForTarget("name","");
+	}
+
+
+	public PlatformForm profileIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  profileIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm profileIdFieldForTarget(String initValue){
+		return profileIdFieldForTarget("profileId",initValue);
+	}
+	public PlatformForm profileIdFieldForTarget(){
+		return profileIdFieldForTarget("profileId","");
+	}
+
+
+	public PlatformForm bannerIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  bannerIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm bannerIdFieldForTarget(String initValue){
+		return bannerIdFieldForTarget("bannerId",initValue);
+	}
+	public PlatformForm bannerIdFieldForTarget(){
+		return bannerIdFieldForTarget("bannerId","");
+	}
+
+
+	public PlatformForm locationFieldForTarget(String parameterName, String initValue){
+		FormField field =  locationFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm locationFieldForTarget(String initValue){
+		return locationFieldForTarget("location",initValue);
+	}
+	public PlatformForm locationFieldForTarget(){
+		return locationFieldForTarget("location","");
+	}
+
+
+	public PlatformForm lastUpdateFieldForTarget(String parameterName, String initValue){
+		FormField field =  lastUpdateFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm lastUpdateFieldForTarget(String initValue){
+		return lastUpdateFieldForTarget("lastUpdate",initValue);
+	}
+	public PlatformForm lastUpdateFieldForTarget(){
+		return lastUpdateFieldForTarget("lastUpdate","");
+	}
+
+
+	public PlatformForm platformIdFieldForTarget(String parameterName, String initValue){
+		FormField field =  platformIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForTarget(String initValue){
+		return platformIdFieldForTarget("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForTarget(){
+		return platformIdFieldForTarget("platformId","");
+	}
+
 	
 
 

@@ -11,6 +11,7 @@ import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.banner.Banner;
 
@@ -23,7 +24,8 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	public static final String PROFILE_PROPERTY               = "profile"           ;
 	public static final String BANNER_PROPERTY                = "banner"            ;
 	public static final String LOCATION_PROPERTY              = "location"          ;
-	public static final String LASTUPDATE_PROPERTY            = "lastUpdate"        ;
+	public static final String LAST_UPDATE_PROPERTY           = "lastUpdate"        ;
+	public static final String PLATFORM_PROPERTY              = "platform"          ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
 
@@ -52,6 +54,7 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	protected		Banner              	mBanner             ;
 	protected		String              	mLocation           ;
 	protected		DateTime            	mLastUpdate         ;
+	protected		Platform            	mPlatform           ;
 	protected		int                 	mVersion            ;
 	
 	
@@ -64,17 +67,19 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	public 	void clearFromAll(){
 		setProfile( null );
 		setBanner( null );
+		setPlatform( null );
 
 		this.changed = true;
 	}
 	
-	public 	Target(String name, Profile profile, Banner banner, String location, DateTime lastUpdate)
+	public 	Target(String name, Profile profile, Banner banner, String location, DateTime lastUpdate, Platform platform)
 	{
 		setName(name);
 		setProfile(profile);
 		setBanner(banner);
 		setLocation(location);
 		setLastUpdate(lastUpdate);
+		setPlatform(platform);
 	
 	}
 	
@@ -88,7 +93,7 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		if(LOCATION_PROPERTY.equals(property)){
 			changeLocationProperty(newValueExpr);
 		}
-		if(LASTUPDATE_PROPERTY.equals(property)){
+		if(LAST_UPDATE_PROPERTY.equals(property)){
 			changeLastUpdateProperty(newValueExpr);
 		}
 
@@ -134,7 +139,7 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		}
 		//they are surely different each other
 		updateLastUpdate(newValue);
-		this.onChangeProperty(LASTUPDATE_PROPERTY, oldValue, newValue);
+		this.onChangeProperty(LAST_UPDATE_PROPERTY, oldValue, newValue);
 		return;
   
 	}
@@ -234,6 +239,24 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
+	public void setPlatform(Platform platform){
+		this.mPlatform = platform;;
+	}
+	public Platform getPlatform(){
+		return this.mPlatform;
+	}
+	public Target updatePlatform(Platform platform){
+		this.mPlatform = platform;;
+		this.changed = true;
+		return this;
+	}
+	
+	
+	public void clearPlatform(){
+		setPlatform ( null );
+		this.changed = true;
+	}
+	
 	public void setVersion(int version){
 		this.mVersion = version;;
 	}
@@ -252,6 +275,7 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 
 		addToEntityList(this, entityList, getProfile(), internalType);
 		addToEntityList(this, entityList, getBanner(), internalType);
+		addToEntityList(this, entityList, getPlatform(), internalType);
 
 		
 	}
@@ -280,7 +304,8 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, PROFILE_PROPERTY, getProfile());
 		appendKeyValuePair(result, BANNER_PROPERTY, getBanner());
 		appendKeyValuePair(result, LOCATION_PROPERTY, getLocation());
-		appendKeyValuePair(result, LASTUPDATE_PROPERTY, getLastUpdate());
+		appendKeyValuePair(result, LAST_UPDATE_PROPERTY, getLastUpdate());
+		appendKeyValuePair(result, PLATFORM_PROPERTY, getPlatform());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
 
 		
@@ -302,6 +327,7 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 			dest.setBanner(getBanner());
 			dest.setLocation(getLocation());
 			dest.setLastUpdate(getLastUpdate());
+			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
 
 		}
@@ -323,6 +349,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
  		}
 		stringBuilder.append("\tlocation='"+getLocation()+"';");
 		stringBuilder.append("\tlastUpdate='"+getLastUpdate()+"';");
+		if(getPlatform() != null ){
+ 			stringBuilder.append("\tplatform='Platform("+getPlatform().getId()+")';");
+ 		}
 		stringBuilder.append("\tversion='"+getVersion()+"';");
 		stringBuilder.append("}");
 

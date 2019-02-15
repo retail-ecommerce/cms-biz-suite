@@ -63,6 +63,7 @@ const showAssociateDialog = (targetComponent) => {
   
   const { ProfileAssociateForm } = GlobalComponents
   const { BannerAssociateForm } = GlobalComponents
+  const { PlatformAssociateForm } = GlobalComponents
 
 
   return (
@@ -78,7 +79,11 @@ const showAssociateDialog = (targetComponent) => {
 	visible={currentAssociateModal==='banner'} 
 	data={{targetList:selectedRows}} owner={owner}  
 	onCancel={()=>toggleAssociateModalVisible(targetComponent,'banner')} 
-	onCreate={()=>toggleAssociateModalVisible(targetComponent,'banner')}/> 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'banner')}/> <PlatformAssociateForm 
+	visible={currentAssociateModal==='platform'} 
+	data={{targetList:selectedRows}} owner={owner}  
+	onCancel={()=>toggleAssociateModalVisible(targetComponent,'platform')} 
+	onCreate={()=>toggleAssociateModalVisible(targetComponent,'platform')}/> 
  
 
 

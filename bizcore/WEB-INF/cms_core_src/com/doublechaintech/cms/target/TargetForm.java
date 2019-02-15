@@ -103,6 +103,20 @@ public class TargetForm extends BaseForm {
 		return lastUpdateField("lastUpdate","");
 	}
 
+
+	public TargetForm platformIdField(String parameterName, String initValue){
+		FormField field = platformIdFromTarget(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public TargetForm platformIdField(String initValue){
+		return platformIdField("platformId",initValue);
+	}
+	public TargetForm platformIdField(){
+		return platformIdField("platformId","");
+	}
+
 	
 	
 
@@ -218,6 +232,62 @@ public class TargetForm extends BaseForm {
 		return platformIdFieldOfBanner("platformId","");
 	}
 
+
+	public TargetForm platformIdFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  idFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public TargetForm platformIdFieldOfPlatform(String initValue){
+		return platformIdFieldOfPlatform("platformId",initValue);
+	}
+	public TargetForm platformIdFieldOfPlatform(){
+		return platformIdFieldOfPlatform("platformId","");
+	}
+
+
+	public TargetForm nameFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  nameFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public TargetForm nameFieldOfPlatform(String initValue){
+		return nameFieldOfPlatform("name",initValue);
+	}
+	public TargetForm nameFieldOfPlatform(){
+		return nameFieldOfPlatform("name","");
+	}
+
+
+	public TargetForm introductionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  introductionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public TargetForm introductionFieldOfPlatform(String initValue){
+		return introductionFieldOfPlatform("introduction",initValue);
+	}
+	public TargetForm introductionFieldOfPlatform(){
+		return introductionFieldOfPlatform("introduction","");
+	}
+
+
+	public TargetForm currentVersionFieldOfPlatform(String parameterName, String initValue){
+		FormField field =  currentVersionFromPlatform(parameterName, initValue);
+		this.addFormField(field);	
+		return this;
+	}
+	
+	public TargetForm currentVersionFieldOfPlatform(String initValue){
+		return currentVersionFieldOfPlatform("currentVersion",initValue);
+	}
+	public TargetForm currentVersionFieldOfPlatform(){
+		return currentVersionFieldOfPlatform("currentVersion","");
+	}
+
 	
 
 
@@ -239,6 +309,16 @@ public class TargetForm extends BaseForm {
 		action.setLabel("显示");
 		action.setLocaleKey("show");
 		action.setUrl("transferToAnotherBanner/targetId/");
+		this.addFormAction(action);
+		return this;
+	}
+
+ 	
+ 	public TargetForm transferToAnotherPlatformAction(){
+		FormAction action = new FormAction();
+		action.setLabel("显示");
+		action.setLocaleKey("show");
+		action.setUrl("transferToAnotherPlatform/targetId/");
 		this.addFormAction(action);
 		return this;
 	}

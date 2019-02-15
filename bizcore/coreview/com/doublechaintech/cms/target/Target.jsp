@@ -133,6 +133,9 @@
 <c:set var="banner" value="${ result.banner}" scope="request" />
 <sky:include page="com/doublechaintech/cms/banner/Banner$Info.jsp" />
 
+<c:set var="platform" value="${ result.platform}" scope="request" />
+<sky:include page="com/doublechaintech/cms/platform/Platform$Info.jsp" />
+
 </div>
 
 

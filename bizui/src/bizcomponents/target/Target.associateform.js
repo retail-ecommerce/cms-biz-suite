@@ -22,6 +22,7 @@ const testValues = {
   location: 'HOME',
   profileId: 'P000001',
   bannerId: 'B000001',
+  platformId: 'P000001',
 }
 */
 
@@ -197,6 +198,21 @@ class TargetAssociateForm extends Component {
                     disabled={!availableForEdit('banner')}
                     targetType={"banner"} 
                     requestFunction={TargetService.requestCandidateBanner}/>
+  
+                  )}
+                </Form.Item>
+              </Col>
+
+              <Col lg={12} md={12} sm={24}>
+                <Form.Item label={fieldLabels.platform} {...formItemLayout}>
+                  {getFieldDecorator('platformId', {
+                  	initialValue: tryinit('platform'),
+                    rules: [{ required: true, message: appLocaleName(userContext,"PleaseInput") }],
+                  })(
+                <SelectObject 
+                    disabled={!availableForEdit('platform')}
+                    targetType={"platform"} 
+                    requestFunction={TargetService.requestCandidatePlatform}/>
   
                   )}
                 </Form.Item>

@@ -7,6 +7,7 @@ import com.doublechaintech.cms.BaseEntity;
 import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
+import com.doublechaintech.cms.target.TargetDAO;
 import com.doublechaintech.cms.banner.BannerDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
@@ -43,10 +44,14 @@ public interface PlatformDAO{
 		
 	public ProfileDAO getProfileDAO();
 		
+	public TargetDAO getTargetDAO();
+		
 	
  	public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Platform> requestCandidatePlatformForProfile(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Platform> requestCandidatePlatformForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
 	
 	public Platform planToRemoveBannerList(Platform platform, String bannerIds[], Map<String,Object> options)throws Exception;
@@ -55,6 +60,17 @@ public interface PlatformDAO{
 	public Platform planToRemoveProfileList(Platform platform, String profileIds[], Map<String,Object> options)throws Exception;
 
 
+	public Platform planToRemoveTargetList(Platform platform, String targetIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Platform with profile in Target
+	public Platform planToRemoveTargetListWithProfile(Platform platform, String profileId, Map<String,Object> options)throws Exception;
+	public int countTargetListWithProfile(String platformId, String profileId, Map<String,Object> options)throws Exception;
+	
+	//disconnect Platform with banner in Target
+	public Platform planToRemoveTargetListWithBanner(Platform platform, String bannerId, Map<String,Object> options)throws Exception;
+	public int countTargetListWithBanner(String platformId, String bannerId, Map<String,Object> options)throws Exception;
+	
 	
 	public SmartList<Platform> queryList(String sql, Object ... parmeters);
 }
