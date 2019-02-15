@@ -109,6 +109,15 @@ public class BaseRelation{
 	{
 		
 		
+		String [] bannerRelatedObjectNames = {"platform:Platform"};
+		addRelationIndex("Banner",bannerRelatedObjectNames);
+
+		String [] profileRelatedObjectNames = {"platform:Platform"};
+		addRelationIndex("Profile",profileRelatedObjectNames);
+
+		String [] targetRelatedObjectNames = {"profile:Profile","banner:Banner"};
+		addRelationIndex("Target",targetRelatedObjectNames);
+
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		addRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
 
@@ -159,6 +168,10 @@ public class BaseRelation{
 	//default for reading trust chain, the default sequence are MXWR, the order is not affect the result
 	protected void prepareRelation()
 	{
+		addGenericRelation("Banner"                                ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("Profile"                               ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"banner");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");

@@ -9,22 +9,31 @@
 	<bean id="checker" class="com.doublechaintech.cms.CmsChecker" scope="prototype"></bean>
 
 	<bean id="platformManagerBase" class="com.doublechaintech.cms.platform.PlatformManagerImpl"/>
-	<bean id="platformManager" class="com.doublechaintech.cms.platform.PlatformManagerImpl" parent="platformManagerBase" ></bean>
+	<bean id="platformManager" class="com.doublechaintech.cms.platform.PlatformCustomManagerImpl" parent="platformManagerBase" ></bean>
+	
+	<bean id="bannerManagerBase" class="com.doublechaintech.cms.banner.BannerManagerImpl"/>
+	<bean id="bannerManager" class="com.doublechaintech.cms.banner.BannerManagerImpl" parent="bannerManagerBase" ></bean>
+	
+	<bean id="profileManagerBase" class="com.doublechaintech.cms.profile.ProfileManagerImpl"/>
+	<bean id="profileManager" class="com.doublechaintech.cms.profile.ProfileManagerImpl" parent="profileManagerBase" ></bean>
+	
+	<bean id="targetManagerBase" class="com.doublechaintech.cms.target.TargetManagerImpl"/>
+	<bean id="targetManager" class="com.doublechaintech.cms.target.TargetManagerImpl" parent="targetManagerBase" ></bean>
 	
 	<bean id="userDomainManagerBase" class="com.doublechaintech.cms.userdomain.UserDomainManagerImpl"/>
-	<bean id="userDomainManager" class="com.doublechaintech.cms.userdomain.UserDomainManagerImpl" parent="userDomainManagerBase" ></bean>
+	<bean id="userDomainManager" class="com.doublechaintech.cms.userdomain.UserDomainCustomManagerImpl" parent="userDomainManagerBase" ></bean>
 	
 	<bean id="userWhiteListManagerBase" class="com.doublechaintech.cms.userwhitelist.UserWhiteListManagerImpl"/>
 	<bean id="userWhiteListManager" class="com.doublechaintech.cms.userwhitelist.UserWhiteListManagerImpl" parent="userWhiteListManagerBase" ></bean>
 	
 	<bean id="secUserManagerBase" class="com.doublechaintech.cms.secuser.SecUserManagerImpl"/>
-	<bean id="secUserManager" class="com.doublechaintech.cms.secuser.SecUserManagerImpl" parent="secUserManagerBase" ></bean>
+	<bean id="secUserManager" class="com.doublechaintech.cms.secuser.SecUserCustomManagerImpl" parent="secUserManagerBase" ></bean>
 	
 	<bean id="secUserBlockingManagerBase" class="com.doublechaintech.cms.secuserblocking.SecUserBlockingManagerImpl"/>
-	<bean id="secUserBlockingManager" class="com.doublechaintech.cms.secuserblocking.SecUserBlockingManagerImpl" parent="secUserBlockingManagerBase" ></bean>
+	<bean id="secUserBlockingManager" class="com.doublechaintech.cms.secuserblocking.SecUserBlockingCustomManagerImpl" parent="secUserBlockingManagerBase" ></bean>
 	
 	<bean id="userAppManagerBase" class="com.doublechaintech.cms.userapp.UserAppManagerImpl"/>
-	<bean id="userAppManager" class="com.doublechaintech.cms.userapp.UserAppManagerImpl" parent="userAppManagerBase" ></bean>
+	<bean id="userAppManager" class="com.doublechaintech.cms.userapp.UserAppCustomManagerImpl" parent="userAppManagerBase" ></bean>
 	
 	<bean id="listAccessManagerBase" class="com.doublechaintech.cms.listaccess.ListAccessManagerImpl"/>
 	<bean id="listAccessManager" class="com.doublechaintech.cms.listaccess.ListAccessManagerImpl" parent="listAccessManagerBase" ></bean>
@@ -53,6 +62,9 @@
 
 	<bean id="managerGroupBase" class="com.doublechaintech.cms.ManagerGroup">
 		<property name="platformManager" ref="platformManager"/>
+		<property name="bannerManager" ref="bannerManager"/>
+		<property name="profileManager" ref="profileManager"/>
+		<property name="targetManager" ref="targetManager"/>
 		<property name="userDomainManager" ref="userDomainManager"/>
 		<property name="userWhiteListManager" ref="userWhiteListManager"/>
 		<property name="secUserManager" ref="secUserManager"/>

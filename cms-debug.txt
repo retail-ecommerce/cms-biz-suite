@@ -5,6 +5,27 @@ Name|Name
 Introduction|Introduction
 Current Version|Current Version
 Version|Version
+Banner|Banner
+Id|Id
+Name|Name
+Image Path|Image Path
+LastUpdate|LastUpdate
+Platform|Platform
+Version|Version
+Profile|Profile
+Id|Id
+Name|Name
+Platform|Platform
+Version|Version
+Target|Target
+Id|Id
+Name|Name
+Profile|Profile
+Banner|Banner
+When|When
+Location|Location
+LastUpdate|LastUpdate
+Version|Version
 User Domain|User Domain
 Id|Id
 Name|Name
@@ -126,6 +147,9 @@ Url|Url
 Form|Form
 Version|Version
 Transfer to Another Platform|Transfer to Another Platform
+Transfer to Another Banner|Transfer to Another Banner
+Transfer to Another Profile|Transfer to Another Profile
+Transfer to Another Target|Transfer to Another Target
 Transfer to Another User Domain|Transfer to Another User Domain
 Transfer to Another User White List|Transfer to Another User White List
 Transfer to Another Sec User|Transfer to Another Sec User

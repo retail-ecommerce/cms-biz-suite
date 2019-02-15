@@ -1,11 +1,46 @@
+@warning banner.lastUpdate: word 'lastUpdate' seems not found in library
+
+#Error field definition: target.when: word 'when' in keywords set mysql.kw; 
 
 
-
-=================Execute Report (Model Time 190109T2340) @Sat Jan 26 00:01:06 CST 2019, 14 objects and 111 fields===========================
+=================Execute Report (Model Time 190215T1649) @Fri Feb 15 16:53:48 CST 2019, 17 objects and 129 fields===========================
 
 
 
  processing: platform
+
+
+ processing: banner
+
+
+ processing: banner.platform.platform
+
+Info: Add virtual field [banners(es)] to <platform>
+	banner.platform
+
+
+ processing: profile
+
+
+ processing: profile.platform.platform
+
+Info: Add virtual field [profiles(es)] to <platform>
+	profile.platform
+
+
+ processing: target
+
+
+ processing: target.profile.profile
+
+Info: Add virtual field [targets(es)] to <profile>
+	target.profile
+
+
+ processing: target.banner.banner
+
+Info: Add virtual field [targets(es)] to <banner>
+	target.banner
 
 
 **************************************************
@@ -18,9 +53,52 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(0){
+	references field(2){
+		bannerList	platform(基本信息)--platform;
+		profileList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
+
+banner{
+	fields(6){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('2.14Promotion'), verb: false, required: true;
+		string_image	image_path('ValDay-800-600-RED.jpg'), verb: false, required: true;
+		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: bannerList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		targetList	banner(基本信息)--banner;
+	}
+} depth=1; isRoot = false
+
+profile{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('Philip Zhang|Naveen Kumar R |VENKATESH GADUPUTI'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		targetList	profile(基本信息)--profile;
+	}
+} depth=1; isRoot = false
+
+target{
+	fields(8){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('valentines day'), verb: false, required: true;
+		profile	profile('$(object)'), verb: false, required: true, referenceBy: targetList;
+		banner	banner('$(object)'), verb: false, required: true, referenceBy: targetList;
+		string	when('VIEW'), verb: false, required: true;
+		string	location('HOME'), verb: false, required: true;
+		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
 
 platform{
 	fields(5){
@@ -30,9 +108,52 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(0){
+	references field(2){
+		bannerList	platform(基本信息)--platform;
+		profileList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
+
+banner{
+	fields(6){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('2.14Promotion'), verb: false, required: true;
+		string_image	image_path('ValDay-800-600-RED.jpg'), verb: false, required: true;
+		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: bannerList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		targetList	banner(基本信息)--banner;
+	}
+} depth=1; isRoot = false
+
+profile{
+	fields(4){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('Philip Zhang|Naveen Kumar R |VENKATESH GADUPUTI'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(1){
+		targetList	profile(基本信息)--profile;
+	}
+} depth=1; isRoot = false
+
+target{
+	fields(8){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('valentines day'), verb: false, required: true;
+		profile	profile('$(object)'), verb: false, required: true, referenceBy: targetList;
+		banner	banner('$(object)'), verb: false, required: true, referenceBy: targetList;
+		string	when('VIEW'), verb: false, required: true;
+		string	location('HOME'), verb: false, required: true;
+		date_time_update	lastUpdate('updateTime()'), verb: false, required: true;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
 
 user_domain{
 	fields(3){
@@ -246,6 +367,9 @@ form_action{
 
 
 =================================End Report=================================
+
+
+
 
 
 

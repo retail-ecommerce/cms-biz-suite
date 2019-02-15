@@ -6,6 +6,15 @@ import java.util.Map;
 import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.platform.PlatformDAO;
 import com.doublechaintech.cms.platform.PlatformTokens;
+import com.doublechaintech.cms.banner.Banner;
+import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.banner.BannerTokens;
+import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.profile.ProfileDAO;
+import com.doublechaintech.cms.profile.ProfileTokens;
+import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.target.TargetDAO;
+import com.doublechaintech.cms.target.TargetTokens;
 import com.doublechaintech.cms.userdomain.UserDomain;
 import com.doublechaintech.cms.userdomain.UserDomainDAO;
 import com.doublechaintech.cms.userdomain.UserDomainTokens;
@@ -50,6 +59,12 @@ public class DAOGroup {
 
 	protected PlatformDAO platformDAO;
 
+	protected BannerDAO bannerDAO;
+
+	protected ProfileDAO profileDAO;
+
+	protected TargetDAO targetDAO;
+
 	protected UserDomainDAO userDomainDAO;
 
 	protected UserWhiteListDAO userWhiteListDAO;
@@ -83,6 +98,30 @@ public class DAOGroup {
 	}
 	public void setPlatformDAO(PlatformDAO dao){
 		this.platformDAO = dao;
+	}
+
+
+	public BannerDAO getBannerDAO(){
+		return this.bannerDAO;
+	}
+	public void setBannerDAO(BannerDAO dao){
+		this.bannerDAO = dao;
+	}
+
+
+	public ProfileDAO getProfileDAO(){
+		return this.profileDAO;
+	}
+	public void setProfileDAO(ProfileDAO dao){
+		this.profileDAO = dao;
+	}
+
+
+	public TargetDAO getTargetDAO(){
+		return this.targetDAO;
+	}
+	public void setTargetDAO(TargetDAO dao){
+		this.targetDAO = dao;
 	}
 
 
@@ -211,6 +250,51 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getPlatformDAO().present((Platform)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("Banner", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getBannerDAO().load(id, BannerTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getBannerDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getBannerDAO().present((Banner)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("Profile", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getProfileDAO().load(id, ProfileTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getProfileDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getProfileDAO().present((Profile)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("Target", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getTargetDAO().load(id, TargetTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getTargetDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getTargetDAO().present((Target)data, tokens);
 			}
 		});
 

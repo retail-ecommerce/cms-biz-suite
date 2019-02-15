@@ -3,6 +3,12 @@ package com.doublechaintech.cms;
 
 import com.doublechaintech.cms.platform.PlatformManager;
 
+import com.doublechaintech.cms.banner.BannerManager;
+
+import com.doublechaintech.cms.profile.ProfileManager;
+
+import com.doublechaintech.cms.target.TargetManager;
+
 import com.doublechaintech.cms.userdomain.UserDomainManager;
 
 import com.doublechaintech.cms.userwhitelist.UserWhiteListManager;
@@ -33,6 +39,12 @@ import com.doublechaintech.cms.formaction.FormActionManager;
 public class ManagerGroup {
 
 	protected PlatformManager platformManager;
+
+	protected BannerManager bannerManager;
+
+	protected ProfileManager profileManager;
+
+	protected TargetManager targetManager;
 
 	protected UserDomainManager userDomainManager;
 
@@ -67,6 +79,30 @@ public class ManagerGroup {
 	}
 	public void setPlatformManager(PlatformManager manager){
 		this.platformManager = manager;
+	}
+
+
+	public BannerManager getBannerManager(){
+		return this.bannerManager;
+	}
+	public void setBannerManager(BannerManager manager){
+		this.bannerManager = manager;
+	}
+
+
+	public ProfileManager getProfileManager(){
+		return this.profileManager;
+	}
+	public void setProfileManager(ProfileManager manager){
+		this.profileManager = manager;
+	}
+
+
+	public TargetManager getTargetManager(){
+		return this.targetManager;
+	}
+	public void setTargetManager(TargetManager manager){
+		this.targetManager = manager;
 	}
 
 

@@ -7,6 +7,8 @@ import com.doublechaintech.cms.BaseEntity;
 import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
+import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.profile.ProfileDAO;
 
 
 public interface PlatformDAO{
@@ -37,8 +39,22 @@ public interface PlatformDAO{
 	public Platform disconnectFromAll(String platformId, int version) throws Exception;
 	public int deleteAll() throws Exception;
 
+	public BannerDAO getBannerDAO();
+		
+	public ProfileDAO getProfileDAO();
+		
 	
+ 	public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Platform> requestCandidatePlatformForProfile(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
 	
+	public Platform planToRemoveBannerList(Platform platform, String bannerIds[], Map<String,Object> options)throws Exception;
+
+
+	public Platform planToRemoveProfileList(Platform platform, String profileIds[], Map<String,Object> options)throws Exception;
+
+
 	
 	public SmartList<Platform> queryList(String sql, Object ... parmeters);
 }

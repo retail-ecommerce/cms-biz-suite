@@ -3,6 +3,9 @@ package com.doublechaintech.cms;
 import java.util.Map;
 
 import com.doublechaintech.cms.platform.Platform;
+import com.doublechaintech.cms.banner.Banner;
+import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.target.Target;
 import com.doublechaintech.cms.userdomain.UserDomain;
 import com.doublechaintech.cms.userwhitelist.UserWhiteList;
 import com.doublechaintech.cms.secuser.SecUser;
@@ -22,6 +25,21 @@ public class BeanFactoryImpl{
 
 	public Platform createPlatform(Map<String,Object> options){
 		return new Platform();
+	}
+
+
+	public Banner createBanner(Map<String,Object> options){
+		return new Banner();
+	}
+
+
+	public Profile createProfile(Map<String,Object> options){
+		return new Profile();
+	}
+
+
+	public Target createTarget(Map<String,Object> options){
+		return new Target();
 	}
 
 

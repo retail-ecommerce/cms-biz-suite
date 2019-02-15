@@ -81,6 +81,118 @@ public class PlatformForm extends BaseForm {
 	
 
 
+
+	public PlatformForm bannerIdFieldForBanner(String parameterName, String initValue){
+		FormField field =  idFromBanner(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm bannerIdFieldForBanner(String initValue){
+		return bannerIdFieldForBanner("bannerId",initValue);
+	}
+	public PlatformForm bannerIdFieldForBanner(){
+		return bannerIdFieldForBanner("bannerId","");
+	}
+
+
+	public PlatformForm nameFieldForBanner(String parameterName, String initValue){
+		FormField field =  nameFromBanner(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForBanner(String initValue){
+		return nameFieldForBanner("name",initValue);
+	}
+	public PlatformForm nameFieldForBanner(){
+		return nameFieldForBanner("name","");
+	}
+
+
+	public PlatformForm imagePathFieldForBanner(String parameterName, String initValue){
+		FormField field =  imagePathFromBanner(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm imagePathFieldForBanner(String initValue){
+		return imagePathFieldForBanner("imagePath",initValue);
+	}
+	public PlatformForm imagePathFieldForBanner(){
+		return imagePathFieldForBanner("imagePath","");
+	}
+
+
+	public PlatformForm lastUpdateFieldForBanner(String parameterName, String initValue){
+		FormField field =  lastUpdateFromBanner(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm lastUpdateFieldForBanner(String initValue){
+		return lastUpdateFieldForBanner("lastUpdate",initValue);
+	}
+	public PlatformForm lastUpdateFieldForBanner(){
+		return lastUpdateFieldForBanner("lastUpdate","");
+	}
+
+
+	public PlatformForm platformIdFieldForBanner(String parameterName, String initValue){
+		FormField field =  platformIdFromBanner(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForBanner(String initValue){
+		return platformIdFieldForBanner("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForBanner(){
+		return platformIdFieldForBanner("platformId","");
+	}
+
+
+	public PlatformForm profileIdFieldForProfile(String parameterName, String initValue){
+		FormField field =  idFromProfile(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm profileIdFieldForProfile(String initValue){
+		return profileIdFieldForProfile("profileId",initValue);
+	}
+	public PlatformForm profileIdFieldForProfile(){
+		return profileIdFieldForProfile("profileId","");
+	}
+
+
+	public PlatformForm nameFieldForProfile(String parameterName, String initValue){
+		FormField field =  nameFromProfile(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForProfile(String initValue){
+		return nameFieldForProfile("name",initValue);
+	}
+	public PlatformForm nameFieldForProfile(){
+		return nameFieldForProfile("name","");
+	}
+
+
+	public PlatformForm platformIdFieldForProfile(String parameterName, String initValue){
+		FormField field =  platformIdFromProfile(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForProfile(String initValue){
+		return platformIdFieldForProfile("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForProfile(){
+		return platformIdFieldForProfile("platformId","");
+	}
+
 	
 
 

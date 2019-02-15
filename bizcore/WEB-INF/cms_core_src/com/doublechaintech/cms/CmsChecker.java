@@ -68,6 +68,150 @@ public class CmsChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  ID_OF_BANNER ="banner.id";
+	public CmsChecker checkIdOfBanner(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_BANNER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_BANNER ="banner.name";
+	public CmsChecker checkNameOfBanner(String name)
+	{
+		
+	 	checkStringLengthRange(name,4, 52,NAME_OF_BANNER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  IMAGE_PATH_OF_BANNER ="banner.image_path";
+	public CmsChecker checkImagePathOfBanner(String imagePath)
+	{
+		
+	 	checkImage(imagePath,0, 512,IMAGE_PATH_OF_BANNER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_BANNER ="banner.platform";
+	public CmsChecker checkPlatformIdOfBanner(String platformId)
+	{
+		
+	 	checkIdOfBanner(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_BANNER ="banner.version";
+	public CmsChecker checkVersionOfBanner(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_BANNER ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_PROFILE ="profile.id";
+	public CmsChecker checkIdOfProfile(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_PROFILE ="profile.name";
+	public CmsChecker checkNameOfProfile(String name)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
+	public CmsChecker checkPlatformIdOfProfile(String platformId)
+	{
+		
+	 	checkIdOfProfile(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_PROFILE ="profile.version";
+	public CmsChecker checkVersionOfProfile(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_TARGET ="target.id";
+	public CmsChecker checkIdOfTarget(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_TARGET ="target.name";
+	public CmsChecker checkNameOfTarget(String name)
+	{
+		
+	 	checkStringLengthRange(name,4, 56,NAME_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_TARGET ="target.profile";
+	public CmsChecker checkProfileIdOfTarget(String profileId)
+	{
+		
+	 	checkIdOfTarget(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  BANNER_OF_TARGET ="target.banner";
+	public CmsChecker checkBannerIdOfTarget(String bannerId)
+	{
+		
+	 	checkIdOfTarget(bannerId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  WHEN_OF_TARGET ="target.when";
+	public CmsChecker checkWhenOfTarget(String when)
+	{
+		
+	 	checkStringLengthRange(when,2, 16,WHEN_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  LOCATION_OF_TARGET ="target.location";
+	public CmsChecker checkLocationOfTarget(String location)
+	{
+		
+	 	checkStringLengthRange(location,2, 16,LOCATION_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_TARGET ="target.version";
+	public CmsChecker checkVersionOfTarget(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  ID_OF_USER_DOMAIN ="user_domain.id";
 	public CmsChecker checkIdOfUserDomain(String id)
 	{

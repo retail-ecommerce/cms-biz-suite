@@ -18,7 +18,11 @@ import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 
 
+import com.doublechaintech.cms.banner.Banner;
+import com.doublechaintech.cms.profile.Profile;
 
+import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.profile.ProfileDAO;
 
 
 
@@ -27,6 +31,44 @@ import org.springframework.dao.EmptyResultDataAccessException;
 public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements PlatformDAO{
 
 
+			
+		
+	
+  	private  BannerDAO  bannerDAO;
+ 	public void setBannerDAO(BannerDAO pBannerDAO){
+ 	
+ 		if(pBannerDAO == null){
+ 			throw new IllegalStateException("Do not try to set bannerDAO to null.");
+ 		}
+	 	this.bannerDAO = pBannerDAO;
+ 	}
+ 	public BannerDAO getBannerDAO(){
+ 		if(this.bannerDAO == null){
+ 			throw new IllegalStateException("The bannerDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.bannerDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  ProfileDAO  profileDAO;
+ 	public void setProfileDAO(ProfileDAO pProfileDAO){
+ 	
+ 		if(pProfileDAO == null){
+ 			throw new IllegalStateException("Do not try to set profileDAO to null.");
+ 		}
+	 	this.profileDAO = pProfileDAO;
+ 	}
+ 	public ProfileDAO getProfileDAO(){
+ 		if(this.profileDAO == null){
+ 			throw new IllegalStateException("The profileDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.profileDAO;
+ 	}	
+ 	
 			
 		
 
@@ -72,6 +114,20 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		Platform newPlatform = loadInternalPlatform(accessKey, options);
 		newPlatform.setVersion(0);
 		
+		
+ 		
+ 		if(isSaveBannerListEnabled(options)){
+ 			for(Banner item: newPlatform.getBannerList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveProfileListEnabled(options)){
+ 			for(Profile item: newPlatform.getProfileList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
 		
 
 		
@@ -164,6 +220,36 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 
 
 		
+	
+	protected boolean isExtractBannerListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.BANNER_LIST);
+ 	}
+ 	protected boolean isAnalyzeBannerListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.BANNER_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveBannerListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.BANNER_LIST);
+		
+ 	}
+ 	
+		
+	
+	protected boolean isExtractProfileListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.PROFILE_LIST);
+ 	}
+ 	protected boolean isAnalyzeProfileListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.PROFILE_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveProfileListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.PROFILE_LIST);
+		
+ 	}
+ 	
+		
 
 	
 
@@ -191,10 +277,126 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		Platform platform = extractPlatform(accessKey, loadOptions);
 
 		
+		if(isExtractBannerListEnabled(loadOptions)){
+	 		extractBannerList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeBannerListEnabled(loadOptions)){
+	 		analyzeBannerList(platform, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractProfileListEnabled(loadOptions)){
+	 		extractProfileList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeProfileListEnabled(loadOptions)){
+	 		analyzeProfileList(platform, loadOptions);
+ 		}
+ 		
+		
 		return platform;
 		
 	}
 
+	
+		
+	protected void enhanceBannerList(SmartList<Banner> bannerList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractBannerList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Banner> bannerList = getBannerDAO().findBannerByPlatform(platform.getId(),options);
+		if(bannerList != null){
+			enhanceBannerList(bannerList,options);
+			platform.setBannerList(bannerList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeBannerList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Banner> bannerList = platform.getBannerList();
+		if(bannerList != null){
+			getBannerDAO().analyzeBannerByPlatform(bannerList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
+	
+		
+	protected void enhanceProfileList(SmartList<Profile> profileList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractProfileList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Profile> profileList = getProfileDAO().findProfileByPlatform(platform.getId(),options);
+		if(profileList != null){
+			enhanceProfileList(profileList,options);
+			platform.setProfileList(profileList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeProfileList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<Profile> profileList = platform.getProfileList();
+		if(profileList != null){
+			getProfileDAO().analyzeProfileByPlatform(profileList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
 	
 		
 		
@@ -369,6 +571,20 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		savePlatform(platform);
 
 		
+		if(isSaveBannerListEnabled(options)){
+	 		saveBannerList(platform, options);
+	 		//removeBannerList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
+		if(isSaveProfileListEnabled(options)){
+	 		saveProfileList(platform, options);
+	 		//removeProfileList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return platform;
 		
 	}
@@ -379,18 +595,260 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	
 
 	
+	public Platform planToRemoveBannerList(Platform platform, String bannerIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Banner.PLATFORM_PROPERTY, platform.getId());
+		key.put(Banner.ID_PROPERTY, bannerIds);
+		
+		SmartList<Banner> externalBannerList = getBannerDAO().
+				findBannerWithKey(key, options);
+		if(externalBannerList == null){
+			return platform;
+		}
+		if(externalBannerList.isEmpty()){
+			return platform;
+		}
+		
+		for(Banner banner: externalBannerList){
 
+			banner.clearFromAll();
+		}
+		
+		
+		SmartList<Banner> bannerList = platform.getBannerList();		
+		bannerList.addAllToRemoveList(externalBannerList);
+		return platform;	
+	
+	}
+
+
+	public Platform planToRemoveProfileList(Platform platform, String profileIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(Profile.PLATFORM_PROPERTY, platform.getId());
+		key.put(Profile.ID_PROPERTY, profileIds);
+		
+		SmartList<Profile> externalProfileList = getProfileDAO().
+				findProfileWithKey(key, options);
+		if(externalProfileList == null){
+			return platform;
+		}
+		if(externalProfileList.isEmpty()){
+			return platform;
+		}
+		
+		for(Profile profile: externalProfileList){
+
+			profile.clearFromAll();
+		}
+		
+		
+		SmartList<Profile> profileList = platform.getProfileList();		
+		profileList.addAllToRemoveList(externalProfileList);
+		return platform;	
+	
+	}
+
+
+
+		
+	protected Platform saveBannerList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<Banner> bannerList = platform.getBannerList();
+		if(bannerList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<Banner> mergedUpdateBannerList = new SmartList<Banner>();
+		
+		
+		mergedUpdateBannerList.addAll(bannerList); 
+		if(bannerList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateBannerList.addAll(bannerList.getToRemoveList());
+			bannerList.removeAll(bannerList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getBannerDAO().saveBannerList(mergedUpdateBannerList,options);
+		
+		if(bannerList.getToRemoveList() != null){
+			bannerList.removeAll(bannerList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeBannerList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<Banner> bannerList = platform.getBannerList();
+		if(bannerList == null){
+			return platform;
+		}	
+	
+		SmartList<Banner> toRemoveBannerList = bannerList.getToRemoveList();
+		
+		if(toRemoveBannerList == null){
+			return platform;
+		}
+		if(toRemoveBannerList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getBannerDAO().removeBannerList(toRemoveBannerList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
+	protected Platform saveProfileList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<Profile> profileList = platform.getProfileList();
+		if(profileList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<Profile> mergedUpdateProfileList = new SmartList<Profile>();
+		
+		
+		mergedUpdateProfileList.addAll(profileList); 
+		if(profileList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateProfileList.addAll(profileList.getToRemoveList());
+			profileList.removeAll(profileList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getProfileDAO().saveProfileList(mergedUpdateProfileList,options);
+		
+		if(profileList.getToRemoveList() != null){
+			profileList.removeAll(profileList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeProfileList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<Profile> profileList = platform.getProfileList();
+		if(profileList == null){
+			return platform;
+		}	
+	
+		SmartList<Profile> toRemoveProfileList = profileList.getToRemoveList();
+		
+		if(toRemoveProfileList == null){
+			return platform;
+		}
+		if(toRemoveProfileList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getProfileDAO().removeProfileList(toRemoveProfileList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
 		
 
 	public Platform present(Platform platform,Map<String, Object> options){
 	
+		presentBannerList(platform,options);
+		presentProfileList(platform,options);
 
 		return platform;
 	
 	}
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentBannerList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<Banner> bannerList = platform.getBannerList();		
+				SmartList<Banner> newList= presentSubList(platform.getId(),
+				bannerList,
+				options,
+				getBannerDAO()::countBannerByPlatform,
+				getBannerDAO()::findBannerByPlatform
+				);
+
+		
+		platform.setBannerList(newList);
+		
+
+		return platform;
+	}			
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentProfileList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<Profile> profileList = platform.getProfileList();		
+				SmartList<Profile> newList= presentSubList(platform.getId(),
+				profileList,
+				options,
+				getProfileDAO()::countProfileByPlatform,
+				getProfileDAO()::findProfileByPlatform
+				);
+
+		
+		platform.setProfileList(newList);
+		
+
+		return platform;
+	}			
+		
 
 	
+    public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
+    public SmartList<Platform> requestCandidatePlatformForProfile(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
 
 	protected String getTableName(){
 		return PlatformTable.TABLE_NAME;

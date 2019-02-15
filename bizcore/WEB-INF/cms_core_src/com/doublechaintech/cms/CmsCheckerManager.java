@@ -49,6 +49,134 @@ public class CmsCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  ID_OF_BANNER ="banner.id";
+	protected void checkIdOfBanner(CmsUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_BANNER, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_BANNER ="banner.name";
+	protected void checkNameOfBanner(CmsUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,4, 52,NAME_OF_BANNER, messageList); 		
+		
+	}	 			
+	
+	public static final String  IMAGE_PATH_OF_BANNER ="banner.image_path";
+	protected void checkImagePathOfBanner(CmsUserContext userContext, String imagePath, List<Message> messageList)
+	{
+		
+	 	checkImage(imagePath,0, 512,IMAGE_PATH_OF_BANNER, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_BANNER ="banner.platform";
+	protected void checkPlatformIdOfBanner(CmsUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfBanner(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_BANNER ="banner.version";
+	protected void checkVersionOfBanner(CmsUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_BANNER, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_PROFILE ="profile.id";
+	protected void checkIdOfProfile(CmsUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_PROFILE ="profile.name";
+	protected void checkNameOfProfile(CmsUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,6, 72,NAME_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_PROFILE ="profile.platform";
+	protected void checkPlatformIdOfProfile(CmsUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfProfile(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_PROFILE ="profile.version";
+	protected void checkVersionOfProfile(CmsUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_PROFILE, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_TARGET ="target.id";
+	protected void checkIdOfTarget(CmsUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_TARGET, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_TARGET ="target.name";
+	protected void checkNameOfTarget(CmsUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,4, 56,NAME_OF_TARGET, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_TARGET ="target.profile";
+	protected void checkProfileIdOfTarget(CmsUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTarget(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  BANNER_OF_TARGET ="target.banner";
+	protected void checkBannerIdOfTarget(CmsUserContext userContext, String bannerId, List<Message> messageList)
+	{
+		
+	 	checkIdOfTarget(userContext,bannerId, messageList); 		
+		
+	}	 			
+	
+	public static final String  WHEN_OF_TARGET ="target.when";
+	protected void checkWhenOfTarget(CmsUserContext userContext, String when, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(when,2, 16,WHEN_OF_TARGET, messageList); 		
+		
+	}	 			
+	
+	public static final String  LOCATION_OF_TARGET ="target.location";
+	protected void checkLocationOfTarget(CmsUserContext userContext, String location, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(location,2, 16,LOCATION_OF_TARGET, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_TARGET ="target.version";
+	protected void checkVersionOfTarget(CmsUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TARGET, messageList); 		
+		
+	}	 			
+	
 	public static final String  ID_OF_USER_DOMAIN ="user_domain.id";
 	protected void checkIdOfUserDomain(CmsUserContext userContext, String id, List<Message> messageList)
 	{

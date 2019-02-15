@@ -131,6 +131,201 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField idFromBanner(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Id");
+		field.setLocaleKey("banner.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Id");
+		return field;
+	}
+
+	protected FormField nameFromBanner(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Name");
+		field.setLocaleKey("banner.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Name");
+		return field;
+	}
+
+	protected FormField imagePathFromBanner(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Image Path");
+		field.setLocaleKey("banner.image_path");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("image");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Image Path");
+		return field;
+	}
+
+	protected FormField lastUpdateFromBanner(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("LastUpdate");
+		field.setLocaleKey("banner.lastUpdate");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写LastUpdate");
+		return field;
+	}
+
+	protected FormField platformIdFromBanner(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("banner.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
+	protected FormField idFromProfile(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Id");
+		field.setLocaleKey("profile.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Id");
+		return field;
+	}
+
+	protected FormField nameFromProfile(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Name");
+		field.setLocaleKey("profile.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Name");
+		return field;
+	}
+
+	protected FormField platformIdFromProfile(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("profile.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
+	protected FormField idFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Id");
+		field.setLocaleKey("target.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Id");
+		return field;
+	}
+
+	protected FormField nameFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Name");
+		field.setLocaleKey("target.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Name");
+		return field;
+	}
+
+	protected FormField profileIdFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Profile");
+		field.setLocaleKey("target.profile");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Profile");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Profile");
+		return field;
+	}
+
+	protected FormField bannerIdFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Banner");
+		field.setLocaleKey("target.banner");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Banner");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Banner");
+		return field;
+	}
+
+	protected FormField whenFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("When");
+		field.setLocaleKey("target.when");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写When");
+		return field;
+	}
+
+	protected FormField locationFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Location");
+		field.setLocaleKey("target.location");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Location");
+		return field;
+	}
+
+	protected FormField lastUpdateFromTarget(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("LastUpdate");
+		field.setLocaleKey("target.lastUpdate");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写LastUpdate");
+		return field;
+	}
+
 	protected FormField idFromUserDomain(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("Id");
