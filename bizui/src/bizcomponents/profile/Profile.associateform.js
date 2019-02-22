@@ -74,6 +74,7 @@ class ProfileAssociateForm extends Component {
     const userContext = null
     
  const {TargetModalTable} = GlobalComponents;
+ const {UserAlertModalTable} = GlobalComponents;
 
 
     const { getFieldDecorator, validateFieldsAndScroll, getFieldsError } = form
@@ -188,6 +189,7 @@ class ProfileAssociateForm extends Component {
         </Card>
         
 	<TargetModalTable data={data.targetList} owner={owner} />
+	<UserAlertModalTable data={data.userAlertList} owner={owner} />
         
         
         

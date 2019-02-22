@@ -157,6 +157,55 @@ class PlatformBizApp extends React.PureComponent {
 
 
 
+  getAlertBarSearch = () => {
+    const {AlertBarSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "Alert Bar",
+      role: "alertBar",
+      data: state._platform.alertBarList,
+      metaInfo: state._platform.alertBarListMetaInfo,
+      count: state._platform.alertBarCount,
+      currentPage: state._platform.alertBarCurrentPageNumber,
+      searchFormParameters: state._platform.alertBarSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'alertBarList', ref:state._platform, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(AlertBarSearch)
+  }
+  getAlertBarCreateForm = () => {
+   	const {AlertBarCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "alertBar",
+      data: state._platform.alertBarList,
+      metaInfo: state._platform.alertBarListMetaInfo,
+      count: state._platform.alertBarCount,
+      currentPage: state._platform.alertBarCurrentPageNumber,
+      searchFormParameters: state._platform.alertBarSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'alertBarList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(AlertBarCreateForm)
+  }
+  
+  getAlertBarUpdateForm = () => {
+    const userContext = null
+  	const {AlertBarUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "alertBar",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'alertBarList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(AlertBarUpdateForm)
+  }
+
   getBannerSearch = () => {
     const {BannerSearch} = GlobalComponents;
     const userContext = null
@@ -304,6 +353,55 @@ class PlatformBizApp extends React.PureComponent {
     }))(TargetUpdateForm)
   }
 
+  getUserAlertSearch = () => {
+    const {UserAlertSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "User Alert",
+      role: "userAlert",
+      data: state._platform.userAlertList,
+      metaInfo: state._platform.userAlertListMetaInfo,
+      count: state._platform.userAlertCount,
+      currentPage: state._platform.userAlertCurrentPageNumber,
+      searchFormParameters: state._platform.userAlertSearchFormParameters,
+      searchParameters: {...state._platform.searchParameters},
+      expandForm: state._platform.expandForm,
+      loading: state._platform.loading,
+      partialList: state._platform.partialList,
+      owner: { type: '_platform', id: state._platform.id, 
+      referenceName: 'platform', 
+      listName: 'userAlertList', ref:state._platform, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(UserAlertSearch)
+  }
+  getUserAlertCreateForm = () => {
+   	const {UserAlertCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "userAlert",
+      data: state._platform.userAlertList,
+      metaInfo: state._platform.userAlertListMetaInfo,
+      count: state._platform.userAlertCount,
+      currentPage: state._platform.userAlertCurrentPageNumber,
+      searchFormParameters: state._platform.userAlertSearchFormParameters,
+      loading: state._platform.loading,
+      owner: { type: '_platform', id: state._platform.id, referenceName: 'platform', listName: 'userAlertList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(UserAlertCreateForm)
+  }
+  
+  getUserAlertUpdateForm = () => {
+    const userContext = null
+  	const {UserAlertUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._platform.selectedRows,
+      role: "userAlert",
+      currentUpdateIndex: state._platform.currentUpdateIndex,
+      owner: { type: '_platform', id: state._platform.id, listName: 'userAlertList', ref:state._platform, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(UserAlertUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -317,6 +415,10 @@ class PlatformBizApp extends React.PureComponent {
   	
   	
   	
+  	{path:"/platform/:id/list/alertBarList", component: this.getAlertBarSearch()},
+  	{path:"/platform/:id/list/alertBarCreateForm", component: this.getAlertBarCreateForm()},
+  	{path:"/platform/:id/list/alertBarUpdateForm", component: this.getAlertBarUpdateForm()},
+   	
   	{path:"/platform/:id/list/bannerList", component: this.getBannerSearch()},
   	{path:"/platform/:id/list/bannerCreateForm", component: this.getBannerCreateForm()},
   	{path:"/platform/:id/list/bannerUpdateForm", component: this.getBannerUpdateForm()},
@@ -328,6 +430,10 @@ class PlatformBizApp extends React.PureComponent {
   	{path:"/platform/:id/list/targetList", component: this.getTargetSearch()},
   	{path:"/platform/:id/list/targetCreateForm", component: this.getTargetCreateForm()},
   	{path:"/platform/:id/list/targetUpdateForm", component: this.getTargetUpdateForm()},
+   	
+  	{path:"/platform/:id/list/userAlertList", component: this.getUserAlertSearch()},
+  	{path:"/platform/:id/list/userAlertCreateForm", component: this.getUserAlertCreateForm()},
+  	{path:"/platform/:id/list/userAlertUpdateForm", component: this.getUserAlertUpdateForm()},
      	
   	
   	]

@@ -183,6 +183,75 @@ export default {
       notifySuccess(userContext)
     },
 
+
+
+
+    *addUserAlert({ payload }, { call, put }) {
+      const userContext = null
+      const {ProfileService} = GlobalComponents;
+
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(ProfileService.addUserAlert, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+      yield put({ type: 'updateState', payload: newPlayload })
+      // yield put(routerRedux.push(`/profile/${id}/list/${role}CreateForm'))
+      notifySuccess(userContext)
+      if (continueNext) {
+        return
+      }
+      const partialList = true
+      const newState = {...data, partialList}
+      const location = { pathname: `/profile/${id}/list/\UserAlertList/User Alert+${appLocaleName(userContext,'List')}`, state: newState }
+      yield put(routerRedux.push(location))
+    },
+    *updateUserAlert({ payload }, { call, put }) {
+      const userContext = null
+      const {ProfileService} = GlobalComponents;      
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(ProfileService.updateUserAlert, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const partialList = true
+      
+      const newPlayload = { ...payload, ...data, selectedRows, currentUpdateIndex,partialList }
+      yield put({ type: 'updateState', payload: newPlayload })
+      notifySuccess(userContext)
+      
+      if (continueNext) {
+        return
+      }
+      const location = { pathname: `/profile/${id}/list/\UserAlertList/User Alert列表`, state: newPlayload }
+      yield put(routerRedux.push(location))
+    },
+    *gotoNextUserAlertUpdateRow({ payload }, { call, put }) {
+      const { id, type, parameters, continueNext, selectedRows, currentUpdateIndex } = payload
+      const newPlayload = { ...payload, selectedRows, currentUpdateIndex }
+      yield put({ type: 'updateState', payload: newPlayload })
+    },
+    *removeUserAlertList({ payload }, { call, put }) {
+     const userContext = null
+      const {ProfileService} = GlobalComponents; 
+      const { id, role, parameters, continueNext } = payload
+      console.log('get form parameters', parameters)
+      const data = yield call(ProfileService.removeUserAlertList, id, parameters)
+      if (hasError(data)) {
+        handleServerError(data)
+        return
+      }
+      const newPlayload = { ...payload, ...data }
+
+      yield put({ type: 'updateState', payload: newPlayload })
+      notifySuccess(userContext)
+    },
+
   },
   
   reducers: {

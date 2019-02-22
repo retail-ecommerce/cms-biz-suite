@@ -206,6 +206,55 @@ class ProfileBizApp extends React.PureComponent {
     }))(TargetUpdateForm)
   }
 
+  getUserAlertSearch = () => {
+    const {UserAlertSearch} = GlobalComponents;
+    const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      name: "User Alert",
+      role: "userAlert",
+      data: state._profile.userAlertList,
+      metaInfo: state._profile.userAlertListMetaInfo,
+      count: state._profile.userAlertCount,
+      currentPage: state._profile.userAlertCurrentPageNumber,
+      searchFormParameters: state._profile.userAlertSearchFormParameters,
+      searchParameters: {...state._profile.searchParameters},
+      expandForm: state._profile.expandForm,
+      loading: state._profile.loading,
+      partialList: state._profile.partialList,
+      owner: { type: '_profile', id: state._profile.id, 
+      referenceName: 'profile', 
+      listName: 'userAlertList', ref:state._profile, 
+      listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(UserAlertSearch)
+  }
+  getUserAlertCreateForm = () => {
+   	const {UserAlertCreateForm} = GlobalComponents;
+   	const userContext = null
+    return connect(state => ({
+      rule: state.rule,
+      role: "userAlert",
+      data: state._profile.userAlertList,
+      metaInfo: state._profile.userAlertListMetaInfo,
+      count: state._profile.userAlertCount,
+      currentPage: state._profile.userAlertCurrentPageNumber,
+      searchFormParameters: state._profile.userAlertSearchFormParameters,
+      loading: state._profile.loading,
+      owner: { type: '_profile', id: state._profile.id, referenceName: 'profile', listName: 'userAlertList', ref:state._profile, listDisplayName: appLocaleName(userContext,"List")}, // this is for model namespace and
+    }))(UserAlertCreateForm)
+  }
+  
+  getUserAlertUpdateForm = () => {
+    const userContext = null
+  	const {UserAlertUpdateForm} = GlobalComponents;
+    return connect(state => ({
+      selectedRows: state._profile.selectedRows,
+      role: "userAlert",
+      currentUpdateIndex: state._profile.currentUpdateIndex,
+      owner: { type: '_profile', id: state._profile.id, listName: 'userAlertList', ref:state._profile, listDisplayName: appLocaleName(userContext,"List") }, // this is for model namespace and
+    }))(UserAlertUpdateForm)
+  }
+
 
   
   buildRouters = () =>{
@@ -222,6 +271,10 @@ class ProfileBizApp extends React.PureComponent {
   	{path:"/profile/:id/list/targetList", component: this.getTargetSearch()},
   	{path:"/profile/:id/list/targetCreateForm", component: this.getTargetCreateForm()},
   	{path:"/profile/:id/list/targetUpdateForm", component: this.getTargetUpdateForm()},
+   	
+  	{path:"/profile/:id/list/userAlertList", component: this.getUserAlertSearch()},
+  	{path:"/profile/:id/list/userAlertCreateForm", component: this.getUserAlertCreateForm()},
+  	{path:"/profile/:id/list/userAlertUpdateForm", component: this.getUserAlertUpdateForm()},
      	
   	
   	]

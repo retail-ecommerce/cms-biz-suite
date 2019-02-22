@@ -111,7 +111,7 @@ class ProfileDashboard extends Component {
 
   render() {
     // eslint-disable-next-line max-len
-    const { id,displayName, targetListMetaInfo, targetCount } = this.props.profile
+    const { id,displayName, targetListMetaInfo, userAlertListMetaInfo, targetCount, userAlertCount } = this.props.profile
     if(!this.props.profile.class){
       return null
     }
@@ -121,6 +121,7 @@ class ProfileDashboard extends Component {
     	cardsSource: this.props.profile,returnURL,displayName,
   		subItems: [
 {name: 'targetList', displayName:'Target',type:'target',count:targetCount,addFunction: true, role: 'target', metaInfo: targetListMetaInfo},
+{name: 'userAlertList', displayName:'User Alert',type:'userAlert',count:userAlertCount,addFunction: true, role: 'userAlert', metaInfo: userAlertListMetaInfo},
     
       	],
   	};

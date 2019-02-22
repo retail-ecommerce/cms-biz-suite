@@ -22,6 +22,28 @@ const load = (targetObjectId, parameters) => {
 
 
 
+const addAlertBar = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addAlertBar/platformId/name/message/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateAlertBar = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateAlertBarProperties/platformId/id/name/message/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeAlertBarList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeAlertBarList/platformId/alertBarIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
+
 const addBanner = (targetObjectId, parameters) => {
   const url = `${PREFIX}platformManager/addBanner/platformId/name/imagePath/tokensExpr/`
   const platformId = targetObjectId
@@ -87,16 +109,44 @@ const removeTargetList = (targetObjectId, parameters) => {
 }
 
 
+
+const addUserAlert = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/addUserAlert/platformId/message/profileId/location/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateUserAlert = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/updateUserAlertProperties/platformId/id/message/location/tokensExpr/`
+  const platformId = targetObjectId
+  const requestParameters = { ...parameters, platformId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeUserAlertList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}platformManager/removeUserAlertList/platformId/userAlertIds/tokensExpr/`
+  const requestParameters = { ...parameters, platformId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const PlatformService = { view,
   load,
+  addAlertBar,
   addBanner,
   addProfile,
   addTarget,
+  addUserAlert,
+  updateAlertBar,
   updateBanner,
   updateProfile,
   updateTarget,
+  updateUserAlert,
+  removeAlertBarList,
   removeBannerList,
   removeProfileList,
-  removeTargetList }
+  removeTargetList,
+  removeUserAlertList }
 export default PlatformService
 

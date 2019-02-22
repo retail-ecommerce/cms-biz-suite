@@ -9,6 +9,7 @@ import appLocaleName from '../../common/Locale.tool'
 const menuData = {menuName:"Profile", menuFor: "profile",
   		subItems: [
   {name: 'targetList', displayName:'Target', icon:'500px',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
+  {name: 'userAlertList', displayName:'User Alert', icon:'user',readPermission: false,createPermission: false,deletePermission: false,updatePermission: false,executionPermission: false},
   
   		],
 }

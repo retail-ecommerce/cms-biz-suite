@@ -59,11 +59,36 @@ const removeTargetList = (targetObjectId, parameters) => {
 }
 
 
+
+const addUserAlert = (targetObjectId, parameters) => {
+  const url = `${PREFIX}profileManager/addUserAlert/profileId/message/location/platformId/tokensExpr/`
+  const profileId = targetObjectId
+  const requestParameters = { ...parameters, profileId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const updateUserAlert = (targetObjectId, parameters) => {
+  const url = `${PREFIX}profileManager/updateUserAlertProperties/profileId/id/message/location/tokensExpr/`
+  const profileId = targetObjectId
+  const requestParameters = { ...parameters, profileId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+const removeUserAlertList = (targetObjectId, parameters) => {
+  const url = `${PREFIX}profileManager/removeUserAlertList/profileId/userAlertIds/tokensExpr/`
+  const requestParameters = { ...parameters, profileId: targetObjectId, tokensExpr: 'none' }
+  return postForm({ url,requestParameters})
+}
+
+
 const ProfileService = { view,
   load,
   addTarget,
+  addUserAlert,
   updateTarget,
+  updateUserAlert,
   removeTargetList,
+  removeUserAlertList,
   requestCandidatePlatform,
   transferToAnotherPlatform }
 export default ProfileService

@@ -15,6 +15,19 @@ import PlatformAssociateForm from './platform/Platform.associateform';
 import PlatformTable from './platform/Platform.table';
 import PlatformService from './platform/Platform.service';
 import PlatformUpdateForm from './platform/Platform.updateform';
+import AlertBarBase from './alertbar/AlertBar.base';
+import AlertBarBizApp from './alertbar/AlertBar.app';
+import AlertBarModel from './alertbar/AlertBar.model';
+import AlertBarDashboard from './alertbar/AlertBar.dashboard';
+import AlertBarPreference from './alertbar/AlertBar.preference';
+import AlertBarModalTable from './alertbar/AlertBar.modaltable';
+import AlertBarSearch from './alertbar/AlertBar.search';
+import AlertBarSearchForm from './alertbar/AlertBar.searchform';
+import AlertBarCreateForm from './alertbar/AlertBar.createform';
+import AlertBarAssociateForm from './alertbar/AlertBar.associateform';
+import AlertBarTable from './alertbar/AlertBar.table';
+import AlertBarService from './alertbar/AlertBar.service';
+import AlertBarUpdateForm from './alertbar/AlertBar.updateform';
 import BannerBase from './banner/Banner.base';
 import BannerBizApp from './banner/Banner.app';
 import BannerModel from './banner/Banner.model';
@@ -54,6 +67,19 @@ import TargetAssociateForm from './target/Target.associateform';
 import TargetTable from './target/Target.table';
 import TargetService from './target/Target.service';
 import TargetUpdateForm from './target/Target.updateform';
+import UserAlertBase from './useralert/UserAlert.base';
+import UserAlertBizApp from './useralert/UserAlert.app';
+import UserAlertModel from './useralert/UserAlert.model';
+import UserAlertDashboard from './useralert/UserAlert.dashboard';
+import UserAlertPreference from './useralert/UserAlert.preference';
+import UserAlertModalTable from './useralert/UserAlert.modaltable';
+import UserAlertSearch from './useralert/UserAlert.search';
+import UserAlertSearchForm from './useralert/UserAlert.searchform';
+import UserAlertCreateForm from './useralert/UserAlert.createform';
+import UserAlertAssociateForm from './useralert/UserAlert.associateform';
+import UserAlertTable from './useralert/UserAlert.table';
+import UserAlertService from './useralert/UserAlert.service';
+import UserAlertUpdateForm from './useralert/UserAlert.updateform';
 import UserDomainBase from './userdomain/UserDomain.base';
 import UserDomainBizApp from './userdomain/UserDomain.app';
 import UserDomainModel from './userdomain/UserDomain.model';
@@ -162,9 +188,11 @@ import LoginHistoryUpdateForm from './loginhistory/LoginHistory.updateform';
 
 const BizModels = [
 	PlatformModel,
+	AlertBarModel,
 	BannerModel,
 	ProfileModel,
 	TargetModel,
+	UserAlertModel,
 	UserDomainModel,
 	UserWhiteListModel,
 	SecUserModel,
@@ -191,9 +219,11 @@ const unbindBizModels = (app) =>{
 const menuLibrary = []
 
 menuLibrary['platform'] = PlatformBase.menuData
+menuLibrary['alertBar'] = AlertBarBase.menuData
 menuLibrary['banner'] = BannerBase.menuData
 menuLibrary['profile'] = ProfileBase.menuData
 menuLibrary['target'] = TargetBase.menuData
+menuLibrary['userAlert'] = UserAlertBase.menuData
 menuLibrary['userDomain'] = UserDomainBase.menuData
 menuLibrary['userWhiteList'] = UserWhiteListBase.menuData
 menuLibrary['secUser'] = SecUserBase.menuData
@@ -223,9 +253,11 @@ const ViewMapping = {
 
 
   'com.doublechaintech.cms.platform.Platform': {name:'platform'},
+  'com.doublechaintech.cms.alertbar.AlertBar': {name:'alertBar'},
   'com.doublechaintech.cms.banner.Banner': {name:'banner'},
   'com.doublechaintech.cms.profile.Profile': {name:'profile'},
   'com.doublechaintech.cms.target.Target': {name:'target'},
+  'com.doublechaintech.cms.useralert.UserAlert': {name:'userAlert'},
   'com.doublechaintech.cms.userdomain.UserDomain': {name:'userDomain'},
   'com.doublechaintech.cms.userwhitelist.UserWhiteList': {name:'userWhiteList'},
   'com.doublechaintech.cms.secuser.SecUser': {name:'secUser'},
@@ -292,6 +324,19 @@ const OOTBComponents={
     PlatformTable,
     PlatformService,
     PlatformUpdateForm,
+    AlertBarBase,
+    AlertBarBizApp,
+    AlertBarModel,
+    AlertBarDashboard,
+    AlertBarPreference,
+    AlertBarModalTable,
+    AlertBarSearch,
+    AlertBarSearchForm,
+    AlertBarCreateForm,
+    AlertBarAssociateForm,
+    AlertBarTable,
+    AlertBarService,
+    AlertBarUpdateForm,
     BannerBase,
     BannerBizApp,
     BannerModel,
@@ -331,6 +376,19 @@ const OOTBComponents={
     TargetTable,
     TargetService,
     TargetUpdateForm,
+    UserAlertBase,
+    UserAlertBizApp,
+    UserAlertModel,
+    UserAlertDashboard,
+    UserAlertPreference,
+    UserAlertModalTable,
+    UserAlertSearch,
+    UserAlertSearchForm,
+    UserAlertCreateForm,
+    UserAlertAssociateForm,
+    UserAlertTable,
+    UserAlertService,
+    UserAlertUpdateForm,
     UserDomainBase,
     UserDomainBizApp,
     UserDomainModel,
