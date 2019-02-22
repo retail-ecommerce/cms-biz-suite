@@ -162,6 +162,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeId(String id){
+		if(id != null) { setId(id);}
+	}
 	
 	
 	public void setName(String name){
@@ -175,6 +178,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeName(String name){
+		if(name != null) { setName(name);}
+	}
 	
 	
 	public void setProfile(Profile profile){
@@ -187,6 +193,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.mProfile = profile;;
 		this.changed = true;
 		return this;
+	}
+	public void mergeProfile(Profile profile){
+		if(profile != null) { setProfile(profile);}
 	}
 	
 	
@@ -206,6 +215,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeBanner(Banner banner){
+		if(banner != null) { setBanner(banner);}
+	}
 	
 	
 	public void clearBanner(){
@@ -224,6 +236,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeLocation(String location){
+		if(location != null) { setLocation(location);}
+	}
 	
 	
 	public void setLastUpdate(DateTime lastUpdate){
@@ -237,6 +252,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeLastUpdate(DateTime lastUpdate){
+		setLastUpdate(lastUpdate);
+	}
 	
 	
 	public void setPlatform(Platform platform){
@@ -249,6 +267,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.mPlatform = platform;;
 		this.changed = true;
 		return this;
+	}
+	public void mergePlatform(Platform platform){
+		if(platform != null) { setPlatform(platform);}
 	}
 	
 	
@@ -267,6 +288,9 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 		this.mVersion = version;;
 		this.changed = true;
 		return this;
+	}
+	public void mergeVersion(int version){
+		setVersion(version);
 	}
 	
 	
@@ -329,6 +353,27 @@ public class Target extends BaseEntity implements  java.io.Serializable{
 			dest.setLastUpdate(getLastUpdate());
 			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
+
+		}
+		super.copyTo(baseDest);
+		return baseDest;
+	}
+	public BaseEntity mergeDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof Target){
+		
+			
+			Target dest =(Target)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeProfile(getProfile());
+			dest.mergeBanner(getBanner());
+			dest.mergeLocation(getLocation());
+			dest.mergeLastUpdate(getLastUpdate());
+			dest.mergePlatform(getPlatform());
+			dest.mergeVersion(getVersion());
 
 		}
 		super.copyTo(baseDest);

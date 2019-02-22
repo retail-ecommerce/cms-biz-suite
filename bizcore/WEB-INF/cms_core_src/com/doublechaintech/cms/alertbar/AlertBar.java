@@ -152,6 +152,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeId(String id){
+		if(id != null) { setId(id);}
+	}
 	
 	
 	public void setName(String name){
@@ -164,6 +167,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.mName = trimString(name);;
 		this.changed = true;
 		return this;
+	}
+	public void mergeName(String name){
+		if(name != null) { setName(name);}
 	}
 	
 	
@@ -178,6 +184,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeMessage(String message){
+		if(message != null) { setMessage(message);}
+	}
 	
 	
 	public void setLastUpdate(DateTime lastUpdate){
@@ -191,6 +200,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeLastUpdate(DateTime lastUpdate){
+		setLastUpdate(lastUpdate);
+	}
 	
 	
 	public void setPlatform(Platform platform){
@@ -203,6 +215,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.mPlatform = platform;;
 		this.changed = true;
 		return this;
+	}
+	public void mergePlatform(Platform platform){
+		if(platform != null) { setPlatform(platform);}
 	}
 	
 	
@@ -221,6 +236,9 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 		this.mVersion = version;;
 		this.changed = true;
 		return this;
+	}
+	public void mergeVersion(int version){
+		setVersion(version);
 	}
 	
 	
@@ -277,6 +295,25 @@ public class AlertBar extends BaseEntity implements  java.io.Serializable{
 			dest.setLastUpdate(getLastUpdate());
 			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
+
+		}
+		super.copyTo(baseDest);
+		return baseDest;
+	}
+	public BaseEntity mergeDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof AlertBar){
+		
+			
+			AlertBar dest =(AlertBar)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeMessage(getMessage());
+			dest.mergeLastUpdate(getLastUpdate());
+			dest.mergePlatform(getPlatform());
+			dest.mergeVersion(getVersion());
 
 		}
 		super.copyTo(baseDest);

@@ -118,6 +118,9 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeId(String id){
+		if(id != null) { setId(id);}
+	}
 	
 	
 	public void setName(String name){
@@ -131,6 +134,9 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeName(String name){
+		if(name != null) { setName(name);}
+	}
 	
 	
 	public void setPlatform(Platform platform){
@@ -143,6 +149,9 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		this.mPlatform = platform;;
 		this.changed = true;
 		return this;
+	}
+	public void mergePlatform(Platform platform){
+		if(platform != null) { setPlatform(platform);}
 	}
 	
 	
@@ -161,6 +170,9 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		this.mVersion = version;;
 		this.changed = true;
 		return this;
+	}
+	public void mergeVersion(int version){
+		setVersion(version);
 	}
 	
 	
@@ -194,7 +206,16 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		}
 		getTargetList().addAll(targetList);
 	}
-	
+	public  void mergeTargetList(SmartList<Target> targetList){
+		if(targetList==null){
+			return;
+		}
+		if(targetList.isEmpty()){
+			return;
+		}
+		addTargetList( targetList );
+		
+	}
 	public  Target removeTarget(Target targetIndex){
 		
 		int index = getTargetList().indexOf(targetIndex);
@@ -292,7 +313,16 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		}
 		getUserAlertList().addAll(userAlertList);
 	}
-	
+	public  void mergeUserAlertList(SmartList<UserAlert> userAlertList){
+		if(userAlertList==null){
+			return;
+		}
+		if(userAlertList.isEmpty()){
+			return;
+		}
+		addUserAlertList( userAlertList );
+		
+	}
 	public  UserAlert removeUserAlert(UserAlert userAlertIndex){
 		
 		int index = getUserAlertList().indexOf(userAlertIndex);
@@ -425,6 +455,25 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 			dest.setVersion(getVersion());
 			dest.setTargetList(getTargetList());
 			dest.setUserAlertList(getUserAlertList());
+
+		}
+		super.copyTo(baseDest);
+		return baseDest;
+	}
+	public BaseEntity mergeDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof Profile){
+		
+			
+			Profile dest =(Profile)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergePlatform(getPlatform());
+			dest.mergeVersion(getVersion());
+			dest.mergeTargetList(getTargetList());
+			dest.mergeUserAlertList(getUserAlertList());
 
 		}
 		super.copyTo(baseDest);

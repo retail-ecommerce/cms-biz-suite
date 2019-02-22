@@ -167,6 +167,9 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeId(String id){
+		if(id != null) { setId(id);}
+	}
 	
 	
 	public void setName(String name){
@@ -179,6 +182,9 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.mName = trimString(name);;
 		this.changed = true;
 		return this;
+	}
+	public void mergeName(String name){
+		if(name != null) { setName(name);}
 	}
 	
 	
@@ -193,6 +199,9 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeIntroduction(String introduction){
+		if(introduction != null) { setIntroduction(introduction);}
+	}
 	
 	
 	public void setCurrentVersion(String currentVersion){
@@ -206,6 +215,9 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.changed = true;
 		return this;
 	}
+	public void mergeCurrentVersion(String currentVersion){
+		if(currentVersion != null) { setCurrentVersion(currentVersion);}
+	}
 	
 	
 	public void setVersion(int version){
@@ -218,6 +230,9 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		this.mVersion = version;;
 		this.changed = true;
 		return this;
+	}
+	public void mergeVersion(int version){
+		setVersion(version);
 	}
 	
 	
@@ -251,7 +266,16 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		}
 		getAlertBarList().addAll(alertBarList);
 	}
-	
+	public  void mergeAlertBarList(SmartList<AlertBar> alertBarList){
+		if(alertBarList==null){
+			return;
+		}
+		if(alertBarList.isEmpty()){
+			return;
+		}
+		addAlertBarList( alertBarList );
+		
+	}
 	public  AlertBar removeAlertBar(AlertBar alertBarIndex){
 		
 		int index = getAlertBarList().indexOf(alertBarIndex);
@@ -349,7 +373,16 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		}
 		getBannerList().addAll(bannerList);
 	}
-	
+	public  void mergeBannerList(SmartList<Banner> bannerList){
+		if(bannerList==null){
+			return;
+		}
+		if(bannerList.isEmpty()){
+			return;
+		}
+		addBannerList( bannerList );
+		
+	}
 	public  Banner removeBanner(Banner bannerIndex){
 		
 		int index = getBannerList().indexOf(bannerIndex);
@@ -447,7 +480,16 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		}
 		getProfileList().addAll(profileList);
 	}
-	
+	public  void mergeProfileList(SmartList<Profile> profileList){
+		if(profileList==null){
+			return;
+		}
+		if(profileList.isEmpty()){
+			return;
+		}
+		addProfileList( profileList );
+		
+	}
 	public  Profile removeProfile(Profile profileIndex){
 		
 		int index = getProfileList().indexOf(profileIndex);
@@ -545,7 +587,16 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		}
 		getTargetList().addAll(targetList);
 	}
-	
+	public  void mergeTargetList(SmartList<Target> targetList){
+		if(targetList==null){
+			return;
+		}
+		if(targetList.isEmpty()){
+			return;
+		}
+		addTargetList( targetList );
+		
+	}
 	public  Target removeTarget(Target targetIndex){
 		
 		int index = getTargetList().indexOf(targetIndex);
@@ -643,7 +694,16 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		}
 		getUserAlertList().addAll(userAlertList);
 	}
-	
+	public  void mergeUserAlertList(SmartList<UserAlert> userAlertList){
+		if(userAlertList==null){
+			return;
+		}
+		if(userAlertList.isEmpty()){
+			return;
+		}
+		addUserAlertList( userAlertList );
+		
+	}
 	public  UserAlert removeUserAlert(UserAlert userAlertIndex){
 		
 		int index = getUserAlertList().indexOf(userAlertIndex);
@@ -801,6 +861,29 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			dest.setProfileList(getProfileList());
 			dest.setTargetList(getTargetList());
 			dest.setUserAlertList(getUserAlertList());
+
+		}
+		super.copyTo(baseDest);
+		return baseDest;
+	}
+	public BaseEntity mergeDataTo(BaseEntity baseDest){
+		
+		
+		if(baseDest instanceof Platform){
+		
+			
+			Platform dest =(Platform)baseDest;
+		
+			dest.mergeId(getId());
+			dest.mergeName(getName());
+			dest.mergeIntroduction(getIntroduction());
+			dest.mergeCurrentVersion(getCurrentVersion());
+			dest.mergeVersion(getVersion());
+			dest.mergeAlertBarList(getAlertBarList());
+			dest.mergeBannerList(getBannerList());
+			dest.mergeProfileList(getProfileList());
+			dest.mergeTargetList(getTargetList());
+			dest.mergeUserAlertList(getUserAlertList());
 
 		}
 		super.copyTo(baseDest);
