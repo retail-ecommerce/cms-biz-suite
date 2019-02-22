@@ -27,6 +27,16 @@ public interface PlatformManager{
 	/*======================================================DATA MAINTENANCE===========================================================*/
 	
 
+	//public  AlertBarManager getAlertBarManager(CmsUserContext userContext, String platformId, String name, String message ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addAlertBar(CmsUserContext userContext, String platformId, String name, String message , String [] tokensExpr)  throws Exception;
+	public  Platform removeAlertBar(CmsUserContext userContext, String platformId, String alertBarId, int alertBarVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateAlertBar(CmsUserContext userContext, String platformId, String alertBarId, int alertBarVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
 	//public  BannerManager getBannerManager(CmsUserContext userContext, String platformId, String name, String imagePath ,String [] tokensExpr)  throws Exception;
 	
 	public  Platform addBanner(CmsUserContext userContext, String platformId, String name, String imagePath , String [] tokensExpr)  throws Exception;
@@ -52,6 +62,16 @@ public interface PlatformManager{
 	public  Platform addTarget(CmsUserContext userContext, String platformId, String name, String profileId, String bannerId, String location , String [] tokensExpr)  throws Exception;
 	public  Platform removeTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion,String [] tokensExpr)  throws Exception;
 	public  Platform updateTarget(CmsUserContext userContext, String platformId, String targetId, int targetVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
+	//public  UserAlertManager getUserAlertManager(CmsUserContext userContext, String platformId, String message, String profileId, String location ,String [] tokensExpr)  throws Exception;
+	
+	public  Platform addUserAlert(CmsUserContext userContext, String platformId, String message, String profileId, String location , String [] tokensExpr)  throws Exception;
+	public  Platform removeUserAlert(CmsUserContext userContext, String platformId, String userAlertId, int userAlertVersion,String [] tokensExpr)  throws Exception;
+	public  Platform updateUserAlert(CmsUserContext userContext, String platformId, String userAlertId, int userAlertVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
 
 	/*
 

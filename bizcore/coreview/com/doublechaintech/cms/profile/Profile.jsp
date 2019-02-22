@@ -102,6 +102,7 @@
 	 
 	<% Profile result = (Profile)request.getAttribute("result");  %>
 			<li><a data-toggle="tab" href="#targetList" class="disabled"> ${userContext.localeMap['target']}</a></li>
+			<li><a data-toggle="tab" href="#userAlertList" class="disabled"> ${userContext.localeMap['user_alert']}</a></li>
  
 	</ul>
 	</div>
@@ -155,6 +156,14 @@
 		<c:set var="targetListName" value="targetList" scope="request"/>
 		<div id="targetList" class="tab-pane fade sublist" refer-name="profile">
 			<sky:include page="com/doublechaintech/cms/target/Target$List.jsp"
+					referName="profile"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["userAlertList"] or ignoreListAccessControl}'>
+		<c:set var="userAlertList" value="${result.userAlertList}" scope="request"/>
+		<c:set var="userAlertListName" value="userAlertList" scope="request"/>
+		<div id="userAlertList" class="tab-pane fade sublist" refer-name="profile">
+			<sky:include page="com/doublechaintech/cms/useralert/UserAlert$List.jsp"
 					referName="profile"/>
 		</div>
 	</c:if>

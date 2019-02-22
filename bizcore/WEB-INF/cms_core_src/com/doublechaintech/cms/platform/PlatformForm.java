@@ -82,6 +82,76 @@ public class PlatformForm extends BaseForm {
 
 
 
+	public PlatformForm alertBarIdFieldForAlertBar(String parameterName, String initValue){
+		FormField field =  idFromAlertBar(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm alertBarIdFieldForAlertBar(String initValue){
+		return alertBarIdFieldForAlertBar("alertBarId",initValue);
+	}
+	public PlatformForm alertBarIdFieldForAlertBar(){
+		return alertBarIdFieldForAlertBar("alertBarId","");
+	}
+
+
+	public PlatformForm nameFieldForAlertBar(String parameterName, String initValue){
+		FormField field =  nameFromAlertBar(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm nameFieldForAlertBar(String initValue){
+		return nameFieldForAlertBar("name",initValue);
+	}
+	public PlatformForm nameFieldForAlertBar(){
+		return nameFieldForAlertBar("name","");
+	}
+
+
+	public PlatformForm messageFieldForAlertBar(String parameterName, String initValue){
+		FormField field =  messageFromAlertBar(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm messageFieldForAlertBar(String initValue){
+		return messageFieldForAlertBar("message",initValue);
+	}
+	public PlatformForm messageFieldForAlertBar(){
+		return messageFieldForAlertBar("message","");
+	}
+
+
+	public PlatformForm lastUpdateFieldForAlertBar(String parameterName, String initValue){
+		FormField field =  lastUpdateFromAlertBar(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm lastUpdateFieldForAlertBar(String initValue){
+		return lastUpdateFieldForAlertBar("lastUpdate",initValue);
+	}
+	public PlatformForm lastUpdateFieldForAlertBar(){
+		return lastUpdateFieldForAlertBar("lastUpdate","");
+	}
+
+
+	public PlatformForm platformIdFieldForAlertBar(String parameterName, String initValue){
+		FormField field =  platformIdFromAlertBar(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForAlertBar(String initValue){
+		return platformIdFieldForAlertBar("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForAlertBar(){
+		return platformIdFieldForAlertBar("platformId","");
+	}
+
+
 	public PlatformForm bannerIdFieldForBanner(String parameterName, String initValue){
 		FormField field =  idFromBanner(parameterName, initValue);		
 		this.addFormField(field);
@@ -289,6 +359,90 @@ public class PlatformForm extends BaseForm {
 	}
 	public PlatformForm platformIdFieldForTarget(){
 		return platformIdFieldForTarget("platformId","");
+	}
+
+
+	public PlatformForm userAlertIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  idFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm userAlertIdFieldForUserAlert(String initValue){
+		return userAlertIdFieldForUserAlert("userAlertId",initValue);
+	}
+	public PlatformForm userAlertIdFieldForUserAlert(){
+		return userAlertIdFieldForUserAlert("userAlertId","");
+	}
+
+
+	public PlatformForm messageFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  messageFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm messageFieldForUserAlert(String initValue){
+		return messageFieldForUserAlert("message",initValue);
+	}
+	public PlatformForm messageFieldForUserAlert(){
+		return messageFieldForUserAlert("message","");
+	}
+
+
+	public PlatformForm profileIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  profileIdFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm profileIdFieldForUserAlert(String initValue){
+		return profileIdFieldForUserAlert("profileId",initValue);
+	}
+	public PlatformForm profileIdFieldForUserAlert(){
+		return profileIdFieldForUserAlert("profileId","");
+	}
+
+
+	public PlatformForm locationFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  locationFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm locationFieldForUserAlert(String initValue){
+		return locationFieldForUserAlert("location",initValue);
+	}
+	public PlatformForm locationFieldForUserAlert(){
+		return locationFieldForUserAlert("location","");
+	}
+
+
+	public PlatformForm lastUpdateFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  lastUpdateFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm lastUpdateFieldForUserAlert(String initValue){
+		return lastUpdateFieldForUserAlert("lastUpdate",initValue);
+	}
+	public PlatformForm lastUpdateFieldForUserAlert(){
+		return lastUpdateFieldForUserAlert("lastUpdate","");
+	}
+
+
+	public PlatformForm platformIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  platformIdFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public PlatformForm platformIdFieldForUserAlert(String initValue){
+		return platformIdFieldForUserAlert("platformId",initValue);
+	}
+	public PlatformForm platformIdFieldForUserAlert(){
+		return platformIdFieldForUserAlert("platformId","");
 	}
 
 	

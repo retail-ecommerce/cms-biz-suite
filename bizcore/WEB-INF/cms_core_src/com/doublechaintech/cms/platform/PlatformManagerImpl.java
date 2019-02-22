@@ -21,8 +21,10 @@ import com.doublechaintech.cms.CmsCheckerManager;
 import com.doublechaintech.cms.CustomCmsCheckerManager;
 
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.alertbar.AlertBar;
 
 
 import com.doublechaintech.cms.platform.Platform;
@@ -152,6 +154,10 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 		addAction(userContext, platform, tokens,"@update","updatePlatform","updatePlatform/"+platform.getId()+"/","main","primary");
 		addAction(userContext, platform, tokens,"@copy","clonePlatform","clonePlatform/"+platform.getId()+"/","main","primary");
 		
+		addAction(userContext, platform, tokens,"platform.addAlertBar","addAlertBar","addAlertBar/"+platform.getId()+"/","alertBarList","primary");
+		addAction(userContext, platform, tokens,"platform.removeAlertBar","removeAlertBar","removeAlertBar/"+platform.getId()+"/","alertBarList","primary");
+		addAction(userContext, platform, tokens,"platform.updateAlertBar","updateAlertBar","updateAlertBar/"+platform.getId()+"/","alertBarList","primary");
+		addAction(userContext, platform, tokens,"platform.copyAlertBarFrom","copyAlertBarFrom","copyAlertBarFrom/"+platform.getId()+"/","alertBarList","primary");
 		addAction(userContext, platform, tokens,"platform.addBanner","addBanner","addBanner/"+platform.getId()+"/","bannerList","primary");
 		addAction(userContext, platform, tokens,"platform.removeBanner","removeBanner","removeBanner/"+platform.getId()+"/","bannerList","primary");
 		addAction(userContext, platform, tokens,"platform.updateBanner","updateBanner","updateBanner/"+platform.getId()+"/","bannerList","primary");
@@ -164,6 +170,10 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 		addAction(userContext, platform, tokens,"platform.removeTarget","removeTarget","removeTarget/"+platform.getId()+"/","targetList","primary");
 		addAction(userContext, platform, tokens,"platform.updateTarget","updateTarget","updateTarget/"+platform.getId()+"/","targetList","primary");
 		addAction(userContext, platform, tokens,"platform.copyTargetFrom","copyTargetFrom","copyTargetFrom/"+platform.getId()+"/","targetList","primary");
+		addAction(userContext, platform, tokens,"platform.addUserAlert","addUserAlert","addUserAlert/"+platform.getId()+"/","userAlertList","primary");
+		addAction(userContext, platform, tokens,"platform.removeUserAlert","removeUserAlert","removeUserAlert/"+platform.getId()+"/","userAlertList","primary");
+		addAction(userContext, platform, tokens,"platform.updateUserAlert","updateUserAlert","updateUserAlert/"+platform.getId()+"/","userAlertList","primary");
+		addAction(userContext, platform, tokens,"platform.copyUserAlertFrom","copyUserAlertFrom","copyUserAlertFrom/"+platform.getId()+"/","userAlertList","primary");
 	
 		
 		
@@ -325,9 +335,11 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 	}
 	protected Map<String,Object> viewTokens(){
 		return tokens().allTokens()
+		.sortAlertBarListWith("id","desc")
 		.sortBannerListWith("id","desc")
 		.sortProfileListWith("id","desc")
 		.sortTargetListWith("id","desc")
+		.sortUserAlertListWith("id","desc")
 		.done();
 
 	}
@@ -412,11 +424,273 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 				return platform;
 			}
 	}
+	//disconnect Platform with profile in UserAlert
+	protected Platform breakWithUserAlertByProfile(CmsUserContext userContext, String platformId, String profileId,  String [] tokensExpr)
+		 throws Exception{
+			
+			//TODO add check code here
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+
+			synchronized(platform){ 
+				//Will be good when the thread loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveUserAlertListWithProfile(platform, profileId, this.emptyOptions());
+
+				platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
+				return platform;
+			}
+	}
 	
 	
 	
 	
 	
+
+	protected void checkParamsForAddingAlertBar(CmsUserContext userContext, String platformId, String name, String message,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+
+		
+		userContext.getChecker().checkNameOfAlertBar(name);
+		
+		userContext.getChecker().checkMessageOfAlertBar(message);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+
+	
+	}
+	public  Platform addAlertBar(CmsUserContext userContext, String platformId, String name, String message, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingAlertBar(userContext,platformId,name, message,tokensExpr);
+		
+		AlertBar alertBar = createAlertBar(userContext,name, message);
+		
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.addAlertBar( alertBar );		
+			platform = savePlatform(userContext, platform, tokens().withAlertBarList().done());
+			
+			userContext.getManagerGroup().getAlertBarManager().onNewInstanceCreated(userContext, alertBar);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingAlertBarProperties(CmsUserContext userContext, String platformId,String id,String name,String message,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfAlertBar(id);
+		
+		userContext.getChecker().checkNameOfAlertBar( name);
+		userContext.getChecker().checkMessageOfAlertBar( message);
+
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform updateAlertBarProperties(CmsUserContext userContext, String platformId, String id,String name,String message, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingAlertBarProperties(userContext,platformId,id,name,message,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withAlertBarListList()
+				.searchAlertBarListWith(AlertBar.ID_PROPERTY, "is", id).done();
+		
+		Platform platformToUpdate = loadPlatform(userContext, platformId, options);
+		
+		if(platformToUpdate.getAlertBarList().isEmpty()){
+			throw new PlatformManagerException("AlertBar is NOT FOUND with id: '"+id+"'");
+		}
+		
+		AlertBar item = platformToUpdate.getAlertBarList().first();
+		
+		item.updateName( name );
+		item.updateMessage( message );
+
+		
+		//checkParamsForAddingAlertBar(userContext,platformId,name, code, used,tokensExpr);
+		Platform platform = savePlatform(userContext, platformToUpdate, tokens().withAlertBarList().done());
+		synchronized(platform){ 
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected AlertBar createAlertBar(CmsUserContext userContext, String name, String message) throws Exception{
+
+		AlertBar alertBar = new AlertBar();
+		
+		
+		alertBar.setName(name);		
+		alertBar.setMessage(message);		
+		alertBar.setLastUpdate(userContext.now());
+	
+		
+		return alertBar;
+	
+		
+	}
+	
+	protected AlertBar createIndexedAlertBar(String id, int version){
+
+		AlertBar alertBar = new AlertBar();
+		alertBar.setId(id);
+		alertBar.setVersion(version);
+		return alertBar;			
+		
+	}
+	
+	protected void checkParamsForRemovingAlertBarList(CmsUserContext userContext, String platformId, 
+			String alertBarIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		for(String alertBarId: alertBarIds){
+			userContext.getChecker().checkIdOfAlertBar(alertBarId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform removeAlertBarList(CmsUserContext userContext, String platformId, 
+			String alertBarIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingAlertBarList(userContext, platformId,  alertBarIds, tokensExpr);
+			
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+			synchronized(platform){ 
+				//Will be good when the platform loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveAlertBarList(platform, alertBarIds, allTokens());
+				platform = savePlatform(userContext, platform, tokens().withAlertBarList().done());
+				deleteRelationListInGraph(userContext, platform.getAlertBarList());
+				return present(userContext,platform, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingAlertBar(CmsUserContext userContext, String platformId, 
+		String alertBarId, int alertBarVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfAlertBar(alertBarId);
+		userContext.getChecker().checkVersionOfAlertBar(alertBarVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform removeAlertBar(CmsUserContext userContext, String platformId, 
+		String alertBarId, int alertBarVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingAlertBar(userContext,platformId, alertBarId, alertBarVersion,tokensExpr);
+		
+		AlertBar alertBar = createIndexedAlertBar(alertBarId, alertBarVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.removeAlertBar( alertBar );		
+			platform = savePlatform(userContext, platform, tokens().withAlertBarList().done());
+			deleteRelationInGraph(userContext, alertBar);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingAlertBar(CmsUserContext userContext, String platformId, 
+		String alertBarId, int alertBarVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfAlertBar(alertBarId);
+		userContext.getChecker().checkVersionOfAlertBar(alertBarVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform copyAlertBarFrom(CmsUserContext userContext, String platformId, 
+		String alertBarId, int alertBarVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingAlertBar(userContext,platformId, alertBarId, alertBarVersion,tokensExpr);
+		
+		AlertBar alertBar = createIndexedAlertBar(alertBarId, alertBarVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			alertBar.updateLastUpdate(userContext.now());
+			
+			platform.copyAlertBarFrom( alertBar );		
+			platform = savePlatform(userContext, platform, tokens().withAlertBarList().done());
+			
+			userContext.getManagerGroup().getAlertBarManager().onNewInstanceCreated(userContext, (AlertBar)platform.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingAlertBar(CmsUserContext userContext, String platformId, String alertBarId, int alertBarVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfAlertBar(alertBarId);
+		userContext.getChecker().checkVersionOfAlertBar(alertBarVersion);
+		
+
+		if(AlertBar.NAME_PROPERTY.equals(property)){
+			userContext.getChecker().checkNameOfAlertBar(parseString(newValueExpr));
+		}
+		
+		if(AlertBar.MESSAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkMessageOfAlertBar(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	
+	public  Platform updateAlertBar(CmsUserContext userContext, String platformId, String alertBarId, int alertBarVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingAlertBar(userContext, platformId, alertBarId, alertBarVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withAlertBarList().searchAlertBarListWith(AlertBar.ID_PROPERTY, "eq", alertBarId).done();
+		
+		
+		
+		Platform platform = loadPlatform(userContext, platformId, loadTokens);
+		
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//platform.removeAlertBar( alertBar );	
+			//make changes to AcceleraterAccount.
+			AlertBar alertBarIndex = createIndexedAlertBar(alertBarId, alertBarVersion);
+		
+			AlertBar alertBar = platform.findTheAlertBar(alertBarIndex);
+			if(alertBar == null){
+				throw new PlatformManagerException(alertBar+" is NOT FOUND" );
+			}
+			
+			alertBar.changeProperty(property, newValueExpr);
+			alertBar.updateLastUpdate(userContext.now());
+			platform = savePlatform(userContext, platform, tokens().withAlertBarList().done());
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
 
 	protected void checkParamsForAddingBanner(CmsUserContext userContext, String platformId, String name, String imagePath,String [] tokensExpr) throws Exception{
 		
@@ -1139,6 +1413,255 @@ public class PlatformManagerImpl extends CustomCmsCheckerManager implements Plat
 			target.changeProperty(property, newValueExpr);
 			target.updateLastUpdate(userContext.now());
 			platform = savePlatform(userContext, platform, tokens().withTargetList().done());
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+
+	}
+	/*
+
+	*/
+	
+
+
+
+	protected void checkParamsForAddingUserAlert(CmsUserContext userContext, String platformId, String message, String profileId, String location,String [] tokensExpr) throws Exception{
+		
+		
+
+		
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+
+		
+		userContext.getChecker().checkMessageOfUserAlert(message);
+		
+		userContext.getChecker().checkProfileIdOfUserAlert(profileId);
+		
+		userContext.getChecker().checkLocationOfUserAlert(location);
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+
+	
+	}
+	public  Platform addUserAlert(CmsUserContext userContext, String platformId, String message, String profileId, String location, String [] tokensExpr) throws Exception
+	{	
+		
+		checkParamsForAddingUserAlert(userContext,platformId,message, profileId, location,tokensExpr);
+		
+		UserAlert userAlert = createUserAlert(userContext,message, profileId, location);
+		
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.addUserAlert( userAlert );		
+			platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
+			
+			userContext.getManagerGroup().getUserAlertManager().onNewInstanceCreated(userContext, userAlert);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	protected void checkParamsForUpdatingUserAlertProperties(CmsUserContext userContext, String platformId,String id,String message,String location,String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfUserAlert(id);
+		
+		userContext.getChecker().checkMessageOfUserAlert( message);
+		userContext.getChecker().checkLocationOfUserAlert( location);
+
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform updateUserAlertProperties(CmsUserContext userContext, String platformId, String id,String message,String location, String [] tokensExpr) throws Exception
+	{	
+		checkParamsForUpdatingUserAlertProperties(userContext,platformId,id,message,location,tokensExpr);
+
+		Map<String, Object> options = tokens()
+				.allTokens()
+				//.withUserAlertListList()
+				.searchUserAlertListWith(UserAlert.ID_PROPERTY, "is", id).done();
+		
+		Platform platformToUpdate = loadPlatform(userContext, platformId, options);
+		
+		if(platformToUpdate.getUserAlertList().isEmpty()){
+			throw new PlatformManagerException("UserAlert is NOT FOUND with id: '"+id+"'");
+		}
+		
+		UserAlert item = platformToUpdate.getUserAlertList().first();
+		
+		item.updateMessage( message );
+		item.updateLocation( location );
+
+		
+		//checkParamsForAddingUserAlert(userContext,platformId,name, code, used,tokensExpr);
+		Platform platform = savePlatform(userContext, platformToUpdate, tokens().withUserAlertList().done());
+		synchronized(platform){ 
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+	}
+	
+	
+	protected UserAlert createUserAlert(CmsUserContext userContext, String message, String profileId, String location) throws Exception{
+
+		UserAlert userAlert = new UserAlert();
+		
+		
+		userAlert.setMessage(message);		
+		Profile  profile = new Profile();
+		profile.setId(profileId);		
+		userAlert.setProfile(profile);		
+		userAlert.setLocation(location);		
+		userAlert.setLastUpdate(userContext.now());
+	
+		
+		return userAlert;
+	
+		
+	}
+	
+	protected UserAlert createIndexedUserAlert(String id, int version){
+
+		UserAlert userAlert = new UserAlert();
+		userAlert.setId(id);
+		userAlert.setVersion(version);
+		return userAlert;			
+		
+	}
+	
+	protected void checkParamsForRemovingUserAlertList(CmsUserContext userContext, String platformId, 
+			String userAlertIds[],String [] tokensExpr) throws Exception {
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		for(String userAlertId: userAlertIds){
+			userContext.getChecker().checkIdOfUserAlert(userAlertId);
+		}
+		
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+		
+	}
+	public  Platform removeUserAlertList(CmsUserContext userContext, String platformId, 
+			String userAlertIds[],String [] tokensExpr) throws Exception{
+			
+			checkParamsForRemovingUserAlertList(userContext, platformId,  userAlertIds, tokensExpr);
+			
+			
+			Platform platform = loadPlatform(userContext, platformId, allTokens());
+			synchronized(platform){ 
+				//Will be good when the platform loaded from this JVM process cache.
+				//Also good when there is a RAM based DAO implementation
+				userContext.getDAOGroup().getPlatformDAO().planToRemoveUserAlertList(platform, userAlertIds, allTokens());
+				platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
+				deleteRelationListInGraph(userContext, platform.getUserAlertList());
+				return present(userContext,platform, mergedAllTokens(tokensExpr));
+			}
+	}
+	
+	protected void checkParamsForRemovingUserAlert(CmsUserContext userContext, String platformId, 
+		String userAlertId, int userAlertVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfUserAlert(userAlertId);
+		userContext.getChecker().checkVersionOfUserAlert(userAlertVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform removeUserAlert(CmsUserContext userContext, String platformId, 
+		String userAlertId, int userAlertVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForRemovingUserAlert(userContext,platformId, userAlertId, userAlertVersion,tokensExpr);
+		
+		UserAlert userAlert = createIndexedUserAlert(userAlertId, userAlertVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			platform.removeUserAlert( userAlert );		
+			platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
+			deleteRelationInGraph(userContext, userAlert);
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+		
+	}
+	protected void checkParamsForCopyingUserAlert(CmsUserContext userContext, String platformId, 
+		String userAlertId, int userAlertVersion,String [] tokensExpr) throws Exception{
+		
+		userContext.getChecker().checkIdOfPlatform( platformId);
+		userContext.getChecker().checkIdOfUserAlert(userAlertId);
+		userContext.getChecker().checkVersionOfUserAlert(userAlertVersion);
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	public  Platform copyUserAlertFrom(CmsUserContext userContext, String platformId, 
+		String userAlertId, int userAlertVersion,String [] tokensExpr) throws Exception{
+		
+		checkParamsForCopyingUserAlert(userContext,platformId, userAlertId, userAlertVersion,tokensExpr);
+		
+		UserAlert userAlert = createIndexedUserAlert(userAlertId, userAlertVersion);
+		Platform platform = loadPlatform(userContext, platformId, allTokens());
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			
+			userAlert.updateLastUpdate(userContext.now());
+			
+			platform.copyUserAlertFrom( userAlert );		
+			platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
+			
+			userContext.getManagerGroup().getUserAlertManager().onNewInstanceCreated(userContext, (UserAlert)platform.getFlexiableObjects().get(BaseEntity.COPIED_CHILD));
+			return present(userContext,platform, mergedAllTokens(tokensExpr));
+		}
+		
+	}
+	
+	protected void checkParamsForUpdatingUserAlert(CmsUserContext userContext, String platformId, String userAlertId, int userAlertVersion, String property, String newValueExpr,String [] tokensExpr) throws Exception{
+		
+
+		
+		userContext.getChecker().checkIdOfPlatform(platformId);
+		userContext.getChecker().checkIdOfUserAlert(userAlertId);
+		userContext.getChecker().checkVersionOfUserAlert(userAlertVersion);
+		
+
+		if(UserAlert.MESSAGE_PROPERTY.equals(property)){
+			userContext.getChecker().checkMessageOfUserAlert(parseString(newValueExpr));
+		}
+		
+		if(UserAlert.LOCATION_PROPERTY.equals(property)){
+			userContext.getChecker().checkLocationOfUserAlert(parseString(newValueExpr));
+		}
+		
+	
+		userContext.getChecker().throwExceptionIfHasErrors(PlatformManagerException.class);
+	
+	}
+	
+	public  Platform updateUserAlert(CmsUserContext userContext, String platformId, String userAlertId, int userAlertVersion, String property, String newValueExpr,String [] tokensExpr)
+			throws Exception{
+		
+		checkParamsForUpdatingUserAlert(userContext, platformId, userAlertId, userAlertVersion, property, newValueExpr,  tokensExpr);
+		
+		Map<String,Object> loadTokens = this.tokens().withUserAlertList().searchUserAlertListWith(UserAlert.ID_PROPERTY, "eq", userAlertId).done();
+		
+		
+		
+		Platform platform = loadPlatform(userContext, platformId, loadTokens);
+		
+		synchronized(platform){ 
+			//Will be good when the platform loaded from this JVM process cache.
+			//Also good when there is a RAM based DAO implementation
+			//platform.removeUserAlert( userAlert );	
+			//make changes to AcceleraterAccount.
+			UserAlert userAlertIndex = createIndexedUserAlert(userAlertId, userAlertVersion);
+		
+			UserAlert userAlert = platform.findTheUserAlert(userAlertIndex);
+			if(userAlert == null){
+				throw new PlatformManagerException(userAlert+" is NOT FOUND" );
+			}
+			
+			userAlert.changeProperty(property, newValueExpr);
+			userAlert.updateLastUpdate(userContext.now());
+			platform = savePlatform(userContext, platform, tokens().withUserAlertList().done());
 			return present(userContext,platform, mergedAllTokens(tokensExpr));
 		}
 

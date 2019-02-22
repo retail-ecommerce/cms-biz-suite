@@ -3,9 +3,11 @@ package com.doublechaintech.cms;
 import java.util.Map;
 
 import com.doublechaintech.cms.platform.Platform;
+import com.doublechaintech.cms.alertbar.AlertBar;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.userdomain.UserDomain;
 import com.doublechaintech.cms.userwhitelist.UserWhiteList;
 import com.doublechaintech.cms.secuser.SecUser;
@@ -28,6 +30,11 @@ public class BeanFactoryImpl{
 	}
 
 
+	public AlertBar createAlertBar(Map<String,Object> options){
+		return new AlertBar();
+	}
+
+
 	public Banner createBanner(Map<String,Object> options){
 		return new Banner();
 	}
@@ -40,6 +47,11 @@ public class BeanFactoryImpl{
 
 	public Target createTarget(Map<String,Object> options){
 		return new Target();
+	}
+
+
+	public UserAlert createUserAlert(Map<String,Object> options){
+		return new UserAlert();
 	}
 
 

@@ -6,6 +6,9 @@ import java.util.Map;
 import com.doublechaintech.cms.platform.Platform;
 import com.doublechaintech.cms.platform.PlatformDAO;
 import com.doublechaintech.cms.platform.PlatformTokens;
+import com.doublechaintech.cms.alertbar.AlertBar;
+import com.doublechaintech.cms.alertbar.AlertBarDAO;
+import com.doublechaintech.cms.alertbar.AlertBarTokens;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.banner.BannerDAO;
 import com.doublechaintech.cms.banner.BannerTokens;
@@ -15,6 +18,9 @@ import com.doublechaintech.cms.profile.ProfileTokens;
 import com.doublechaintech.cms.target.Target;
 import com.doublechaintech.cms.target.TargetDAO;
 import com.doublechaintech.cms.target.TargetTokens;
+import com.doublechaintech.cms.useralert.UserAlert;
+import com.doublechaintech.cms.useralert.UserAlertDAO;
+import com.doublechaintech.cms.useralert.UserAlertTokens;
 import com.doublechaintech.cms.userdomain.UserDomain;
 import com.doublechaintech.cms.userdomain.UserDomainDAO;
 import com.doublechaintech.cms.userdomain.UserDomainTokens;
@@ -59,11 +65,15 @@ public class DAOGroup {
 
 	protected PlatformDAO platformDAO;
 
+	protected AlertBarDAO alertBarDAO;
+
 	protected BannerDAO bannerDAO;
 
 	protected ProfileDAO profileDAO;
 
 	protected TargetDAO targetDAO;
+
+	protected UserAlertDAO userAlertDAO;
 
 	protected UserDomainDAO userDomainDAO;
 
@@ -101,6 +111,14 @@ public class DAOGroup {
 	}
 
 
+	public AlertBarDAO getAlertBarDAO(){
+		return this.alertBarDAO;
+	}
+	public void setAlertBarDAO(AlertBarDAO dao){
+		this.alertBarDAO = dao;
+	}
+
+
 	public BannerDAO getBannerDAO(){
 		return this.bannerDAO;
 	}
@@ -122,6 +140,14 @@ public class DAOGroup {
 	}
 	public void setTargetDAO(TargetDAO dao){
 		this.targetDAO = dao;
+	}
+
+
+	public UserAlertDAO getUserAlertDAO(){
+		return this.userAlertDAO;
+	}
+	public void setUserAlertDAO(UserAlertDAO dao){
+		this.userAlertDAO = dao;
 	}
 
 
@@ -253,6 +279,21 @@ public class DAOGroup {
 			}
 		});
 
+		internalLoaderMap.put("AlertBar", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getAlertBarDAO().load(id, AlertBarTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getAlertBarDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getAlertBarDAO().present((AlertBar)data, tokens);
+			}
+		});
+
 		internalLoaderMap.put("Banner", new BasicLoader() {
 			@Override
 			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
@@ -295,6 +336,21 @@ public class DAOGroup {
 			@Override
 			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
 				return daoGoup.getTargetDAO().present((Target)data, tokens);
+			}
+		});
+
+		internalLoaderMap.put("UserAlert", new BasicLoader() {
+			@Override
+			public BaseEntity loadBasicData(DAOGroup daoGoup, String id) throws Exception {
+				return daoGoup.getUserAlertDAO().load(id, UserAlertTokens.withoutLists());
+			}
+			@Override
+			public BaseEntity loadBasicDataWithToken(DAOGroup daoGoup, String id, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getUserAlertDAO().load(id, tokens);
+			}
+			@Override
+			public BaseEntity present(DAOGroup daoGoup, BaseEntity data, Map<String, Object> tokens) throws Exception {
+				return daoGoup.getUserAlertDAO().present((UserAlert)data, tokens);
 			}
 		});
 

@@ -221,6 +221,90 @@ public class ProfileForm extends BaseForm {
 		return platformIdFieldForTarget("platformId","");
 	}
 
+
+	public ProfileForm userAlertIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  idFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm userAlertIdFieldForUserAlert(String initValue){
+		return userAlertIdFieldForUserAlert("userAlertId",initValue);
+	}
+	public ProfileForm userAlertIdFieldForUserAlert(){
+		return userAlertIdFieldForUserAlert("userAlertId","");
+	}
+
+
+	public ProfileForm messageFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  messageFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm messageFieldForUserAlert(String initValue){
+		return messageFieldForUserAlert("message",initValue);
+	}
+	public ProfileForm messageFieldForUserAlert(){
+		return messageFieldForUserAlert("message","");
+	}
+
+
+	public ProfileForm profileIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  profileIdFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm profileIdFieldForUserAlert(String initValue){
+		return profileIdFieldForUserAlert("profileId",initValue);
+	}
+	public ProfileForm profileIdFieldForUserAlert(){
+		return profileIdFieldForUserAlert("profileId","");
+	}
+
+
+	public ProfileForm locationFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  locationFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm locationFieldForUserAlert(String initValue){
+		return locationFieldForUserAlert("location",initValue);
+	}
+	public ProfileForm locationFieldForUserAlert(){
+		return locationFieldForUserAlert("location","");
+	}
+
+
+	public ProfileForm lastUpdateFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  lastUpdateFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm lastUpdateFieldForUserAlert(String initValue){
+		return lastUpdateFieldForUserAlert("lastUpdate",initValue);
+	}
+	public ProfileForm lastUpdateFieldForUserAlert(){
+		return lastUpdateFieldForUserAlert("lastUpdate","");
+	}
+
+
+	public ProfileForm platformIdFieldForUserAlert(String parameterName, String initValue){
+		FormField field =  platformIdFromUserAlert(parameterName, initValue);		
+		this.addFormField(field);
+		return this;
+	}
+	
+	public ProfileForm platformIdFieldForUserAlert(String initValue){
+		return platformIdFieldForUserAlert("platformId",initValue);
+	}
+	public ProfileForm platformIdFieldForUserAlert(){
+		return platformIdFieldForUserAlert("platformId","");
+	}
+
 	
 
 	

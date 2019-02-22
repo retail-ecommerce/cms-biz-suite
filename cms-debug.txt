@@ -5,6 +5,13 @@ Name|Name
 Introduction|Introduction
 Current Version|Current Version
 Version|Version
+Alert Bar|Alert Bar
+Id|Id
+Name|Name
+Message|Message
+Last Update|Last Update
+Platform|Platform
+Version|Version
 Banner|Banner
 Id|Id
 Name|Name
@@ -22,6 +29,14 @@ Id|Id
 Name|Name
 Profile|Profile
 Banner|Banner
+Location|Location
+Last Update|Last Update
+Platform|Platform
+Version|Version
+User Alert|User Alert
+Id|Id
+Message|Message
+Profile|Profile
 Location|Location
 Last Update|Last Update
 Platform|Platform
@@ -147,9 +162,11 @@ Url|Url
 Form|Form
 Version|Version
 Transfer to Another Platform|Transfer to Another Platform
+Transfer to Another Alert Bar|Transfer to Another Alert Bar
 Transfer to Another Banner|Transfer to Another Banner
 Transfer to Another Profile|Transfer to Another Profile
 Transfer to Another Target|Transfer to Another Target
+Transfer to Another User Alert|Transfer to Another User Alert
 Transfer to Another User Domain|Transfer to Another User Domain
 Transfer to Another User White List|Transfer to Another User White List
 Transfer to Another Sec User|Transfer to Another Sec User

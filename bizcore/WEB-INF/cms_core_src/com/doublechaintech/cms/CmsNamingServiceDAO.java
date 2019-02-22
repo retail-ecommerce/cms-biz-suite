@@ -20,9 +20,11 @@ public class CmsNamingServiceDAO extends CommonJDBCTemplateDAO {
 	static {
 		namingTableMap = new HashMap<String, String[]>();
 		namingTableMap.put("Platform", new String[]{"platform_data","name"});
+		namingTableMap.put("AlertBar", new String[]{"alert_bar_data","name"});
 		namingTableMap.put("Banner", new String[]{"banner_data","name"});
 		namingTableMap.put("Profile", new String[]{"profile_data","name"});
 		namingTableMap.put("Target", new String[]{"target_data","name"});
+		namingTableMap.put("UserAlert", new String[]{"user_alert_data","message"});
 		namingTableMap.put("UserDomain", new String[]{"user_domain_data","name"});
 		namingTableMap.put("UserWhiteList", new String[]{"user_white_list_data","user_identity"});
 		namingTableMap.put("SecUser", new String[]{"sec_user_data","login"});

@@ -131,6 +131,71 @@ public class BaseForm extends GenericForm{
 		return field;
 	}
 
+	protected FormField idFromAlertBar(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Id");
+		field.setLocaleKey("alert_bar.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Id");
+		return field;
+	}
+
+	protected FormField nameFromAlertBar(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Name");
+		field.setLocaleKey("alert_bar.name");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Name");
+		return field;
+	}
+
+	protected FormField messageFromAlertBar(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Message");
+		field.setLocaleKey("alert_bar.message");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Message");
+		return field;
+	}
+
+	protected FormField lastUpdateFromAlertBar(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Last Update");
+		field.setLocaleKey("alert_bar.last_update");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Last Update");
+		return field;
+	}
+
+	protected FormField platformIdFromAlertBar(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("alert_bar.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
 	protected FormField idFromBanner(String parameterName, String initValue){
 		FormField field = new FormField();
 		field.setLabel("Id");
@@ -317,6 +382,84 @@ public class BaseForm extends GenericForm{
 		FormField field = new FormField();
 		field.setLabel("Platform");
 		field.setLocaleKey("target.platform");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Platform");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Platform");
+		return field;
+	}
+
+	protected FormField idFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Id");
+		field.setLocaleKey("user_alert.id");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Id");
+		return field;
+	}
+
+	protected FormField messageFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Message");
+		field.setLocaleKey("user_alert.message");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Message");
+		return field;
+	}
+
+	protected FormField profileIdFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Profile");
+		field.setLocaleKey("user_alert.profile");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("Profile");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Profile");
+		return field;
+	}
+
+	protected FormField locationFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Location");
+		field.setLocaleKey("user_alert.location");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("text");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Location");
+		return field;
+	}
+
+	protected FormField lastUpdateFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Last Update");
+		field.setLocaleKey("user_alert.last_update");
+		field.setParameterName(parameterName);
+		field.setDefaultValue(initValue);
+		field.setFieldGroup("基本信息");
+		field.setType("date_time");
+		field.setRequired(true);
+		field.setPlaceholder("请填写Last Update");
+		return field;
+	}
+
+	protected FormField platformIdFromUserAlert(String parameterName, String initValue){
+		FormField field = new FormField();
+		field.setLabel("Platform");
+		field.setLocaleKey("user_alert.platform");
 		field.setParameterName(parameterName);
 		field.setDefaultValue(initValue);
 		field.setFieldGroup("基本信息");

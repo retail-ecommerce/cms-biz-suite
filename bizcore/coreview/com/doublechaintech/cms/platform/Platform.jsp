@@ -101,9 +101,11 @@
 	  <li class="active"><a data-toggle="tab" href="#summary" class="disabled"><i class="fa  fa-home"></i> ${userContext.localeMap['@summary']}</a></li>
 	 
 	<% Platform result = (Platform)request.getAttribute("result");  %>
+			<li><a data-toggle="tab" href="#alertBarList" class="disabled"> ${userContext.localeMap['alert_bar']}</a></li>
 			<li><a data-toggle="tab" href="#bannerList" class="disabled"> ${userContext.localeMap['banner']}</a></li>
 			<li><a data-toggle="tab" href="#profileList" class="disabled"> ${userContext.localeMap['profile']}</a></li>
 			<li><a data-toggle="tab" href="#targetList" class="disabled"> ${userContext.localeMap['target']}</a></li>
+			<li><a data-toggle="tab" href="#userAlertList" class="disabled"> ${userContext.localeMap['user_alert']}</a></li>
  
 	</ul>
 	</div>
@@ -147,7 +149,15 @@
 
 	
 
-		<c:if test='${not empty userContext.accessTokens["bannerList"] or ignoreListAccessControl}'>
+		<c:if test='${not empty userContext.accessTokens["alertBarList"] or ignoreListAccessControl}'>
+		<c:set var="alertBarList" value="${result.alertBarList}" scope="request"/>
+		<c:set var="alertBarListName" value="alertBarList" scope="request"/>
+		<div id="alertBarList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/doublechaintech/cms/alertbar/AlertBar$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["bannerList"] or ignoreListAccessControl}'>
 		<c:set var="bannerList" value="${result.bannerList}" scope="request"/>
 		<c:set var="bannerListName" value="bannerList" scope="request"/>
 		<div id="bannerList" class="tab-pane fade sublist" refer-name="platform">
@@ -168,6 +178,14 @@
 		<c:set var="targetListName" value="targetList" scope="request"/>
 		<div id="targetList" class="tab-pane fade sublist" refer-name="platform">
 			<sky:include page="com/doublechaintech/cms/target/Target$List.jsp"
+					referName="platform"/>
+		</div>
+	</c:if>
+	<c:if test='${not empty userContext.accessTokens["userAlertList"] or ignoreListAccessControl}'>
+		<c:set var="userAlertList" value="${result.userAlertList}" scope="request"/>
+		<c:set var="userAlertListName" value="userAlertList" scope="request"/>
+		<div id="userAlertList" class="tab-pane fade sublist" refer-name="platform">
+			<sky:include page="com/doublechaintech/cms/useralert/UserAlert$List.jsp"
 					referName="platform"/>
 		</div>
 	</c:if>

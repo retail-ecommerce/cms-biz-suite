@@ -34,14 +34,24 @@
 	
 	<bean id="platformDAOBase" class="com.doublechaintech.cms.platform.PlatformJDBCTemplateDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="alertBarDAO" ref="alertBarDAO" />
+		
 		<property name="bannerDAO" ref="bannerDAO" />
 		
 		<property name="profileDAO" ref="profileDAO" />
 		
 		<property name="targetDAO" ref="targetDAO" />
 		
+		<property name="userAlertDAO" ref="userAlertDAO" />
+		
 	</bean>
 	<bean id="platformDAO" parent="platformDAOBase"></bean>	
+	
+	
+	<bean id="alertBarDAOBase" class="com.doublechaintech.cms.alertbar.AlertBarJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="alertBarDAO" parent="alertBarDAOBase"></bean>	
 	
 	
 	<bean id="bannerDAOBase" class="com.doublechaintech.cms.banner.BannerJDBCTemplateDAO">
@@ -56,6 +66,8 @@
 		<property name="dataSource" ref="dataSource" /><property name="platformDAO" ref="platformDAO" />
 		<property name="targetDAO" ref="targetDAO" />
 		
+		<property name="userAlertDAO" ref="userAlertDAO" />
+		
 	</bean>
 	<bean id="profileDAO" parent="profileDAOBase"></bean>	
 	
@@ -64,6 +76,12 @@
 		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" /><property name="bannerDAO" ref="bannerDAO" /><property name="platformDAO" ref="platformDAO" />
 	</bean>
 	<bean id="targetDAO" parent="targetDAOBase"></bean>	
+	
+	
+	<bean id="userAlertDAOBase" class="com.doublechaintech.cms.useralert.UserAlertJDBCTemplateDAO">
+		<property name="dataSource" ref="dataSource" /><property name="profileDAO" ref="profileDAO" /><property name="platformDAO" ref="platformDAO" />
+	</bean>
+	<bean id="userAlertDAO" parent="userAlertDAOBase"></bean>	
 	
 	
 	<bean id="userDomainDAOBase" class="com.doublechaintech.cms.userdomain.UserDomainJDBCTemplateDAO">
@@ -169,9 +187,11 @@
 
 	<bean id="DAOGroupBase" class="com.doublechaintech.cms.DAOGroup">
 		<property name="platformDAO" ref="platformDAO"/>
+		<property name="alertBarDAO" ref="alertBarDAO"/>
 		<property name="bannerDAO" ref="bannerDAO"/>
 		<property name="profileDAO" ref="profileDAO"/>
 		<property name="targetDAO" ref="targetDAO"/>
+		<property name="userAlertDAO" ref="userAlertDAO"/>
 		<property name="userDomainDAO" ref="userDomainDAO"/>
 		<property name="userWhiteListDAO" ref="userWhiteListDAO"/>
 		<property name="secUserDAO" ref="secUserDAO"/>

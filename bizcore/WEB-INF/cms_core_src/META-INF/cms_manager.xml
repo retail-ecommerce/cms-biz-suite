@@ -11,14 +11,20 @@
 	<bean id="platformManagerBase" class="com.doublechaintech.cms.platform.PlatformManagerImpl"/>
 	<bean id="platformManager" class="com.doublechaintech.cms.platform.PlatformCustomManagerImpl" parent="platformManagerBase" ></bean>
 	
+	<bean id="alertBarManagerBase" class="com.doublechaintech.cms.alertbar.AlertBarManagerImpl"/>
+	<bean id="alertBarManager" class="com.doublechaintech.cms.alertbar.AlertBarManagerImpl" parent="alertBarManagerBase" ></bean>
+	
 	<bean id="bannerManagerBase" class="com.doublechaintech.cms.banner.BannerManagerImpl"/>
 	<bean id="bannerManager" class="com.doublechaintech.cms.banner.BannerManagerImpl" parent="bannerManagerBase" ></bean>
 	
 	<bean id="profileManagerBase" class="com.doublechaintech.cms.profile.ProfileManagerImpl"/>
-	<bean id="profileManager" class="com.doublechaintech.cms.profile.ProfileManagerImpl" parent="profileManagerBase" ></bean>
+	<bean id="profileManager" class="com.doublechaintech.cms.profile.ProfileCustomManagerImpl" parent="profileManagerBase" ></bean>
 	
 	<bean id="targetManagerBase" class="com.doublechaintech.cms.target.TargetManagerImpl"/>
 	<bean id="targetManager" class="com.doublechaintech.cms.target.TargetManagerImpl" parent="targetManagerBase" ></bean>
+	
+	<bean id="userAlertManagerBase" class="com.doublechaintech.cms.useralert.UserAlertManagerImpl"/>
+	<bean id="userAlertManager" class="com.doublechaintech.cms.useralert.UserAlertManagerImpl" parent="userAlertManagerBase" ></bean>
 	
 	<bean id="userDomainManagerBase" class="com.doublechaintech.cms.userdomain.UserDomainManagerImpl"/>
 	<bean id="userDomainManager" class="com.doublechaintech.cms.userdomain.UserDomainCustomManagerImpl" parent="userDomainManagerBase" ></bean>
@@ -62,9 +68,11 @@
 
 	<bean id="managerGroupBase" class="com.doublechaintech.cms.ManagerGroup">
 		<property name="platformManager" ref="platformManager"/>
+		<property name="alertBarManager" ref="alertBarManager"/>
 		<property name="bannerManager" ref="bannerManager"/>
 		<property name="profileManager" ref="profileManager"/>
 		<property name="targetManager" ref="targetManager"/>
+		<property name="userAlertManager" ref="userAlertManager"/>
 		<property name="userDomainManager" ref="userDomainManager"/>
 		<property name="userWhiteListManager" ref="userWhiteListManager"/>
 		<property name="secUserManager" ref="secUserManager"/>

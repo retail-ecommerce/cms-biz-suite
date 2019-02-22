@@ -12,6 +12,7 @@ import com.doublechaintech.cms.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.platform.Platform;
 
 @JsonSerialize(using = ProfileSerializer.class)
@@ -24,6 +25,7 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 	public static final String VERSION_PROPERTY               = "version"           ;
 
 	public static final String TARGET_LIST                              = "targetList"        ;
+	public static final String USER_ALERT_LIST                          = "userAlertList"     ;
 
 	public static final String INTERNAL_TYPE="Profile";
 	public String getInternalType(){
@@ -51,6 +53,7 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 	
 	
 	protected		SmartList<Target>   	mTargetList         ;
+	protected		SmartList<UserAlert>	mUserAlertList      ;
 	
 		
 	public 	Profile(){
@@ -68,7 +71,8 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		setName(name);
 		setPlatform(platform);
 
-		this.mTargetList = new SmartList<Target>();	
+		this.mTargetList = new SmartList<Target>();
+		this.mUserAlertList = new SmartList<UserAlert>();	
 	}
 	
 	//Support for changing the property
@@ -259,6 +263,104 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 	
 
 
+	public  SmartList<UserAlert> getUserAlertList(){
+		if(this.mUserAlertList == null){
+			this.mUserAlertList = new SmartList<UserAlert>();
+			this.mUserAlertList.setListInternalName (USER_ALERT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mUserAlertList;	
+	}
+	public  void setUserAlertList(SmartList<UserAlert> userAlertList){
+		for( UserAlert userAlert:userAlertList){
+			userAlert.setProfile(this);
+		}
+
+		this.mUserAlertList = userAlertList;
+		this.mUserAlertList.setListInternalName (USER_ALERT_LIST );
+		
+	}
+	
+	public  void addUserAlert(UserAlert userAlert){
+		userAlert.setProfile(this);
+		getUserAlertList().add(userAlert);
+	}
+	public  void addUserAlertList(SmartList<UserAlert> userAlertList){
+		for( UserAlert userAlert:userAlertList){
+			userAlert.setProfile(this);
+		}
+		getUserAlertList().addAll(userAlertList);
+	}
+	
+	public  UserAlert removeUserAlert(UserAlert userAlertIndex){
+		
+		int index = getUserAlertList().indexOf(userAlertIndex);
+        if(index < 0){
+        	String message = "UserAlert("+userAlertIndex.getId()+") with version='"+userAlertIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        UserAlert userAlert = getUserAlertList().get(index);        
+        // userAlert.clearProfile(); //disconnect with Profile
+        userAlert.clearFromAll(); //disconnect with Profile
+		
+		boolean result = getUserAlertList().planToRemove(userAlert);
+        if(!result){
+        	String message = "UserAlert("+userAlertIndex.getId()+") with version='"+userAlertIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return userAlert;
+        
+	
+	}
+	//断舍离
+	public  void breakWithUserAlert(UserAlert userAlert){
+		
+		if(userAlert == null){
+			return;
+		}
+		userAlert.setProfile(null);
+		//getUserAlertList().remove();
+	
+	}
+	
+	public  boolean hasUserAlert(UserAlert userAlert){
+	
+		return getUserAlertList().contains(userAlert);
+  
+	}
+	
+	public void copyUserAlertFrom(UserAlert userAlert) {
+
+		UserAlert userAlertInList = findTheUserAlert(userAlert);
+		UserAlert newUserAlert = new UserAlert();
+		userAlertInList.copyTo(newUserAlert);
+		newUserAlert.setVersion(0);//will trigger copy
+		getUserAlertList().add(newUserAlert);
+		addItemToFlexiableObject(COPIED_CHILD, newUserAlert);
+	}
+	
+	public  UserAlert findTheUserAlert(UserAlert userAlert){
+		
+		int index =  getUserAlertList().indexOf(userAlert);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "UserAlert("+userAlert.getId()+") with version='"+userAlert.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getUserAlertList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpUserAlertList(){
+		getUserAlertList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 		addToEntityList(this, entityList, getPlatform(), internalType);
@@ -270,6 +372,7 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		
 		List<BaseEntity> entityList = new ArrayList<BaseEntity>();
 		collectFromList(this, entityList, getTargetList(), internalType);
+		collectFromList(this, entityList, getUserAlertList(), internalType);
 
 		return entityList;
 	}
@@ -278,6 +381,7 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		List<SmartList<?>> listOfList = new ArrayList<SmartList<?>>();
 		
 		listOfList.add( getTargetList());
+		listOfList.add( getUserAlertList());
 			
 
 		return listOfList;
@@ -295,6 +399,11 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 		if(!getTargetList().isEmpty()){
 			appendKeyValuePair(result, "targetCount", getTargetList().getTotalCount());
 			appendKeyValuePair(result, "targetCurrentPageNumber", getTargetList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, USER_ALERT_LIST, getUserAlertList());
+		if(!getUserAlertList().isEmpty()){
+			appendKeyValuePair(result, "userAlertCount", getUserAlertList().getTotalCount());
+			appendKeyValuePair(result, "userAlertCurrentPageNumber", getUserAlertList().getCurrentPageNumber());
 		}
 
 		
@@ -315,6 +424,7 @@ public class Profile extends BaseEntity implements  java.io.Serializable{
 			dest.setPlatform(getPlatform());
 			dest.setVersion(getVersion());
 			dest.setTargetList(getTargetList());
+			dest.setUserAlertList(getUserAlertList());
 
 		}
 		super.copyTo(baseDest);

@@ -11,6 +11,17 @@
 		</fields>
 	</table>
 
+	<table name="alert_bar_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="name" type="string" checkType="StringLengthRange" min="3" max="32" description="Name" />
+			<field name="message" type="string" checkType="StringLengthRange" min="26" max="404" description="Message" />
+			<field name="last_update" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Last Update" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
 	<table name="banner_data">
 		<fields>
 			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
@@ -37,6 +48,18 @@
 			<field name="name" type="string" checkType="StringLengthRange" min="4" max="56" description="Name" />
 			<field name="profile" type="reference" checkType="exist(profile)" description="Profile" />
 			<field name="banner" type="reference" checkType="exist(banner)" description="Banner" />
+			<field name="location" type="string" checkType="StringLengthRange" min="2" max="16" description="Location" />
+			<field name="last_update" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Last Update" />
+			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />
+			<field name="version" type="int" checkType="IntegerRange" min="0" max="Integer.MAX_VALUE" description="Version" />
+		</fields>
+	</table>
+
+	<table name="user_alert_data">
+		<fields>
+			<field name="id" nullable="false" type="string" checkType="StringLengthRange" min="5" max="64" description="Id" />
+			<field name="message" type="string" checkType="StringLengthRange" min="26" max="404" description="Message" />
+			<field name="profile" type="reference" checkType="exist(profile)" description="Profile" />
 			<field name="location" type="string" checkType="StringLengthRange" min="2" max="16" description="Location" />
 			<field name="last_update" type="date_time_update" checkType="DateTimeUpdate" min="1900-01-01T00:00:00" max="updateTime()" description="Last Update" />
 			<field name="platform" type="reference" checkType="exist(platform)" description="Platform" />

@@ -9,6 +9,7 @@ import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 import com.doublechaintech.cms.target.TargetDAO;
 import com.doublechaintech.cms.platform.PlatformDAO;
+import com.doublechaintech.cms.useralert.UserAlertDAO;
 
 
 public interface ProfileDAO{
@@ -41,8 +42,12 @@ public interface ProfileDAO{
 
 	public TargetDAO getTargetDAO();
 		
+	public UserAlertDAO getUserAlertDAO();
+		
 	
  	public SmartList<Profile> requestCandidateProfileForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
+ 	public SmartList<Profile> requestCandidateProfileForUserAlert(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
 	
 	public Profile planToRemoveTargetList(Profile profile, String targetIds[], Map<String,Object> options)throws Exception;
@@ -55,6 +60,13 @@ public interface ProfileDAO{
 	//disconnect Profile with platform in Target
 	public Profile planToRemoveTargetListWithPlatform(Profile profile, String platformId, Map<String,Object> options)throws Exception;
 	public int countTargetListWithPlatform(String profileId, String platformId, Map<String,Object> options)throws Exception;
+	
+	public Profile planToRemoveUserAlertList(Profile profile, String userAlertIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Profile with platform in UserAlert
+	public Profile planToRemoveUserAlertListWithPlatform(Profile profile, String platformId, Map<String,Object> options)throws Exception;
+	public int countUserAlertListWithPlatform(String profileId, String platformId, Map<String,Object> options)throws Exception;
 	
 	
 	public SmartList<Profile> queryList(String sql, Object ... parmeters);

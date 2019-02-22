@@ -68,6 +68,51 @@ public class CmsChecker extends BaseChecker{
 		return this;
 	}	 			
 
+	public static final String  ID_OF_ALERT_BAR ="alert_bar.id";
+	public CmsChecker checkIdOfAlertBar(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_ALERT_BAR ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  NAME_OF_ALERT_BAR ="alert_bar.name";
+	public CmsChecker checkNameOfAlertBar(String name)
+	{
+		
+	 	checkStringLengthRange(name,3, 32,NAME_OF_ALERT_BAR ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  MESSAGE_OF_ALERT_BAR ="alert_bar.message";
+	public CmsChecker checkMessageOfAlertBar(String message)
+	{
+		
+	 	checkStringLengthRange(message,26, 404,MESSAGE_OF_ALERT_BAR ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_ALERT_BAR ="alert_bar.platform";
+	public CmsChecker checkPlatformIdOfAlertBar(String platformId)
+	{
+		
+	 	checkIdOfAlertBar(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_ALERT_BAR ="alert_bar.version";
+	public CmsChecker checkVersionOfAlertBar(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_ALERT_BAR ); 		
+		
+		return this;
+	}	 			
+
 	public static final String  ID_OF_BANNER ="banner.id";
 	public CmsChecker checkIdOfBanner(String id)
 	{
@@ -208,6 +253,60 @@ public class CmsChecker extends BaseChecker{
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TARGET ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  ID_OF_USER_ALERT ="user_alert.id";
+	public CmsChecker checkIdOfUserAlert(String id)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_USER_ALERT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  MESSAGE_OF_USER_ALERT ="user_alert.message";
+	public CmsChecker checkMessageOfUserAlert(String message)
+	{
+		
+	 	checkStringLengthRange(message,26, 404,MESSAGE_OF_USER_ALERT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PROFILE_OF_USER_ALERT ="user_alert.profile";
+	public CmsChecker checkProfileIdOfUserAlert(String profileId)
+	{
+		
+	 	checkIdOfUserAlert(profileId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  LOCATION_OF_USER_ALERT ="user_alert.location";
+	public CmsChecker checkLocationOfUserAlert(String location)
+	{
+		
+	 	checkStringLengthRange(location,2, 16,LOCATION_OF_USER_ALERT ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  PLATFORM_OF_USER_ALERT ="user_alert.platform";
+	public CmsChecker checkPlatformIdOfUserAlert(String platformId)
+	{
+		
+	 	checkIdOfUserAlert(platformId ); 		
+		
+		return this;
+	}	 			
+
+	public static final String  VERSION_OF_USER_ALERT ="user_alert.version";
+	public CmsChecker checkVersionOfUserAlert(int version)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_USER_ALERT ); 		
 		
 		return this;
 	}	 			

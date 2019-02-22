@@ -63,9 +63,11 @@ public class PlatformTokens extends CommonTokens{
 	protected static PlatformTokens allTokens(){
 		
 		return start()
+			.withAlertBarList()
 			.withBannerList()
 			.withProfileList()
-			.withTargetList();
+			.withTargetList()
+			.withUserAlertList();
 	
 	}
 	public static PlatformTokens withoutListsTokens(){
@@ -84,6 +86,68 @@ public class PlatformTokens extends CommonTokens{
 		return start().done();
 	}
 
+	protected static final String ALERT_BAR_LIST = "alertBarList";
+	public String getAlertBarList(){
+		return ALERT_BAR_LIST;
+	}
+	public PlatformTokens withAlertBarList(){		
+		addSimpleOptions(ALERT_BAR_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeAlertBarList(){		
+		addSimpleOptions(ALERT_BAR_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeAlertBarListEnabled(){		
+		
+		return checkOptions(this.options(), ALERT_BAR_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromAlertBarList(String idsSeperatedWithComma){		
+		addSimpleOptions(ALERT_BAR_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int alertBarListSortCounter = 0;
+	public PlatformTokens sortAlertBarListWith(String field, String descOrAsc){		
+		addSortMoreOptions(ALERT_BAR_LIST,alertBarListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int alertBarListSearchCounter = 0;
+	public PlatformTokens searchAlertBarListWith(String field, String verb, String value){		
+		addSearchMoreOptions(ALERT_BAR_LIST,alertBarListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfAlertBarList(String verb, String value){	
+		String field = "id|name|message";
+		addSearchMoreOptions(ALERT_BAR_LIST,alertBarListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfAlertBarList(int rowsPerPage){		
+		addSimpleOptions(ALERT_BAR_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfAlertBarList(int currentPageNumber){		
+		addSimpleOptions(ALERT_BAR_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfAlertBarList(String[] columns){		
+		addSimpleOptions(ALERT_BAR_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfAlertBarList(String[] columns){		
+		addSimpleOptions(ALERT_BAR_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	protected static final String BANNER_LIST = "bannerList";
 	public String getBannerList(){
 		return BANNER_LIST;
@@ -270,12 +334,76 @@ public class PlatformTokens extends CommonTokens{
 	
 	
 		
+	protected static final String USER_ALERT_LIST = "userAlertList";
+	public String getUserAlertList(){
+		return USER_ALERT_LIST;
+	}
+	public PlatformTokens withUserAlertList(){		
+		addSimpleOptions(USER_ALERT_LIST);
+		return this;
+	}
+	public PlatformTokens analyzeUserAlertList(){		
+		addSimpleOptions(USER_ALERT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeUserAlertListEnabled(){		
+		
+		return checkOptions(this.options(), USER_ALERT_LIST+".anaylze");
+	}
+	public PlatformTokens extractMoreFromUserAlertList(String idsSeperatedWithComma){		
+		addSimpleOptions(USER_ALERT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int userAlertListSortCounter = 0;
+	public PlatformTokens sortUserAlertListWith(String field, String descOrAsc){		
+		addSortMoreOptions(USER_ALERT_LIST,userAlertListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int userAlertListSearchCounter = 0;
+	public PlatformTokens searchUserAlertListWith(String field, String verb, String value){		
+		addSearchMoreOptions(USER_ALERT_LIST,userAlertListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public PlatformTokens searchAllTextOfUserAlertList(String verb, String value){	
+		String field = "id|message|location";
+		addSearchMoreOptions(USER_ALERT_LIST,userAlertListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public PlatformTokens rowsPerPageOfUserAlertList(int rowsPerPage){		
+		addSimpleOptions(USER_ALERT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public PlatformTokens currentPageNumberOfUserAlertList(int currentPageNumber){		
+		addSimpleOptions(USER_ALERT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public PlatformTokens retainColumnsOfUserAlertList(String[] columns){		
+		addSimpleOptions(USER_ALERT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public PlatformTokens excludeColumnsOfUserAlertList(String[] columns){		
+		addSimpleOptions(USER_ALERT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  PlatformTokens searchEntireObjectText(String verb, String value){
 		
+		searchAllTextOfAlertBarList(verb, value);	
 		searchAllTextOfBannerList(verb, value);	
 		searchAllTextOfProfileList(verb, value);	
 		searchAllTextOfTargetList(verb, value);	
+		searchAllTextOfUserAlertList(verb, value);	
 		return this;
 	}
 }

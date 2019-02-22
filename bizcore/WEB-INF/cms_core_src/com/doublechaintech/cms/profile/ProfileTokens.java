@@ -64,7 +64,8 @@ public class ProfileTokens extends CommonTokens{
 		
 		return start()
 			.withPlatform()
-			.withTargetList();
+			.withTargetList()
+			.withUserAlertList();
 	
 	}
 	public static ProfileTokens withoutListsTokens(){
@@ -156,10 +157,73 @@ public class ProfileTokens extends CommonTokens{
 	
 	
 		
+	protected static final String USER_ALERT_LIST = "userAlertList";
+	public String getUserAlertList(){
+		return USER_ALERT_LIST;
+	}
+	public ProfileTokens withUserAlertList(){		
+		addSimpleOptions(USER_ALERT_LIST);
+		return this;
+	}
+	public ProfileTokens analyzeUserAlertList(){		
+		addSimpleOptions(USER_ALERT_LIST+".anaylze");
+		return this;
+	}
+	public boolean analyzeUserAlertListEnabled(){		
+		
+		return checkOptions(this.options(), USER_ALERT_LIST+".anaylze");
+	}
+	public ProfileTokens extractMoreFromUserAlertList(String idsSeperatedWithComma){		
+		addSimpleOptions(USER_ALERT_LIST+".extractIds", idsSeperatedWithComma);
+		return this;
+	}
+	
+	
+	
+	
+	private int userAlertListSortCounter = 0;
+	public ProfileTokens sortUserAlertListWith(String field, String descOrAsc){		
+		addSortMoreOptions(USER_ALERT_LIST,userAlertListSortCounter++, field, descOrAsc);
+		return this;
+	}
+	private int userAlertListSearchCounter = 0;
+	public ProfileTokens searchUserAlertListWith(String field, String verb, String value){		
+		addSearchMoreOptions(USER_ALERT_LIST,userAlertListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	public ProfileTokens searchAllTextOfUserAlertList(String verb, String value){	
+		String field = "id|message|location";
+		addSearchMoreOptions(USER_ALERT_LIST,userAlertListSearchCounter++, field, verb, value);
+		return this;
+	}
+	
+	
+	
+	public ProfileTokens rowsPerPageOfUserAlertList(int rowsPerPage){		
+		addSimpleOptions(USER_ALERT_LIST+"RowsPerPage",rowsPerPage);
+		return this;
+	}
+	public ProfileTokens currentPageNumberOfUserAlertList(int currentPageNumber){		
+		addSimpleOptions(USER_ALERT_LIST+"CurrentPage",currentPageNumber);
+		return this;
+	}
+	public ProfileTokens retainColumnsOfUserAlertList(String[] columns){		
+		addSimpleOptions(USER_ALERT_LIST+"RetainColumns",columns);
+		return this;
+	}
+	public ProfileTokens excludeColumnsOfUserAlertList(String[] columns){		
+		addSimpleOptions(USER_ALERT_LIST+"ExcludeColumns",columns);
+		return this;
+	}
+	
+	
+		
 	
 	public  ProfileTokens searchEntireObjectText(String verb, String value){
 		
 		searchAllTextOfTargetList(verb, value);	
+		searchAllTextOfUserAlertList(verb, value);	
 		return this;
 	}
 }

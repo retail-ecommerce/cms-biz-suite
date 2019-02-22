@@ -9,6 +9,13 @@
 	
 	/>
 	
+	<alert_bar
+		name="LAST DAY"
+		message="IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW"
+		
+		last_update="updateTime()"
+		platform="$(platform)"
+	/>
 	<banner
 		name="2.14Promotion"
 		image_path="ValDay-800-600-RED.jpg"
@@ -27,6 +34,13 @@
 		name="valentines day"
 		profile="$(profile)"
 		banner="$(banner)"
+		location="HOME"
+		last_update="updateTime()"
+		platform="$(platform)"
+	/>
+	<user_alert
+		message="IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW"
+		profile="$(profile)"
 		location="HOME"
 		last_update="updateTime()"
 		platform="$(platform)"

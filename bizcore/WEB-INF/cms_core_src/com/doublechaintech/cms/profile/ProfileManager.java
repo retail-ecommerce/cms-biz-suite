@@ -38,6 +38,16 @@ public interface ProfileManager{
 
 	*/
 
+	//public  UserAlertManager getUserAlertManager(CmsUserContext userContext, String profileId, String message, String location, String platformId ,String [] tokensExpr)  throws Exception;
+	
+	public  Profile addUserAlert(CmsUserContext userContext, String profileId, String message, String location, String platformId , String [] tokensExpr)  throws Exception;
+	public  Profile removeUserAlert(CmsUserContext userContext, String profileId, String userAlertId, int userAlertVersion,String [] tokensExpr)  throws Exception;
+	public  Profile updateUserAlert(CmsUserContext userContext, String profileId, String userAlertId, int userAlertVersion, String property, String newValueExpr,String [] tokensExpr)  throws Exception;
+
+	/*
+
+	*/
+
 
 
 }

@@ -1,11 +1,20 @@
 
 
 
-=================Execute Report (Model Time 190215T1728) @Fri Feb 15 17:28:29 CST 2019, 17 objects and 129 fields===========================
+=================Execute Report (Model Time 190221T1154) @Fri Feb 22 12:31:00 CST 2019, 19 objects and 142 fields===========================
 
 
 
  processing: platform
+
+
+ processing: alert_bar
+
+
+ processing: alert_bar.platform.platform
+
+Info: Add virtual field [alert_bars(es)] to <platform>
+	alert_bar.platform
 
 
  processing: banner
@@ -47,6 +56,21 @@ Info: Add virtual field [targets(es)] to <platform>
 	target.platform
 
 
+ processing: user_alert
+
+
+ processing: user_alert.profile.profile
+
+Info: Add virtual field [user_alerts(es)] to <profile>
+	user_alert.profile
+
+
+ processing: user_alert.platform.platform
+
+Info: Add virtual field [user_alerts(es)] to <platform>
+	user_alert.platform
+
+
 **************************************************
 
 platform{
@@ -57,12 +81,27 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(3){
+	references field(5){
+		alertBarList	platform(基本信息)--platform;
 		bannerList	platform(基本信息)--platform;
 		profileList	platform(基本信息)--platform;
 		targetList	platform(基本信息)--platform;
+		userAlertList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
+
+alert_bar{
+	fields(6){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('LAST DAY'), verb: false, required: true;
+		string	message('IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: alertBarList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=1; isRoot = false
 
 banner{
 	fields(6){
@@ -85,8 +124,9 @@ profile{
 		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(1){
+	references field(2){
 		targetList	profile(基本信息)--profile;
+		userAlertList	profile(基本信息)--profile;
 	}
 } depth=1; isRoot = false
 
@@ -105,6 +145,20 @@ target{
 	}
 } depth=2; isRoot = false
 
+user_alert{
+	fields(7){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	message('IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW'), verb: false, required: true;
+		profile	profile('$(object)'), verb: false, required: true, referenceBy: userAlertList;
+		string	location('HOME'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: userAlertList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
 platform{
 	fields(5){
 		string	id('ABCDEFGIJK000001'), verb: false, required: true;
@@ -113,12 +167,27 @@ platform{
 		string	current_version('V1.0'), verb: false, required: true;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(3){
+	references field(5){
+		alertBarList	platform(基本信息)--platform;
 		bannerList	platform(基本信息)--platform;
 		profileList	platform(基本信息)--platform;
 		targetList	platform(基本信息)--platform;
+		userAlertList	platform(基本信息)--platform;
 	}
 } depth=0; isRoot = true
+
+alert_bar{
+	fields(6){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	name('LAST DAY'), verb: false, required: true;
+		string	message('IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: alertBarList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=1; isRoot = false
 
 banner{
 	fields(6){
@@ -141,8 +210,9 @@ profile{
 		platform	platform('$(object)'), verb: false, required: true, referenceBy: profileList;
 		int	version('2147483647'), verb: false, required: true;
 	}
-	references field(1){
+	references field(2){
 		targetList	profile(基本信息)--profile;
+		userAlertList	profile(基本信息)--profile;
 	}
 } depth=1; isRoot = false
 
@@ -155,6 +225,20 @@ target{
 		string	location('HOME'), verb: false, required: true;
 		date_time_update	last_update('updateTime()'), verb: false, required: true;
 		platform	platform('$(object)'), verb: false, required: true, referenceBy: targetList;
+		int	version('2147483647'), verb: false, required: true;
+	}
+	references field(0){
+	}
+} depth=2; isRoot = false
+
+user_alert{
+	fields(7){
+		string	id('ABCDEFGIJK000001'), verb: false, required: true;
+		string	message('IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW'), verb: false, required: true;
+		profile	profile('$(object)'), verb: false, required: true, referenceBy: userAlertList;
+		string	location('HOME'), verb: false, required: true;
+		date_time_update	last_update('updateTime()'), verb: false, required: true;
+		platform	platform('$(object)'), verb: false, required: true, referenceBy: userAlertList;
 		int	version('2147483647'), verb: false, required: true;
 	}
 	references field(0){
@@ -373,3 +457,14 @@ form_action{
 
 
 =================================End Report=================================
+
+
+
+
+
+
+
+
+
+
+

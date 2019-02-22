@@ -12,8 +12,10 @@ import com.doublechaintech.cms.KeyValuePair;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.alertbar.AlertBar;
 
 @JsonSerialize(using = PlatformSerializer.class)
 public class Platform extends BaseEntity implements  java.io.Serializable{
@@ -25,9 +27,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	public static final String CURRENT_VERSION_PROPERTY       = "currentVersion"    ;
 	public static final String VERSION_PROPERTY               = "version"           ;
 
+	public static final String ALERT_BAR_LIST                           = "alertBarList"      ;
 	public static final String BANNER_LIST                              = "bannerList"        ;
 	public static final String PROFILE_LIST                             = "profileList"       ;
 	public static final String TARGET_LIST                              = "targetList"        ;
+	public static final String USER_ALERT_LIST                          = "userAlertList"     ;
 
 	public static final String INTERNAL_TYPE="Platform";
 	public String getInternalType(){
@@ -55,9 +59,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	protected		int                 	mVersion            ;
 	
 	
+	protected		SmartList<AlertBar> 	mAlertBarList       ;
 	protected		SmartList<Banner>   	mBannerList         ;
 	protected		SmartList<Profile>  	mProfileList        ;
 	protected		SmartList<Target>   	mTargetList         ;
+	protected		SmartList<UserAlert>	mUserAlertList      ;
 	
 		
 	public 	Platform(){
@@ -75,9 +81,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		setIntroduction(introduction);
 		setCurrentVersion(currentVersion);
 
+		this.mAlertBarList = new SmartList<AlertBar>();
 		this.mBannerList = new SmartList<Banner>();
 		this.mProfileList = new SmartList<Profile>();
-		this.mTargetList = new SmartList<Target>();	
+		this.mTargetList = new SmartList<Target>();
+		this.mUserAlertList = new SmartList<UserAlert>();	
 	}
 	
 	//Support for changing the property
@@ -213,6 +221,104 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	}
 	
 	
+
+	public  SmartList<AlertBar> getAlertBarList(){
+		if(this.mAlertBarList == null){
+			this.mAlertBarList = new SmartList<AlertBar>();
+			this.mAlertBarList.setListInternalName (ALERT_BAR_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mAlertBarList;	
+	}
+	public  void setAlertBarList(SmartList<AlertBar> alertBarList){
+		for( AlertBar alertBar:alertBarList){
+			alertBar.setPlatform(this);
+		}
+
+		this.mAlertBarList = alertBarList;
+		this.mAlertBarList.setListInternalName (ALERT_BAR_LIST );
+		
+	}
+	
+	public  void addAlertBar(AlertBar alertBar){
+		alertBar.setPlatform(this);
+		getAlertBarList().add(alertBar);
+	}
+	public  void addAlertBarList(SmartList<AlertBar> alertBarList){
+		for( AlertBar alertBar:alertBarList){
+			alertBar.setPlatform(this);
+		}
+		getAlertBarList().addAll(alertBarList);
+	}
+	
+	public  AlertBar removeAlertBar(AlertBar alertBarIndex){
+		
+		int index = getAlertBarList().indexOf(alertBarIndex);
+        if(index < 0){
+        	String message = "AlertBar("+alertBarIndex.getId()+") with version='"+alertBarIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        AlertBar alertBar = getAlertBarList().get(index);        
+        // alertBar.clearPlatform(); //disconnect with Platform
+        alertBar.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getAlertBarList().planToRemove(alertBar);
+        if(!result){
+        	String message = "AlertBar("+alertBarIndex.getId()+") with version='"+alertBarIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return alertBar;
+        
+	
+	}
+	//断舍离
+	public  void breakWithAlertBar(AlertBar alertBar){
+		
+		if(alertBar == null){
+			return;
+		}
+		alertBar.setPlatform(null);
+		//getAlertBarList().remove();
+	
+	}
+	
+	public  boolean hasAlertBar(AlertBar alertBar){
+	
+		return getAlertBarList().contains(alertBar);
+  
+	}
+	
+	public void copyAlertBarFrom(AlertBar alertBar) {
+
+		AlertBar alertBarInList = findTheAlertBar(alertBar);
+		AlertBar newAlertBar = new AlertBar();
+		alertBarInList.copyTo(newAlertBar);
+		newAlertBar.setVersion(0);//will trigger copy
+		getAlertBarList().add(newAlertBar);
+		addItemToFlexiableObject(COPIED_CHILD, newAlertBar);
+	}
+	
+	public  AlertBar findTheAlertBar(AlertBar alertBar){
+		
+		int index =  getAlertBarList().indexOf(alertBar);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "AlertBar("+alertBar.getId()+") with version='"+alertBar.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getAlertBarList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpAlertBarList(){
+		getAlertBarList().clear();
+	}
+	
+	
+	
+
 
 	public  SmartList<Banner> getBannerList(){
 		if(this.mBannerList == null){
@@ -508,6 +614,104 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	
 
 
+	public  SmartList<UserAlert> getUserAlertList(){
+		if(this.mUserAlertList == null){
+			this.mUserAlertList = new SmartList<UserAlert>();
+			this.mUserAlertList.setListInternalName (USER_ALERT_LIST );
+			//有名字，便于做权限控制
+		}
+		
+		return this.mUserAlertList;	
+	}
+	public  void setUserAlertList(SmartList<UserAlert> userAlertList){
+		for( UserAlert userAlert:userAlertList){
+			userAlert.setPlatform(this);
+		}
+
+		this.mUserAlertList = userAlertList;
+		this.mUserAlertList.setListInternalName (USER_ALERT_LIST );
+		
+	}
+	
+	public  void addUserAlert(UserAlert userAlert){
+		userAlert.setPlatform(this);
+		getUserAlertList().add(userAlert);
+	}
+	public  void addUserAlertList(SmartList<UserAlert> userAlertList){
+		for( UserAlert userAlert:userAlertList){
+			userAlert.setPlatform(this);
+		}
+		getUserAlertList().addAll(userAlertList);
+	}
+	
+	public  UserAlert removeUserAlert(UserAlert userAlertIndex){
+		
+		int index = getUserAlertList().indexOf(userAlertIndex);
+        if(index < 0){
+        	String message = "UserAlert("+userAlertIndex.getId()+") with version='"+userAlertIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        UserAlert userAlert = getUserAlertList().get(index);        
+        // userAlert.clearPlatform(); //disconnect with Platform
+        userAlert.clearFromAll(); //disconnect with Platform
+		
+		boolean result = getUserAlertList().planToRemove(userAlert);
+        if(!result){
+        	String message = "UserAlert("+userAlertIndex.getId()+") with version='"+userAlertIndex.getVersion()+"' NOT found!";
+            throw new IllegalStateException(message);
+        }
+        return userAlert;
+        
+	
+	}
+	//断舍离
+	public  void breakWithUserAlert(UserAlert userAlert){
+		
+		if(userAlert == null){
+			return;
+		}
+		userAlert.setPlatform(null);
+		//getUserAlertList().remove();
+	
+	}
+	
+	public  boolean hasUserAlert(UserAlert userAlert){
+	
+		return getUserAlertList().contains(userAlert);
+  
+	}
+	
+	public void copyUserAlertFrom(UserAlert userAlert) {
+
+		UserAlert userAlertInList = findTheUserAlert(userAlert);
+		UserAlert newUserAlert = new UserAlert();
+		userAlertInList.copyTo(newUserAlert);
+		newUserAlert.setVersion(0);//will trigger copy
+		getUserAlertList().add(newUserAlert);
+		addItemToFlexiableObject(COPIED_CHILD, newUserAlert);
+	}
+	
+	public  UserAlert findTheUserAlert(UserAlert userAlert){
+		
+		int index =  getUserAlertList().indexOf(userAlert);
+		//The input parameter must have the same id and version number.
+		if(index < 0){
+ 			String message = "UserAlert("+userAlert.getId()+") with version='"+userAlert.getVersion()+"' NOT found!";
+			throw new IllegalStateException(message);
+		}
+		
+		return  getUserAlertList().get(index);
+		//Performance issue when using LinkedList, but it is almost an ArrayList for sure!
+	}
+	
+	public  void cleanUpUserAlertList(){
+		getUserAlertList().clear();
+	}
+	
+	
+	
+
+
 	public void collectRefercences(BaseEntity owner, List<BaseEntity> entityList, String internalType){
 
 
@@ -517,9 +721,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	public List<BaseEntity>  collectRefercencesFromLists(String internalType){
 		
 		List<BaseEntity> entityList = new ArrayList<BaseEntity>();
+		collectFromList(this, entityList, getAlertBarList(), internalType);
 		collectFromList(this, entityList, getBannerList(), internalType);
 		collectFromList(this, entityList, getProfileList(), internalType);
 		collectFromList(this, entityList, getTargetList(), internalType);
+		collectFromList(this, entityList, getUserAlertList(), internalType);
 
 		return entityList;
 	}
@@ -527,9 +733,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 	public  List<SmartList<?>> getAllRelatedLists() {
 		List<SmartList<?>> listOfList = new ArrayList<SmartList<?>>();
 		
+		listOfList.add( getAlertBarList());
 		listOfList.add( getBannerList());
 		listOfList.add( getProfileList());
 		listOfList.add( getTargetList());
+		listOfList.add( getUserAlertList());
 			
 
 		return listOfList;
@@ -544,6 +752,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		appendKeyValuePair(result, INTRODUCTION_PROPERTY, getIntroduction());
 		appendKeyValuePair(result, CURRENT_VERSION_PROPERTY, getCurrentVersion());
 		appendKeyValuePair(result, VERSION_PROPERTY, getVersion());
+		appendKeyValuePair(result, ALERT_BAR_LIST, getAlertBarList());
+		if(!getAlertBarList().isEmpty()){
+			appendKeyValuePair(result, "alertBarCount", getAlertBarList().getTotalCount());
+			appendKeyValuePair(result, "alertBarCurrentPageNumber", getAlertBarList().getCurrentPageNumber());
+		}
 		appendKeyValuePair(result, BANNER_LIST, getBannerList());
 		if(!getBannerList().isEmpty()){
 			appendKeyValuePair(result, "bannerCount", getBannerList().getTotalCount());
@@ -558,6 +771,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 		if(!getTargetList().isEmpty()){
 			appendKeyValuePair(result, "targetCount", getTargetList().getTotalCount());
 			appendKeyValuePair(result, "targetCurrentPageNumber", getTargetList().getCurrentPageNumber());
+		}
+		appendKeyValuePair(result, USER_ALERT_LIST, getUserAlertList());
+		if(!getUserAlertList().isEmpty()){
+			appendKeyValuePair(result, "userAlertCount", getUserAlertList().getTotalCount());
+			appendKeyValuePair(result, "userAlertCurrentPageNumber", getUserAlertList().getCurrentPageNumber());
 		}
 
 		
@@ -578,9 +796,11 @@ public class Platform extends BaseEntity implements  java.io.Serializable{
 			dest.setIntroduction(getIntroduction());
 			dest.setCurrentVersion(getCurrentVersion());
 			dest.setVersion(getVersion());
+			dest.setAlertBarList(getAlertBarList());
 			dest.setBannerList(getBannerList());
 			dest.setProfileList(getProfileList());
 			dest.setTargetList(getTargetList());
+			dest.setUserAlertList(getUserAlertList());
 
 		}
 		super.copyTo(baseDest);

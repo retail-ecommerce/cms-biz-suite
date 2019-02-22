@@ -109,6 +109,9 @@ public class BaseRelation{
 	{
 		
 		
+		String [] alertBarRelatedObjectNames = {"platform:Platform"};
+		addRelationIndex("AlertBar",alertBarRelatedObjectNames);
+
 		String [] bannerRelatedObjectNames = {"platform:Platform"};
 		addRelationIndex("Banner",bannerRelatedObjectNames);
 
@@ -117,6 +120,9 @@ public class BaseRelation{
 
 		String [] targetRelatedObjectNames = {"profile:Profile","banner:Banner","platform:Platform"};
 		addRelationIndex("Target",targetRelatedObjectNames);
+
+		String [] userAlertRelatedObjectNames = {"profile:Profile","platform:Platform"};
+		addRelationIndex("UserAlert",userAlertRelatedObjectNames);
 
 		String [] userWhiteListRelatedObjectNames = {"domain:UserDomain"};
 		addRelationIndex("UserWhiteList",userWhiteListRelatedObjectNames);
@@ -168,11 +174,14 @@ public class BaseRelation{
 	//default for reading trust chain, the default sequence are MXWR, the order is not affect the result
 	protected void prepareRelation()
 	{
+		addGenericRelation("AlertBar"                              ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Banner"                                ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Profile"                               ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"profile");
 		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"banner");
 		addGenericRelation("Target"                                ,TRUST_CHAIN_READ,"platform");
+		addGenericRelation("UserAlert"                             ,TRUST_CHAIN_READ,"profile");
+		addGenericRelation("UserAlert"                             ,TRUST_CHAIN_READ,"platform");
 		addGenericRelation("UserWhiteList"                         ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("SecUser"                               ,TRUST_CHAIN_READ,"domain");
 		addGenericRelation("UserApp"                               ,TRUST_CHAIN_READ,"secUser");

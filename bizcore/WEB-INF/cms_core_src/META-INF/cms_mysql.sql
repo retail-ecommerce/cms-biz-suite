@@ -1,4 +1,4 @@
--- BUILD WITH MODEL TIME 190215T1728
+-- BUILD WITH MODEL TIME 190221T1154
 drop database  if exists cms;
 create database cms;
 alter  database cms  character set = utf8mb4  collate = utf8mb4_unicode_ci; -- 支持表情符号
@@ -10,6 +10,17 @@ create table platform_data (
 	name                	varchar(92)                              comment 'Name',
 	introduction        	varchar(288)                             comment 'Introduction',
 	current_version     	varchar(16)                              comment 'Current Version',
+	version             	int                                      comment 'Version',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
+
+drop table  if exists alert_bar_data;
+create table alert_bar_data (
+	id                  	varchar(64)          not null            comment 'Id',
+	name                	varchar(32)                              comment 'Name',
+	message             	varchar(404)                             comment 'Message',
+	last_update         	datetime                                 comment 'Last Update',
+	platform            	varchar(48)                              comment 'Platform',
 	version             	int                                      comment 'Version',
 	primary key(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
@@ -40,6 +51,18 @@ create table target_data (
 	name                	varchar(56)                              comment 'Name',
 	profile             	varchar(48)                              comment 'Profile',
 	banner              	varchar(48)                              comment 'Banner',
+	location            	varchar(16)                              comment 'Location',
+	last_update         	datetime                                 comment 'Last Update',
+	platform            	varchar(48)                              comment 'Platform',
+	version             	int                                      comment 'Version',
+	primary key(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE = utf8mb4_unicode_ci ;
+
+drop table  if exists user_alert_data;
+create table user_alert_data (
+	id                  	varchar(64)          not null            comment 'Id',
+	message             	varchar(404)                             comment 'Message',
+	profile             	varchar(48)                              comment 'Profile',
 	location            	varchar(16)                              comment 'Location',
 	last_update         	datetime                                 comment 'Last Update',
 	platform            	varchar(48)                              comment 'Platform',
@@ -227,8 +250,12 @@ create table form_action_data (
 insert into platform_data values ('P000001','Chain eComerce Platform','new generation of eCommerce platform based on opensource and modern tech','V1.0','1');
 
 	
-insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-01-28 20:13:12','P000001','1');
-insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-08 03:19:49','P000001','1');
+insert into alert_bar_data values ('AB000001','LAST DAY','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','2019-02-13 10:25:06','P000001','1');
+insert into alert_bar_data values ('AB000002','LAST DAY0002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','2019-02-13 08:26:57','P000001','1');
+
+	
+insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-05 21:20:43','P000001','1');
+insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-20 00:50:46','P000001','1');
 
 	
 insert into profile_data values ('P000001','Philip Zhang','P000001','1');
@@ -236,10 +263,16 @@ insert into profile_data values ('P000002','Naveen Kumar R ','P000001','1');
 insert into profile_data values ('P000003','VENKATESH GADUPUTI','P000001','1');
 
 	
-insert into target_data values ('T000001','valentines day','P000001','B000001','HOME','2019-01-29 03:12:29','P000001','1');
-insert into target_data values ('T000002','valentines day0002','P000001','B000001','HOME0002','2019-01-25 00:38:55','P000001','1');
-insert into target_data values ('T000003','valentines day0003','P000002','B000002','HOME0003','2019-01-26 13:47:30','P000001','1');
-insert into target_data values ('T000004','valentines day0004','P000003','B000002','HOME0004','2019-02-01 23:25:40','P000001','1');
+insert into target_data values ('T000001','valentines day','P000001','B000001','HOME','2019-02-01 18:58:46','P000001','1');
+insert into target_data values ('T000002','valentines day0002','P000001','B000001','HOME0002','2019-02-03 13:40:52','P000001','1');
+insert into target_data values ('T000003','valentines day0003','P000002','B000002','HOME0003','2019-02-07 01:07:18','P000001','1');
+insert into target_data values ('T000004','valentines day0004','P000003','B000002','HOME0004','2019-02-10 02:52:42','P000001','1');
+
+	
+insert into user_alert_data values ('UA000001','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','P000001','HOME','2019-02-05 11:14:22','P000001','1');
+insert into user_alert_data values ('UA000002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','P000001','HOME0002','2019-02-10 21:16:56','P000001','1');
+insert into user_alert_data values ('UA000003','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0003','P000002','HOME0003','2019-02-05 12:23:04','P000001','1');
+insert into user_alert_data values ('UA000004','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0004','P000003','HOME0004','2019-02-18 11:07:06','P000001','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -249,11 +282,11 @@ insert into user_white_list_data values ('UWL000001','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-11 15:48:58','2019-01-31 05:26:16','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-02-05 23:43:37','2019-01-28 16:11:18','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-05 21:58:19','2019-02-21 14:04:08','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-02-15 09:41:45','2019-02-09 17:03:21','UD000001',NULL,'BLOCKED0002','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-07 10:53:18','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-07 03:25:33','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -284,10 +317,10 @@ insert into object_access_data values ('OA000007','控制访问列表10007','Fra
 insert into object_access_data values ('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-06 16:30:25','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-02-06 06:49:38','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-02-13 04:25:11','192.168.1.1','登陆成功0003','SU000002','1');
-insert into login_history_data values ('LH000004','2019-02-04 16:09:18','192.168.1.2','登陆成功0004','SU000002','1');
+insert into login_history_data values ('LH000001','2019-02-19 13:55:51','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-02-02 17:36:02','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-15 07:00:49','192.168.1.1','登陆成功0003','SU000002','1');
+insert into login_history_data values ('LH000004','2019-02-16 21:06:33','192.168.1.2','登陆成功0004','SU000002','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
@@ -317,6 +350,10 @@ Mysql innodb's foreign key has index automatically
 
 create unique index idx_platform_version on platform_data(id, version);
 
+create unique index idx_alert_bar_version on alert_bar_data(id, version);
+
+alter table alert_bar_data add constraint alert_bar4platform_fk
+	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
 create unique index idx_banner_version on banner_data(id, version);
 
 alter table banner_data add constraint banner4platform_fk
@@ -332,6 +369,12 @@ alter table target_data add constraint target4profile_fk
 alter table target_data add constraint target4banner_fk
 	foreign key(banner) references banner_data(id) on delete cascade on update cascade;
 alter table target_data add constraint target4platform_fk
+	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
+create unique index idx_user_alert_version on user_alert_data(id, version);
+
+alter table user_alert_data add constraint user_alert4profile_fk
+	foreign key(profile) references profile_data(id) on delete cascade on update cascade;
+alter table user_alert_data add constraint user_alert4platform_fk
 	foreign key(platform) references platform_data(id) on delete cascade on update cascade;
 create unique index idx_user_domain_version on user_domain_data(id, version);
 
@@ -384,11 +427,15 @@ alter table form_action_data add constraint form_action4form_fk
 -- create extra index for time, number and mobile phone
 
 create index platform4version_idx on platform_data(version);
+create index alert_bar4last_update_idx on alert_bar_data(last_update);
+create index alert_bar4version_idx on alert_bar_data(version);
 create index banner4last_update_idx on banner_data(last_update);
 create index banner4version_idx on banner_data(version);
 create index profile4version_idx on profile_data(version);
 create index target4last_update_idx on target_data(last_update);
 create index target4version_idx on target_data(version);
+create index user_alert4last_update_idx on user_alert_data(last_update);
+create index user_alert4version_idx on user_alert_data(version);
 create index user_domain4version_idx on user_domain_data(version);
 create index user_white_list4version_idx on user_white_list_data(version);
 create index sec_user4mobile_idx on sec_user_data(mobile);
@@ -444,8 +491,8 @@ delete from user_app_data;
 */
 
 insert into sec_user_data values('SU000001','User000001','13900000001','1000001@qq.com','258D9BB89BBC1F2A6CDDD3A4CB300E6CD9B83F3FC9984619DF1A59F6051F1F44','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
-insert into user_app_data values('UA000001','Platform','SU000001','at',1,'MXWR','Platform','P000001','/link/to/app','1'); -- REFER COUNT: 3
-insert into user_app_data values('UA000002','My Account','SU000001','lock',1,'MXWR','SecUser','SU000001','/link/to/app','1'); -- REFER COUNT: 3
+insert into user_app_data values('UA000001','Platform','SU000001','at',1,'MXWR','Platform','P000001','/link/to/app','1'); -- REFER COUNT: 5
+insert into user_app_data values('UA000002','My Account','SU000001','lock',1,'MXWR','SecUser','SU000001','/link/to/app','1'); -- REFER COUNT: 5
 insert into sec_user_data values('SU000002','User000002','13900000002','1000002@qq.com','7FEABCC19D638787655F9FFC2C22755D5771184D85D000147D643D22F6617F7B','9292993','2019-09-09 09:09:09','2019-09-09 09:09:09','UD000001',NULL,'INIT',1);
 insert into user_app_data values('UA000003','User Domain','SU000002','user',1,'MXWR','UserDomain','UD000001','/link/to/app','1'); -- REFER COUNT: 2
 insert into user_app_data values('UA000004','My Account','SU000002','lock',1,'MXWR','SecUser','SU000002','/link/to/app','1'); -- REFER COUNT: 2

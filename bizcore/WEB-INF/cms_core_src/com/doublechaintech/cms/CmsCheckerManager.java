@@ -49,6 +49,46 @@ public class CmsCheckerManager extends BaseManagerImpl {
 		
 	}	 			
 	
+	public static final String  ID_OF_ALERT_BAR ="alert_bar.id";
+	protected void checkIdOfAlertBar(CmsUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_ALERT_BAR, messageList); 		
+		
+	}	 			
+	
+	public static final String  NAME_OF_ALERT_BAR ="alert_bar.name";
+	protected void checkNameOfAlertBar(CmsUserContext userContext, String name, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(name,3, 32,NAME_OF_ALERT_BAR, messageList); 		
+		
+	}	 			
+	
+	public static final String  MESSAGE_OF_ALERT_BAR ="alert_bar.message";
+	protected void checkMessageOfAlertBar(CmsUserContext userContext, String message, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(message,26, 404,MESSAGE_OF_ALERT_BAR, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_ALERT_BAR ="alert_bar.platform";
+	protected void checkPlatformIdOfAlertBar(CmsUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfAlertBar(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_ALERT_BAR ="alert_bar.version";
+	protected void checkVersionOfAlertBar(CmsUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_ALERT_BAR, messageList); 		
+		
+	}	 			
+	
 	public static final String  ID_OF_BANNER ="banner.id";
 	protected void checkIdOfBanner(CmsUserContext userContext, String id, List<Message> messageList)
 	{
@@ -174,6 +214,54 @@ public class CmsCheckerManager extends BaseManagerImpl {
 	{
 		
 	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_TARGET, messageList); 		
+		
+	}	 			
+	
+	public static final String  ID_OF_USER_ALERT ="user_alert.id";
+	protected void checkIdOfUserAlert(CmsUserContext userContext, String id, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(id,5, 64,ID_OF_USER_ALERT, messageList); 		
+		
+	}	 			
+	
+	public static final String  MESSAGE_OF_USER_ALERT ="user_alert.message";
+	protected void checkMessageOfUserAlert(CmsUserContext userContext, String message, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(message,26, 404,MESSAGE_OF_USER_ALERT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PROFILE_OF_USER_ALERT ="user_alert.profile";
+	protected void checkProfileIdOfUserAlert(CmsUserContext userContext, String profileId, List<Message> messageList)
+	{
+		
+	 	checkIdOfUserAlert(userContext,profileId, messageList); 		
+		
+	}	 			
+	
+	public static final String  LOCATION_OF_USER_ALERT ="user_alert.location";
+	protected void checkLocationOfUserAlert(CmsUserContext userContext, String location, List<Message> messageList)
+	{
+		
+	 	checkStringLengthRange(location,2, 16,LOCATION_OF_USER_ALERT, messageList); 		
+		
+	}	 			
+	
+	public static final String  PLATFORM_OF_USER_ALERT ="user_alert.platform";
+	protected void checkPlatformIdOfUserAlert(CmsUserContext userContext, String platformId, List<Message> messageList)
+	{
+		
+	 	checkIdOfUserAlert(userContext,platformId, messageList); 		
+		
+	}	 			
+	
+	public static final String  VERSION_OF_USER_ALERT ="user_alert.version";
+	protected void checkVersionOfUserAlert(CmsUserContext userContext, int version, List<Message> messageList)
+	{
+		
+	 	checkIntegerRange(version,0, Integer.MAX_VALUE,VERSION_OF_USER_ALERT, messageList); 		
 		
 	}	 			
 	

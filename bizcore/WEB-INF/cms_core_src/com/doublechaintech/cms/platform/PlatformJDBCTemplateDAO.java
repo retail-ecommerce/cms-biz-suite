@@ -19,11 +19,15 @@ import com.doublechaintech.cms.CmsUserContext;
 
 
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.banner.Banner;
 import com.doublechaintech.cms.profile.Profile;
+import com.doublechaintech.cms.alertbar.AlertBar;
 
 import com.doublechaintech.cms.target.TargetDAO;
+import com.doublechaintech.cms.alertbar.AlertBarDAO;
 import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.useralert.UserAlertDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
 
@@ -33,6 +37,25 @@ import org.springframework.dao.EmptyResultDataAccessException;
 public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements PlatformDAO{
 
 
+			
+		
+	
+  	private  AlertBarDAO  alertBarDAO;
+ 	public void setAlertBarDAO(AlertBarDAO pAlertBarDAO){
+ 	
+ 		if(pAlertBarDAO == null){
+ 			throw new IllegalStateException("Do not try to set alertBarDAO to null.");
+ 		}
+	 	this.alertBarDAO = pAlertBarDAO;
+ 	}
+ 	public AlertBarDAO getAlertBarDAO(){
+ 		if(this.alertBarDAO == null){
+ 			throw new IllegalStateException("The alertBarDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.alertBarDAO;
+ 	}	
+ 	
 			
 		
 	
@@ -92,6 +115,25 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  	
 			
 		
+	
+  	private  UserAlertDAO  userAlertDAO;
+ 	public void setUserAlertDAO(UserAlertDAO pUserAlertDAO){
+ 	
+ 		if(pUserAlertDAO == null){
+ 			throw new IllegalStateException("Do not try to set userAlertDAO to null.");
+ 		}
+	 	this.userAlertDAO = pUserAlertDAO;
+ 	}
+ 	public UserAlertDAO getUserAlertDAO(){
+ 		if(this.userAlertDAO == null){
+ 			throw new IllegalStateException("The userAlertDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.userAlertDAO;
+ 	}	
+ 	
+			
+		
 
 	
 	/*
@@ -137,6 +179,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		
 		
  		
+ 		if(isSaveAlertBarListEnabled(options)){
+ 			for(AlertBar item: newPlatform.getAlertBarList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
  		if(isSaveBannerListEnabled(options)){
  			for(Banner item: newPlatform.getBannerList()){
  				item.setVersion(0);
@@ -153,6 +202,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  		
  		if(isSaveTargetListEnabled(options)){
  			for(Target item: newPlatform.getTargetList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveUserAlertListEnabled(options)){
+ 			for(UserAlert item: newPlatform.getUserAlertList()){
  				item.setVersion(0);
  			}
  		}
@@ -249,6 +305,21 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 
 		
 	
+	protected boolean isExtractAlertBarListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.ALERT_BAR_LIST);
+ 	}
+ 	protected boolean isAnalyzeAlertBarListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.ALERT_BAR_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveAlertBarListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.ALERT_BAR_LIST);
+		
+ 	}
+ 	
+		
+	
 	protected boolean isExtractBannerListEnabled(Map<String,Object> options){		
  		return checkOptions(options,PlatformTokens.BANNER_LIST);
  	}
@@ -293,6 +364,21 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  	}
  	
 		
+	
+	protected boolean isExtractUserAlertListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,PlatformTokens.USER_ALERT_LIST);
+ 	}
+ 	protected boolean isAnalyzeUserAlertListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,PlatformTokens.USER_ALERT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveUserAlertListEnabled(Map<String,Object> options){
+		return checkOptions(options, PlatformTokens.USER_ALERT_LIST);
+		
+ 	}
+ 	
+		
 
 	
 
@@ -320,6 +406,14 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		Platform platform = extractPlatform(accessKey, loadOptions);
 
 		
+		if(isExtractAlertBarListEnabled(loadOptions)){
+	 		extractAlertBarList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeAlertBarListEnabled(loadOptions)){
+	 		analyzeAlertBarList(platform, loadOptions);
+ 		}
+ 		
+		
 		if(isExtractBannerListEnabled(loadOptions)){
 	 		extractBannerList(platform, loadOptions);
  		}	
@@ -344,10 +438,68 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
  		}
  		
 		
+		if(isExtractUserAlertListEnabled(loadOptions)){
+	 		extractUserAlertList(platform, loadOptions);
+ 		}	
+ 		if(isAnalyzeUserAlertListEnabled(loadOptions)){
+	 		analyzeUserAlertList(platform, loadOptions);
+ 		}
+ 		
+		
 		return platform;
 		
 	}
 
+	
+		
+	protected void enhanceAlertBarList(SmartList<AlertBar> alertBarList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractAlertBarList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<AlertBar> alertBarList = getAlertBarDAO().findAlertBarByPlatform(platform.getId(),options);
+		if(alertBarList != null){
+			enhanceAlertBarList(alertBarList,options);
+			platform.setAlertBarList(alertBarList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeAlertBarList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<AlertBar> alertBarList = platform.getAlertBarList();
+		if(alertBarList != null){
+			getAlertBarDAO().analyzeAlertBarByPlatform(alertBarList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
 	
 		
 	protected void enhanceBannerList(SmartList<Banner> bannerList,Map<String,Object> options){
@@ -492,6 +644,56 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		SmartList<Target> targetList = platform.getTargetList();
 		if(targetList != null){
 			getTargetDAO().analyzeTargetByPlatform(targetList, platform.getId(), options);
+			
+		}
+		
+		return platform;
+	
+	}	
+	
+		
+	protected void enhanceUserAlertList(SmartList<UserAlert> userAlertList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Platform extractUserAlertList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<UserAlert> userAlertList = getUserAlertDAO().findUserAlertByPlatform(platform.getId(),options);
+		if(userAlertList != null){
+			enhanceUserAlertList(userAlertList,options);
+			platform.setUserAlertList(userAlertList);
+		}
+		
+		return platform;
+	
+	}	
+	
+	protected Platform analyzeUserAlertList(Platform platform, Map<String,Object> options){
+		
+		
+		if(platform == null){
+			return null;
+		}
+		if(platform.getId() == null){
+			return platform;
+		}
+
+		
+		
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();
+		if(userAlertList != null){
+			getUserAlertDAO().analyzeUserAlertByPlatform(userAlertList, platform.getId(), options);
 			
 		}
 		
@@ -672,6 +874,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		savePlatform(platform);
 
 		
+		if(isSaveAlertBarListEnabled(options)){
+	 		saveAlertBarList(platform, options);
+	 		//removeAlertBarList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		if(isSaveBannerListEnabled(options)){
 	 		saveBannerList(platform, options);
 	 		//removeBannerList(platform, options);
@@ -693,6 +902,13 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	 		
  		}		
 		
+		if(isSaveUserAlertListEnabled(options)){
+	 		saveUserAlertList(platform, options);
+	 		//removeUserAlertList(platform, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return platform;
 		
 	}
@@ -703,6 +919,34 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	
 
 	
+	public Platform planToRemoveAlertBarList(Platform platform, String alertBarIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(AlertBar.PLATFORM_PROPERTY, platform.getId());
+		key.put(AlertBar.ID_PROPERTY, alertBarIds);
+		
+		SmartList<AlertBar> externalAlertBarList = getAlertBarDAO().
+				findAlertBarWithKey(key, options);
+		if(externalAlertBarList == null){
+			return platform;
+		}
+		if(externalAlertBarList.isEmpty()){
+			return platform;
+		}
+		
+		for(AlertBar alertBar: externalAlertBarList){
+
+			alertBar.clearFromAll();
+		}
+		
+		
+		SmartList<AlertBar> alertBarList = platform.getAlertBarList();		
+		alertBarList.addAllToRemoveList(externalAlertBarList);
+		return platform;	
+	
+	}
+
+
 	public Platform planToRemoveBannerList(Platform platform, String bannerIds[], Map<String,Object> options)throws Exception{
 	
 		MultipleAccessKey key = new MultipleAccessKey();
@@ -875,7 +1119,145 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		return count;
 	}
 	
+	public Platform planToRemoveUserAlertList(Platform platform, String userAlertIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PLATFORM_PROPERTY, platform.getId());
+		key.put(UserAlert.ID_PROPERTY, userAlertIds);
+		
+		SmartList<UserAlert> externalUserAlertList = getUserAlertDAO().
+				findUserAlertWithKey(key, options);
+		if(externalUserAlertList == null){
+			return platform;
+		}
+		if(externalUserAlertList.isEmpty()){
+			return platform;
+		}
+		
+		for(UserAlert userAlert: externalUserAlertList){
 
+			userAlert.clearFromAll();
+		}
+		
+		
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();		
+		userAlertList.addAllToRemoveList(externalUserAlertList);
+		return platform;	
+	
+	}
+
+
+	//disconnect Platform with profile in UserAlert
+	public Platform planToRemoveUserAlertListWithProfile(Platform platform, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PLATFORM_PROPERTY, platform.getId());
+		key.put(UserAlert.PROFILE_PROPERTY, profileId);
+		
+		SmartList<UserAlert> externalUserAlertList = getUserAlertDAO().
+				findUserAlertWithKey(key, options);
+		if(externalUserAlertList == null){
+			return platform;
+		}
+		if(externalUserAlertList.isEmpty()){
+			return platform;
+		}
+		
+		for(UserAlert userAlert: externalUserAlertList){
+			userAlert.clearProfile();
+			userAlert.clearPlatform();
+			
+		}
+		
+		
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();		
+		userAlertList.addAllToRemoveList(externalUserAlertList);
+		return platform;
+	}
+	
+	public int countUserAlertListWithProfile(String platformId, String profileId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PLATFORM_PROPERTY, platformId);
+		key.put(UserAlert.PROFILE_PROPERTY, profileId);
+		
+		int count = getUserAlertDAO().countUserAlertWithKey(key, options);
+		return count;
+	}
+	
+
+		
+	protected Platform saveAlertBarList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<AlertBar> alertBarList = platform.getAlertBarList();
+		if(alertBarList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<AlertBar> mergedUpdateAlertBarList = new SmartList<AlertBar>();
+		
+		
+		mergedUpdateAlertBarList.addAll(alertBarList); 
+		if(alertBarList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateAlertBarList.addAll(alertBarList.getToRemoveList());
+			alertBarList.removeAll(alertBarList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getAlertBarDAO().saveAlertBarList(mergedUpdateAlertBarList,options);
+		
+		if(alertBarList.getToRemoveList() != null){
+			alertBarList.removeAll(alertBarList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeAlertBarList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<AlertBar> alertBarList = platform.getAlertBarList();
+		if(alertBarList == null){
+			return platform;
+		}	
+	
+		SmartList<AlertBar> toRemoveAlertBarList = alertBarList.getToRemoveList();
+		
+		if(toRemoveAlertBarList == null){
+			return platform;
+		}
+		if(toRemoveAlertBarList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getAlertBarDAO().removeAlertBarList(toRemoveAlertBarList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
 		
 	protected Platform saveBannerList(Platform platform, Map<String,Object> options){
 		
@@ -1075,16 +1457,104 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 	
 	
 		
+	protected Platform saveUserAlertList(Platform platform, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();
+		if(userAlertList == null){
+			//null list means nothing
+			return platform;
+		}
+		SmartList<UserAlert> mergedUpdateUserAlertList = new SmartList<UserAlert>();
+		
+		
+		mergedUpdateUserAlertList.addAll(userAlertList); 
+		if(userAlertList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateUserAlertList.addAll(userAlertList.getToRemoveList());
+			userAlertList.removeAll(userAlertList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getUserAlertDAO().saveUserAlertList(mergedUpdateUserAlertList,options);
+		
+		if(userAlertList.getToRemoveList() != null){
+			userAlertList.removeAll(userAlertList.getToRemoveList());
+		}
+		
+		
+		return platform;
+	
+	}
+	
+	protected Platform removeUserAlertList(Platform platform, Map<String,Object> options){
+	
+	
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();
+		if(userAlertList == null){
+			return platform;
+		}	
+	
+		SmartList<UserAlert> toRemoveUserAlertList = userAlertList.getToRemoveList();
+		
+		if(toRemoveUserAlertList == null){
+			return platform;
+		}
+		if(toRemoveUserAlertList.isEmpty()){
+			return platform;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getUserAlertDAO().removeUserAlertList(toRemoveUserAlertList,options);
+		
+		return platform;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
 
 	public Platform present(Platform platform,Map<String, Object> options){
 	
+		presentAlertBarList(platform,options);
 		presentBannerList(platform,options);
 		presentProfileList(platform,options);
 		presentTargetList(platform,options);
+		presentUserAlertList(platform,options);
 
 		return platform;
 	
 	}
+		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentAlertBarList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<AlertBar> alertBarList = platform.getAlertBarList();		
+				SmartList<AlertBar> newList= presentSubList(platform.getId(),
+				alertBarList,
+				options,
+				getAlertBarDAO()::countAlertBarByPlatform,
+				getAlertBarDAO()::findAlertBarByPlatform
+				);
+
+		
+		platform.setAlertBarList(newList);
+		
+
+		return platform;
+	}			
 		
 	//Using java8 feature to reduce the code significantly
  	protected Platform presentBannerList(
@@ -1146,8 +1616,34 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
 		return platform;
 	}			
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Platform presentUserAlertList(
+			Platform platform,
+			Map<String, Object> options) {
+
+		SmartList<UserAlert> userAlertList = platform.getUserAlertList();		
+				SmartList<UserAlert> newList= presentSubList(platform.getId(),
+				userAlertList,
+				options,
+				getUserAlertDAO()::countUserAlertByPlatform,
+				getUserAlertDAO()::findUserAlertByPlatform
+				);
+
+		
+		platform.setUserAlertList(newList);
+		
+
+		return platform;
+	}			
+		
 
 	
+    public SmartList<Platform> requestCandidatePlatformForAlertBar(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
     public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
@@ -1161,6 +1657,12 @@ public class PlatformJDBCTemplateDAO extends CmsNamingServiceDAO implements Plat
     }
 		
     public SmartList<Platform> requestCandidatePlatformForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());
+    }
+		
+    public SmartList<Platform> requestCandidatePlatformForUserAlert(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
 		return findAllCandidateByFilter(PlatformTable.COLUMN_NAME, filterKey, pageNo, pageSize, getPlatformMapper());

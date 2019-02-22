@@ -3,11 +3,15 @@ package com.doublechaintech.cms;
 
 import com.doublechaintech.cms.platform.PlatformManager;
 
+import com.doublechaintech.cms.alertbar.AlertBarManager;
+
 import com.doublechaintech.cms.banner.BannerManager;
 
 import com.doublechaintech.cms.profile.ProfileManager;
 
 import com.doublechaintech.cms.target.TargetManager;
+
+import com.doublechaintech.cms.useralert.UserAlertManager;
 
 import com.doublechaintech.cms.userdomain.UserDomainManager;
 
@@ -40,11 +44,15 @@ public class ManagerGroup {
 
 	protected PlatformManager platformManager;
 
+	protected AlertBarManager alertBarManager;
+
 	protected BannerManager bannerManager;
 
 	protected ProfileManager profileManager;
 
 	protected TargetManager targetManager;
+
+	protected UserAlertManager userAlertManager;
 
 	protected UserDomainManager userDomainManager;
 
@@ -82,6 +90,14 @@ public class ManagerGroup {
 	}
 
 
+	public AlertBarManager getAlertBarManager(){
+		return this.alertBarManager;
+	}
+	public void setAlertBarManager(AlertBarManager manager){
+		this.alertBarManager = manager;
+	}
+
+
 	public BannerManager getBannerManager(){
 		return this.bannerManager;
 	}
@@ -103,6 +119,14 @@ public class ManagerGroup {
 	}
 	public void setTargetManager(TargetManager manager){
 		this.targetManager = manager;
+	}
+
+
+	public UserAlertManager getUserAlertManager(){
+		return this.userAlertManager;
+	}
+	public void setUserAlertManager(UserAlertManager manager){
+		this.userAlertManager = manager;
 	}
 
 

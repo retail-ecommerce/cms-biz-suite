@@ -8,7 +8,9 @@ import com.doublechaintech.cms.SmartList;
 import com.doublechaintech.cms.MultipleAccessKey;
 import com.doublechaintech.cms.CmsUserContext;
 import com.doublechaintech.cms.target.TargetDAO;
+import com.doublechaintech.cms.alertbar.AlertBarDAO;
 import com.doublechaintech.cms.banner.BannerDAO;
+import com.doublechaintech.cms.useralert.UserAlertDAO;
 import com.doublechaintech.cms.profile.ProfileDAO;
 
 
@@ -40,20 +42,31 @@ public interface PlatformDAO{
 	public Platform disconnectFromAll(String platformId, int version) throws Exception;
 	public int deleteAll() throws Exception;
 
+	public AlertBarDAO getAlertBarDAO();
+		
 	public BannerDAO getBannerDAO();
 		
 	public ProfileDAO getProfileDAO();
 		
 	public TargetDAO getTargetDAO();
 		
+	public UserAlertDAO getUserAlertDAO();
+		
 	
+ 	public SmartList<Platform> requestCandidatePlatformForAlertBar(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
  	public SmartList<Platform> requestCandidatePlatformForBanner(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Platform> requestCandidatePlatformForProfile(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
  	public SmartList<Platform> requestCandidatePlatformForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
 		
+ 	public SmartList<Platform> requestCandidatePlatformForUserAlert(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception;
+		
 	
+	public Platform planToRemoveAlertBarList(Platform platform, String alertBarIds[], Map<String,Object> options)throws Exception;
+
+
 	public Platform planToRemoveBannerList(Platform platform, String bannerIds[], Map<String,Object> options)throws Exception;
 
 
@@ -70,6 +83,13 @@ public interface PlatformDAO{
 	//disconnect Platform with banner in Target
 	public Platform planToRemoveTargetListWithBanner(Platform platform, String bannerId, Map<String,Object> options)throws Exception;
 	public int countTargetListWithBanner(String platformId, String bannerId, Map<String,Object> options)throws Exception;
+	
+	public Platform planToRemoveUserAlertList(Platform platform, String userAlertIds[], Map<String,Object> options)throws Exception;
+
+
+	//disconnect Platform with profile in UserAlert
+	public Platform planToRemoveUserAlertListWithProfile(Platform platform, String profileId, Map<String,Object> options)throws Exception;
+	public int countUserAlertListWithProfile(String platformId, String profileId, Map<String,Object> options)throws Exception;
 	
 	
 	public SmartList<Platform> queryList(String sql, Object ... parmeters);

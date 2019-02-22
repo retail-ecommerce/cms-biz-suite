@@ -19,10 +19,12 @@ import com.doublechaintech.cms.CmsUserContext;
 
 
 import com.doublechaintech.cms.target.Target;
+import com.doublechaintech.cms.useralert.UserAlert;
 import com.doublechaintech.cms.platform.Platform;
 
 import com.doublechaintech.cms.target.TargetDAO;
 import com.doublechaintech.cms.platform.PlatformDAO;
+import com.doublechaintech.cms.useralert.UserAlertDAO;
 
 
 
@@ -57,6 +59,25 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
  		}
  		
 	 	return this.targetDAO;
+ 	}	
+ 	
+			
+		
+	
+  	private  UserAlertDAO  userAlertDAO;
+ 	public void setUserAlertDAO(UserAlertDAO pUserAlertDAO){
+ 	
+ 		if(pUserAlertDAO == null){
+ 			throw new IllegalStateException("Do not try to set userAlertDAO to null.");
+ 		}
+	 	this.userAlertDAO = pUserAlertDAO;
+ 	}
+ 	public UserAlertDAO getUserAlertDAO(){
+ 		if(this.userAlertDAO == null){
+ 			throw new IllegalStateException("The userAlertDAO is not configured yet, please config it some where.");
+ 		}
+ 		
+	 	return this.userAlertDAO;
  	}	
  	
 			
@@ -108,6 +129,13 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
  		
  		if(isSaveTargetListEnabled(options)){
  			for(Target item: newProfile.getTargetList()){
+ 				item.setVersion(0);
+ 			}
+ 		}
+		
+ 		
+ 		if(isSaveUserAlertListEnabled(options)){
+ 			for(UserAlert item: newProfile.getUserAlertList()){
  				item.setVersion(0);
  			}
  		}
@@ -232,6 +260,21 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
  	}
  	
 		
+	
+	protected boolean isExtractUserAlertListEnabled(Map<String,Object> options){		
+ 		return checkOptions(options,ProfileTokens.USER_ALERT_LIST);
+ 	}
+ 	protected boolean isAnalyzeUserAlertListEnabled(Map<String,Object> options){		
+ 		return true;
+ 		//return checkOptions(options,ProfileTokens.USER_ALERT_LIST+".analyze");
+ 	}
+	
+	protected boolean isSaveUserAlertListEnabled(Map<String,Object> options){
+		return checkOptions(options, ProfileTokens.USER_ALERT_LIST);
+		
+ 	}
+ 	
+		
 
 	
 
@@ -268,6 +311,14 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
  		}	
  		if(isAnalyzeTargetListEnabled(loadOptions)){
 	 		analyzeTargetList(profile, loadOptions);
+ 		}
+ 		
+		
+		if(isExtractUserAlertListEnabled(loadOptions)){
+	 		extractUserAlertList(profile, loadOptions);
+ 		}	
+ 		if(isAnalyzeUserAlertListEnabled(loadOptions)){
+	 		analyzeUserAlertList(profile, loadOptions);
  		}
  		
 		
@@ -339,6 +390,56 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 		SmartList<Target> targetList = profile.getTargetList();
 		if(targetList != null){
 			getTargetDAO().analyzeTargetByProfile(targetList, profile.getId(), options);
+			
+		}
+		
+		return profile;
+	
+	}	
+	
+		
+	protected void enhanceUserAlertList(SmartList<UserAlert> userAlertList,Map<String,Object> options){
+		//extract multiple list from difference sources
+		//Trying to use a single SQL to extract all data from database and do the work in java side, java is easier to scale to N ndoes;
+	}
+	
+	protected Profile extractUserAlertList(Profile profile, Map<String,Object> options){
+		
+		
+		if(profile == null){
+			return null;
+		}
+		if(profile.getId() == null){
+			return profile;
+		}
+
+		
+		
+		SmartList<UserAlert> userAlertList = getUserAlertDAO().findUserAlertByProfile(profile.getId(),options);
+		if(userAlertList != null){
+			enhanceUserAlertList(userAlertList,options);
+			profile.setUserAlertList(userAlertList);
+		}
+		
+		return profile;
+	
+	}	
+	
+	protected Profile analyzeUserAlertList(Profile profile, Map<String,Object> options){
+		
+		
+		if(profile == null){
+			return null;
+		}
+		if(profile.getId() == null){
+			return profile;
+		}
+
+		
+		
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();
+		if(userAlertList != null){
+			getUserAlertDAO().analyzeUserAlertByProfile(userAlertList, profile.getId(), options);
 			
 		}
 		
@@ -569,6 +670,13 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 	 		
  		}		
 		
+		if(isSaveUserAlertListEnabled(options)){
+	 		saveUserAlertList(profile, options);
+	 		//removeUserAlertList(profile, options);
+	 		//Not delete the record
+	 		
+ 		}		
+		
 		return profile;
 		
 	}
@@ -712,6 +820,78 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 		return count;
 	}
 	
+	public Profile planToRemoveUserAlertList(Profile profile, String userAlertIds[], Map<String,Object> options)throws Exception{
+	
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PROFILE_PROPERTY, profile.getId());
+		key.put(UserAlert.ID_PROPERTY, userAlertIds);
+		
+		SmartList<UserAlert> externalUserAlertList = getUserAlertDAO().
+				findUserAlertWithKey(key, options);
+		if(externalUserAlertList == null){
+			return profile;
+		}
+		if(externalUserAlertList.isEmpty()){
+			return profile;
+		}
+		
+		for(UserAlert userAlert: externalUserAlertList){
+
+			userAlert.clearFromAll();
+		}
+		
+		
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();		
+		userAlertList.addAllToRemoveList(externalUserAlertList);
+		return profile;	
+	
+	}
+
+
+	//disconnect Profile with platform in UserAlert
+	public Profile planToRemoveUserAlertListWithPlatform(Profile profile, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+		
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PROFILE_PROPERTY, profile.getId());
+		key.put(UserAlert.PLATFORM_PROPERTY, platformId);
+		
+		SmartList<UserAlert> externalUserAlertList = getUserAlertDAO().
+				findUserAlertWithKey(key, options);
+		if(externalUserAlertList == null){
+			return profile;
+		}
+		if(externalUserAlertList.isEmpty()){
+			return profile;
+		}
+		
+		for(UserAlert userAlert: externalUserAlertList){
+			userAlert.clearPlatform();
+			userAlert.clearProfile();
+			
+		}
+		
+		
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();		
+		userAlertList.addAllToRemoveList(externalUserAlertList);
+		return profile;
+	}
+	
+	public int countUserAlertListWithPlatform(String profileId, String platformId, Map<String,Object> options)throws Exception{
+				//SmartList<ThreadLike> toRemoveThreadLikeList = threadLikeList.getToRemoveList();
+		//the list will not be null here, empty, maybe
+		//getThreadLikeDAO().removeThreadLikeList(toRemoveThreadLikeList,options);
+
+		MultipleAccessKey key = new MultipleAccessKey();
+		key.put(UserAlert.PROFILE_PROPERTY, profileId);
+		key.put(UserAlert.PLATFORM_PROPERTY, platformId);
+		
+		int count = getUserAlertDAO().countUserAlertWithKey(key, options);
+		return count;
+	}
+	
 
 		
 	protected Profile saveTargetList(Profile profile, Map<String,Object> options){
@@ -780,10 +960,77 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 	
 	
 		
+	protected Profile saveUserAlertList(Profile profile, Map<String,Object> options){
+		
+		
+		
+		
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();
+		if(userAlertList == null){
+			//null list means nothing
+			return profile;
+		}
+		SmartList<UserAlert> mergedUpdateUserAlertList = new SmartList<UserAlert>();
+		
+		
+		mergedUpdateUserAlertList.addAll(userAlertList); 
+		if(userAlertList.getToRemoveList() != null){
+			//ensures the toRemoveList is not null
+			mergedUpdateUserAlertList.addAll(userAlertList.getToRemoveList());
+			userAlertList.removeAll(userAlertList.getToRemoveList());
+			//OK for now, need fix later
+		}
+
+		//adding new size can improve performance
+	
+		getUserAlertDAO().saveUserAlertList(mergedUpdateUserAlertList,options);
+		
+		if(userAlertList.getToRemoveList() != null){
+			userAlertList.removeAll(userAlertList.getToRemoveList());
+		}
+		
+		
+		return profile;
+	
+	}
+	
+	protected Profile removeUserAlertList(Profile profile, Map<String,Object> options){
+	
+	
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();
+		if(userAlertList == null){
+			return profile;
+		}	
+	
+		SmartList<UserAlert> toRemoveUserAlertList = userAlertList.getToRemoveList();
+		
+		if(toRemoveUserAlertList == null){
+			return profile;
+		}
+		if(toRemoveUserAlertList.isEmpty()){
+			return profile;// Does this mean delete all from the parent object?
+		}
+		//Call DAO to remove the list
+		
+		getUserAlertDAO().removeUserAlertList(toRemoveUserAlertList,options);
+		
+		return profile;
+	
+	}
+	
+	
+
+ 	
+ 	
+	
+	
+	
+		
 
 	public Profile present(Profile profile,Map<String, Object> options){
 	
 		presentTargetList(profile,options);
+		presentUserAlertList(profile,options);
 
 		return profile;
 	
@@ -809,9 +1056,35 @@ public class ProfileJDBCTemplateDAO extends CmsNamingServiceDAO implements Profi
 		return profile;
 	}			
 		
+	//Using java8 feature to reduce the code significantly
+ 	protected Profile presentUserAlertList(
+			Profile profile,
+			Map<String, Object> options) {
+
+		SmartList<UserAlert> userAlertList = profile.getUserAlertList();		
+				SmartList<UserAlert> newList= presentSubList(profile.getId(),
+				userAlertList,
+				options,
+				getUserAlertDAO()::countUserAlertByProfile,
+				getUserAlertDAO()::findUserAlertByProfile
+				);
+
+		
+		profile.setUserAlertList(newList);
+		
+
+		return profile;
+	}			
+		
 
 	
     public SmartList<Profile> requestCandidateProfileForTarget(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
+        // NOTE: by default, ignore owner info, just return all by filter key.
+		// You need override this method if you have different candidate-logic
+		return findAllCandidateByFilter(ProfileTable.COLUMN_NAME, filterKey, pageNo, pageSize, getProfileMapper());
+    }
+		
+    public SmartList<Profile> requestCandidateProfileForUserAlert(CmsUserContext userContext, String ownerClass, String id, String filterKey, int pageNo, int pageSize) throws Exception {
         // NOTE: by default, ignore owner info, just return all by filter key.
 		// You need override this method if you have different candidate-logic
 		return findAllCandidateByFilter(ProfileTable.COLUMN_NAME, filterKey, pageNo, pageSize, getProfileMapper());
