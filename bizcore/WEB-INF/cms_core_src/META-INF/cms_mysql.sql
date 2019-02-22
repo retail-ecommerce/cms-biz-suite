@@ -250,12 +250,12 @@ create table form_action_data (
 insert into platform_data values ('P000001','Chain eComerce Platform','new generation of eCommerce platform based on opensource and modern tech','V1.0','1');
 
 	
-insert into alert_bar_data values ('AB000001','LAST DAY','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','2019-02-15 20:53:30','P000001','1');
-insert into alert_bar_data values ('AB000002','LAST DAY0002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','2019-02-08 19:21:00','P000001','1');
+insert into alert_bar_data values ('AB000001','LAST DAY','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','2019-02-18 22:00:59','P000001','1');
+insert into alert_bar_data values ('AB000002','LAST DAY0002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','2019-02-16 09:27:37','P000001','1');
 
 	
-insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-12 20:50:10','P000001','1');
-insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-18 14:38:20','P000001','1');
+insert into banner_data values ('B000001','2.14Promotion','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-05 23:45:53','P000001','1');
+insert into banner_data values ('B000002','2.14Promotion0002','https://demo.doublechaintech.com/demodata/imageManager/genImage/ValDay00/800/600/RED/','2019-02-10 07:29:27','P000001','1');
 
 	
 insert into profile_data values ('P000001','Philip Zhang','P000001','1');
@@ -263,16 +263,16 @@ insert into profile_data values ('P000002','Naveen Kumar R ','P000001','1');
 insert into profile_data values ('P000003','VENKATESH GADUPUTI','P000001','1');
 
 	
-insert into target_data values ('T000001','valentines day','P000001','B000001','HOME','2019-02-21 19:46:04','P000001','1');
-insert into target_data values ('T000002','valentines day0002','P000001','B000001','HOME0002','2019-02-02 12:02:31','P000001','1');
-insert into target_data values ('T000003','valentines day0003','P000002','B000002','HOME0003','2019-02-12 17:52:27','P000001','1');
-insert into target_data values ('T000004','valentines day0004','P000003','B000002','HOME0004','2019-02-10 02:07:27','P000001','1');
+insert into target_data values ('T000001','valentines day','P000001','B000001','HOME','2019-02-05 12:19:09','P000001','1');
+insert into target_data values ('T000002','valentines day0002','P000001','B000001','HOME0002','2019-02-10 11:28:09','P000001','1');
+insert into target_data values ('T000003','valentines day0003','P000002','B000002','HOME0003','2019-02-17 18:55:25','P000001','1');
+insert into target_data values ('T000004','valentines day0004','P000003','B000002','HOME0004','2019-02-14 22:04:21','P000001','1');
 
 	
-insert into user_alert_data values ('UA000001','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','P000001','HOME','2019-02-14 10:15:00','P000001','1');
-insert into user_alert_data values ('UA000002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','P000001','HOME0002','2019-02-20 16:10:58','P000001','1');
-insert into user_alert_data values ('UA000003','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0003','P000002','HOME0003','2019-02-20 04:57:12','P000001','1');
-insert into user_alert_data values ('UA000004','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0004','P000003','HOME0004','2019-02-19 13:27:47','P000001','1');
+insert into user_alert_data values ('UA000001','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW','P000001','HOME','2019-02-15 15:49:40','P000001','1');
+insert into user_alert_data values ('UA000002','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0002','P000001','HOME0002','2019-02-17 07:49:58','P000001','1');
+insert into user_alert_data values ('UA000003','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0003','P000002','HOME0003','2019-02-07 18:13:35','P000001','1');
+insert into user_alert_data values ('UA000004','IT’S THE LAST DAY TO SHOP THE WEEKLY WOW—CURRENT DEALS EXPIRE TOMORROW! WHILE SUPPLIES LAST. SHOP NOW0004','P000003','HOME0004','2019-02-21 20:04:16','P000001','1');
 
 	
 insert into user_domain_data values ('UD000001','用户区域','1');
@@ -282,11 +282,11 @@ insert into user_white_list_data values ('UWL000001','clariones','tester;ios-spo
 insert into user_white_list_data values ('UWL000002','13808188512','tester;ios-spokesperson0002','UD000001','1');
 
 	
-insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-03 18:50:11','2019-02-15 12:07:20','UD000001',NULL,'BLOCKED','1');
-insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-02-12 13:25:20','2019-02-17 10:05:41','UD000001',NULL,'BLOCKED0002','1');
+insert into sec_user_data values ('SU000001','login','13900000001','','C183EC89F92A462CF45B95504792EC4625E847C90536EEFE512D1C9DB8602E95','0','2019-02-07 11:43:33','2019-02-10 10:38:22','UD000001',NULL,'BLOCKED','1');
+insert into sec_user_data values ('SU000002','login0002','13900000002','suddy_chang@163.com','AC2F95628244C6975EB2C36942EA879ED93D93F5895EF3157733E4629FA86B92','9999999','2019-02-06 06:53:36','2019-02-11 23:54:36','UD000001',NULL,'BLOCKED0002','1');
 
 	
-insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-06 10:28:00','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
+insert into sec_user_blocking_data values ('SUB000001','currentUser()','2019-02-03 17:44:41','这个用户多次发送违反社区的帖子，现在把他给屏蔽了','1');
 
 	
 insert into user_app_data values ('UA000001','审车平台','SU000001','users',1,'MXWR','CarInspectionPlatform','CIP000001','/link/to/app','1');
@@ -317,10 +317,10 @@ insert into object_access_data values ('OA000007','控制访问列表10007','Fra
 insert into object_access_data values ('OA000008','控制访问列表10008','AccountSet','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','levelOneCategoryList','UA000006','1');
 
 	
-insert into login_history_data values ('LH000001','2019-02-08 16:26:29','192.168.1.1','登陆成功','SU000001','1');
-insert into login_history_data values ('LH000002','2019-02-15 23:21:37','192.168.1.2','登陆成功0002','SU000001','1');
-insert into login_history_data values ('LH000003','2019-02-01 22:08:55','192.168.1.1','登陆成功0003','SU000002','1');
-insert into login_history_data values ('LH000004','2019-02-14 11:21:51','192.168.1.2','登陆成功0004','SU000002','1');
+insert into login_history_data values ('LH000001','2019-02-21 18:57:41','192.168.1.1','登陆成功','SU000001','1');
+insert into login_history_data values ('LH000002','2019-02-11 04:11:34','192.168.1.2','登陆成功0002','SU000001','1');
+insert into login_history_data values ('LH000003','2019-02-08 17:46:25','192.168.1.1','登陆成功0003','SU000002','1');
+insert into login_history_data values ('LH000004','2019-02-05 05:18:12','192.168.1.2','登陆成功0004','SU000002','1');
 
 	
 insert into generic_form_data values ('GF000001','登记输入单','姓名就是你身份证上的名字','1');
